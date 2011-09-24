@@ -1,0 +1,36 @@
+[15-Sep-2011 06:24:38] PHP Parse error:  syntax error, unexpected ')' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 110
+[15-Sep-2011 06:25:03] PHP Parse error:  syntax error, unexpected ')' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 136
+[15-Sep-2011 06:32:36] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 135
+[15-Sep-2011 06:38:05] PHP Parse error:  syntax error, unexpected ',' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 134
+[15-Sep-2011 07:05:10] PHP Parse error:  syntax error, unexpected ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 137
+[15-Sep-2011 07:07:27] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 146
+[15-Sep-2011 07:08:38] PHP Warning:  Wrong parameter count for substr() in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 137
+[15-Sep-2011 07:08:38] PHP Warning:  Wrong parameter count for substr() in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 137
+[15-Sep-2011 07:08:38] PHP Warning:  Wrong parameter count for substr() in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 137
+[15-Sep-2011 07:08:38] PHP Warning:  Wrong parameter count for substr() in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 146
+[15-Sep-2011 07:56:21] PHP Parse error:  syntax error, unexpected '&', expecting ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 114
+[15-Sep-2011 07:56:23] PHP Parse error:  syntax error, unexpected '&', expecting ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 114
+[15-Sep-2011 07:56:42] PHP Parse error:  syntax error, unexpected T_INC, expecting ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 114
+[15-Sep-2011 07:57:02] PHP Parse error:  syntax error, unexpected T_INC, expecting ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 114
+[15-Sep-2011 07:57:07] PHP Parse error:  syntax error, unexpected T_INC, expecting ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 114
+[15-Sep-2011 07:58:01] PHP Parse error:  syntax error, unexpected ')', expecting ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 114
+[15-Sep-2011 07:58:43] PHP Parse error:  syntax error, unexpected ']' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 120
+[15-Sep-2011 08:18:27] PHP Warning:  Missing argument 1 for FPDF::Cell(), called in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 161 and defined in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 599
+[15-Sep-2011 08:21:47] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 162
+[16-Sep-2011 09:18:10] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 26
+[16-Sep-2011 09:18:13] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 26
+[16-Sep-2011 09:18:31] PHP Fatal error:  Call to a member function setTime() on a non-object in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 24
+[16-Sep-2011 09:19:10] PHP Fatal error:  Call to a member function setTime() on a non-object in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 24
+[16-Sep-2011 09:19:13] PHP Fatal error:  Call to a member function setTime() on a non-object in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 24
+[16-Sep-2011 09:19:15] PHP Fatal error:  Call to a member function setTime() on a non-object in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 24
+[16-Sep-2011 09:19:16] PHP Fatal error:  Call to a member function setTime() on a non-object in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 24
+[16-Sep-2011 09:19:17] PHP Fatal error:  Call to a member function setTime() on a non-object in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 24
+[16-Sep-2011 09:19:55] PHP Fatal error:  Call to undefined function  datetime() in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 23
+[16-Sep-2011 09:20:24] PHP Warning:  date() expects parameter 2 to be long, object given in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 25
+[16-Sep-2011 09:23:41] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 24
+[16-Sep-2011 09:25:06] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 27
+[16-Sep-2011 09:26:29] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 28
+[16-Sep-2011 09:26:29] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 28
+[16-Sep-2011 09:26:31] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 28
+[16-Sep-2011 09:27:26] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 28
+[16-Sep-2011 09:31:59] PHP Parse error:  syntax error, unexpected T_STRING, expecting ',' or ';' in /home3/todayspo/public_html/29r/jackets/jacketTags2.php on line 122

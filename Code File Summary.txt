@@ -1,0 +1,17 @@
+calendarICS.php
+    Working.  This code queries the db for events and returns an ICS file.  It can query based on parameter passed in the URL.Currently, 2011-09-08 6:53 PM, if no date parameters are passed, it returns the events matching the other criteria and that occurred with one day ago and five day in the future.  A longer time frame resulted in memory errors.
+
+    TODO:
+        Build in logic for returning a judge-, case-, or counsel calendar, that take a dates in the form of six months ago, out to 5 years.
+        Build form based interface for build ics urls, e.g., one for J. Metz, one for an interCreate a universal site-wide query builder.
+        Create test cases, test
+    
+dataTable.php
+    Working.  Builds a jQuery dataTable based the URI parameters.  The parameters are passed to dataTableJSON which queries the db and returns the data.
+    
+    TODO:
+        Add tool tip with court phone numbers.
+        Add Export functionality.
+        Create test cases, test.
+
+dataTableJSON.php

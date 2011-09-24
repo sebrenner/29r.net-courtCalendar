@@ -1,0 +1,18 @@
+[07-Sep-2011 18:56:36] PHP Parse error:  syntax error, unexpected T_STRING, expecting '(' in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF.php on line 7
+[07-Sep-2011 19:00:18] PHP Parse error:  syntax error, unexpected T_STRING, expecting '(' in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF.php on line 7
+[07-Sep-2011 19:00:26] PHP Parse error:  syntax error, unexpected T_STRING, expecting '(' in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF.php on line 7
+[07-Sep-2011 19:01:23] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 655
+[07-Sep-2011 19:01:55] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 599
+[07-Sep-2011 19:02:39] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 602
+[07-Sep-2011 19:02:40] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 655
+[07-Sep-2011 19:02:46] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 603
+[07-Sep-2011 19:03:55] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 665
+[07-Sep-2011 19:04:06] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 655
+[07-Sep-2011 19:56:50] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF2.php on line 28
+[07-Sep-2011 19:56:58] PHP Warning:  Division by zero in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 684
+[07-Sep-2011 19:57:18] PHP Warning:  Division by zero in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 684
+[07-Sep-2011 19:57:26] PHP Warning:  Division by zero in /home3/todayspo/public_html/29r/fpdf17/fpdf.php on line 684
+[07-Sep-2011 20:05:36] PHP Parse error:  syntax error, unexpected T_STRING in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF3.php on line 35
+[07-Sep-2011 20:07:11] PHP Parse error:  syntax error, unexpected T_STRING in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF3.php on line 36
+[07-Sep-2011 20:07:38] PHP Parse error:  syntax error, unexpected T_STRING in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF3.php on line 36
+[07-Sep-2011 20:08:10] PHP Parse error:  syntax error, unexpected T_STRING in /home3/todayspo/public_html/29r/fpdf17/tutorial/firstPDF3.php on line 32

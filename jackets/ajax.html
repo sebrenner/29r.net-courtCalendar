@@ -1,0 +1,21 @@
+<html>
+<head>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$("button").click(function(){
+  $.ajax({url:"ajaxText.txt", success:function(result){
+    $("div").html(result);
+  }});
+});});
+</script>
+</head>
+<body>
+
+<div><h2>Let AJAX change this text</h2></div>
+<button>Change Content</button>
+</body>
+</html>
+
