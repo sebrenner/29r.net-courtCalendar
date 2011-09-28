@@ -753,3 +753,4 @@
 [27-Sep-2011 19:26:50] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_FUNCTION in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 226
 [27-Sep-2011 19:26:51] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_FUNCTION in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 226
 [27-Sep-2011 19:34:08] PHP Fatal error:  Call to undefined function  getjudgesnames() in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 107
+[27-Sep-2011 19:50:05] PHP Warning:  Invalid argument supplied for foreach() in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 118

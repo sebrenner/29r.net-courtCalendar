@@ -112,6 +112,9 @@ class activityHistogram
 	        $judgesArray[] = htmlspecialchars($_GET["judge"]);
 	        }
 	    }
+	    else{
+	        $judgesArray[] = "Allen";
+	    }
 	    
 	    $pdf = new PDF();
         $header = array('Date', 'Criminal Settings','', 'Notes');
