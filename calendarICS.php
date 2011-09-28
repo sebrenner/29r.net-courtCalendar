@@ -39,6 +39,13 @@ if(isset($_GET["counsel"])){
     $query = $query . " AND prosecutor like '%$counsel%' or defense like '%$counsel%'";
 }
 
+//  If prosecutor is given.
+if(isset($_GET["prosecutor"])){
+    $prosecutor = htmlspecialchars($_GET["prosecutor"]);
+    $query = $query . " AND prosecutor like '%$prosecutor%'";
+}
+
+
 //  If type is specified  0: non-criminal; 1: criminal; 2 || null: all.
 switch ($_GET["casetype"]) {
     case 0:     // non-criminal
@@ -67,7 +74,7 @@ if(isset($_GET["cnum"])){
     $query = "SELECT * FROM nextActions WHERE case_number = '{$cnum}' ";
 }
 
-/*** connect to SQLite database ***/
+/*** connect to MySql database ***/
 try 
 {
     $dbh = mysql_connect('localhost', 'todayspo_ctDbRdr', '4W(Rn*aLgdXi') or die(mysql_error());
@@ -142,7 +149,7 @@ if($result = mysql_query($query))
     $v->setProperty( "x-wr-calname", $calName );
 
     // required of some calendar software
-    $v->setProperty( "X-WR-CALDESC", "This is the calendar for Hamilton County Common Pleas Court covering " . $firstDateReq . " through " . $lastDateReq .". It only includes setting for judge " . ucfirst($judgeReq) );
+    $v->setProperty( "X-WR-CALDESC", "This is the calendar for Hamilton County Common Pleas Court covering " . $firstDateReq . " through " . $lastDateReq . "." );
   
 }
 else

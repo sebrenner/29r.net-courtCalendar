@@ -47,7 +47,6 @@ if(isset($_GET["cnum"])){
 /*** connect to SQLite database ***/
 try 
 {
-    $dbh = new PDO("sqlite:the_nacs.db");
     $dbh = mysql_connect('localhost', 'todayspo_ctDbRdr', '4W(Rn*aLgdXi') or die(mysql_error());
     mysql_select_db("todayspo_courtCal2") or die(mysql_error());
     
@@ -73,7 +72,7 @@ if($result = mysql_query($query))
     $row["judge"] = $row["judge"] . "<br />" . $row["location"];
     
     $date= new DateTime($row["NAC_date"]);
-    $row["NAC_date_formatted"]= $date->format('D <br /> m/d/y<br /> g:iA');
+    $row["NAC_date_formatted"]= $date->format('D m/d/y  g:iA');
     
     $row["caption"] =  $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
     $row["counsel"] = "&pi;: " . $row["prosecutor"] . "<br />&Delta;: " . $row["defense"];

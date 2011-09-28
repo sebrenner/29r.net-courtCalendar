@@ -1,0 +1,190 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <meta name="author" content="Scott Brenner" >
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.css' />
+        <link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.print.css' media='print' />
+
+        <script type='text/javascript' src='jquery/jquery-1.5.2.min.js'></script>
+        <script type='text/javascript' src='jquery/jquery-ui-1.8.11.custom.min.js'></script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        
+
+        <script type='text/javascript' src='fullcalendar/fullcalendar.min.js'></script>
+        
+        <link href="main.css" rel="stylesheet" type="text/css" >
+        <title>Hamilton County Court of Common Pleas Schedule</title>
+        <script type='text/javascript'>
+            function getURLParameter(name) {
+                return decodeURI(
+                    (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+                );
+            }
+            
+            $(document).ready(function() {
+                $('#advancedOptions').hide();
+                /* $('#statusLine').hide();*/
+                $('#toggleAdvancedOptions').click(
+                    function () {
+                        $('#advancedOptions').toggle('slow');
+                    }
+                );
+                
+                $('#toggleSearchFields').click(
+                    function () {
+                        $('#searchFields').toggle('slow');
+                    }
+                );
+                
+                $('#tabs').tabs({
+                    ajaxOptions: {
+                        error: function( xhr, status, index, anchor ) {
+                            $( anchor.hash ).html(
+                                "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+                                "If this wouldn't be a demo." );
+                        }
+                    }
+                });
+                
+                var date = new Date();
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                var taken23 = getURLParameter('take');
+                var judge = getURLParameter('judge');
+                var earliestDate = getURLParameter('earliestDate');
+                var lastDate = getURLParameter('lastDate');
+                
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    defaultView: 'agendaWeek',      
+                    weekends: false,        // will hide Saturdays and Sundays
+                    lazyFetching: true,     // will rely on cache when switching views.
+                    events: {
+                        url: 'fullCalendarJSONData.php?judge=allen&earliestDate=2011-08-01&lastDate=2016-08-08',
+                        cache: true,
+                        type: 'GET',
+                        data: {
+                            judge: judge,
+                            earliestDate: earliestDate,
+                            lastDate: lastDate
+                        },
+                        error: function() {
+                            alert('there was an error while fetching events!');
+                        },
+                    },
+
+                    eventDrop: function(event, delta) {
+                        alert(event.title + ' was moved ' + delta + ' days\n' +
+                        '(should probably update your database)');
+                    },
+
+                    eventMouseover: function(calEvent, domEvent) {
+                        var layer ="<div id='events-layer' class='fc-transparent' style='position:absolute; width:100%; height:100%; top:-1px; text-align:right; z-index:100'></div>";
+                        $(this).append(layer);
+                    },
+
+                    eventMouseout: function(calEvent, domEvent) {
+                        },
+
+                    loading: function(bool) {
+                        if (bool) $('#loading').show();
+                        else $('#loading').hide();
+                    }
+
+                });
+
+
+
+                
+            });
+            
+        </script>
+    </head>
+    <body>
+        <div id="searchFields">
+            <div style="text-align:center; position:relative; left:0; top:2px; " id="titleBanner" >
+                <h1>Hamilton County<br>
+                Court of Common Pleas<br>
+                Schedule</h1>
+            </div>
+            <div id="statusLine">This is the status line</div>
+            <div id="basicSearch" >
+                <p>
+                    <label for="startDate" >From: </label><input type="text" value="" id="toDate" />
+                    <label for="endDate" >To: </label><input type="text" id="endDate" />
+                    </p>
+                    <p><label for="judge" >Judge:&nbsp;</label><input type="text" value="" />
+                    <label for="counsel" >&nbsp;&nbsp;Counsel:&nbsp;</label><input type="text" value="" />
+                    </p>
+                    <p>Case Type: 
+                    <input type="radio" name="type" value="all" checked /> <label for="all" >All</label>&nbsp;|&nbsp;
+                    <input type="radio" name="type" value="criminal" /><label for="criminal" >Criminal</label>&nbsp;|&nbsp;
+                    <input type="radio" name="type" value="civil" /><label for="civil" >Civil: </label></p>
+            <div><a href="#toggle" id="toggleAdvancedOptions" >Show Advanced Search Options</a></div>
+            </div>
+            <fieldset id="advancedOptions" >
+                <legend>Advanced Options</legend>
+                <label for="prosecutor" >Prosecutor/Plaintiff's Counsel: </label><input type="text" value="" id="prosecutor" />
+                <label for="defense" >Defense Counsel: </label><input type="text" value="" id="defense" />
+                <br>
+                <label for="plaintiff" >Plaintiff: </label><input type="text" value="" id="plaintiff" />
+                <label for="defendant" >Defendant: </label><input type="text" value="" id="defendant" />
+                <br>
+                <label for="setting" >Setting: </label><input type="text" value="" id="setting" />
+                <label for="cause" >Cause: </label><input type="text" value="" id="cause" />
+                <br>
+                <hr/>
+                <label for="anyField" >Any field: </label><input type="text" value="" id="anyField" />
+            </fieldset>
+    		<div id="buttons" ><p>
+    			<input type="submit" value="Display Resuts" />
+                Subscribe:
+                <a href="#ical" ><img alt="Subscribe to iCal feed" src="images/ical.gif" /></a></p>
+            </div>
+        </div>
+        <div>
+            <a id="toggleSearchFields" href="#toggleSearch">Hide Search Fields</a>
+        </div>
+        <div id="tabs">
+            <ul>
+        		<li><a href="dataTable.php">Next 7 Days</a></li>
+        		<li><a href="fullCalendar.php?judge=allen&earliestDate=2011-08-01&lastDate=2016-08-08">Full Calendar</a></li>
+        		<li><a href="#bookmarks">Bookmarks</a></li>
+                <li><a href="#faq">FAQs</a></li>
+                <li><a href="#noCalendar">Code in this page</a></li>
+        		<li><a href="#tabs-4">Clerk's Case Summary</a></li>
+        	</ul>
+        	
+        	<div id="bookmarks">
+                  <p>These are my bookmarks.</p>
+                </iframe>
+            </div>
+        	<div id="faq">
+                  <p>These are my faqs.</p>
+                </iframe>
+            </div>
+            
+            
+            
+            <div id='loading' style='display:none'>loading...</div>
+            <div id='calendar'></div>
+            <p>json-events.php needs to be running in the same directory.</p>
+            
+        	
+            <div id="tabs-4">
+                <iframe src="http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=A%201010684" width="100%" height="800">
+                  <p>Your browser does not support iframes.</p>
+                </iframe>
+            </div>
+
+        </div>
+	</body>
+</html>

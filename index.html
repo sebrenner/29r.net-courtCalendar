@@ -1,186 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-        <meta name="author" content="Scott Brenner" >
-        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-        <link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.css' />
-        <link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.print.css' media='print' />
-
-        <script type='text/javascript' src='jquery/jquery-1.5.2.min.js'></script>
-        <script type='text/javascript' src='jquery/jquery-ui-1.8.11.custom.min.js'></script>
-
-        <script type='text/javascript' src='fullcalendar/fullcalendar.min.js'></script>
-        
-        <link href="main.css" rel="stylesheet" type="text/css" >
-        <title>Hamilton County Court of Common Pleas Schedule</title>
-        <script type='text/javascript'>
-            function getURLParameter(name) {
-                return decodeURI(
-                    (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
-                );
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    
+    <title>DataTables example</title>
+    <style type="text/css" title="currentStyle">
+      @import "/DataTables/media/css/demo_page.css";
+      @import "/DataTables/media/css/demo_table.css";
+    </style>
+    
+    <script type="text/javascript" language="javascript" src="/DataTables/js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="/DataTables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        function getUrlVars()
+            {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for(var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
             }
             
-            $(document).ready(function() {
-                $('#advancedOptions').hide();
-                /* $('#statusLine').hide();*/
-                $('#toggleAdvancedOptions').click(
-                    function () {
-                        $('#advancedOptions').toggle('slow');
-                    }
-                );
-                
-                $('#toggleSearchFields').click(
-                    function () {
-                        $('#searchFields').toggle('slow');
-                    }
-                );
-                
-                $('#tabs').tabs({
-                    ajaxOptions: {
-                        error: function( xhr, status, index, anchor ) {
-                            $( anchor.hash ).html(
-                                "Couldn't load this tab. We'll try to fix this as soon as possible. " +
-                                "If this wouldn't be a demo." );
-                        }
-                    }
-                });
-                
-                var date = new Date();
-                var d = date.getDate();
-                var m = date.getMonth();
-                var y = date.getFullYear();
-                var taken23 = getURLParameter('take');
-                var judge = getURLParameter('judge');
-                var earliestDate = getURLParameter('earliestDate');
-                var lastDate = getURLParameter('lastDate');
-                
-                $('#calendar').fullCalendar({
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
-                    },
-                    defaultView: 'agendaWeek',      
-                    weekends: false,        // will hide Saturdays and Sundays
-                    lazyFetching: true,     // will rely on cache when switching views.
-                    events: {
-                        url: 'fullCalendarJSONData.php?judge=allen&earliestDate=2011-08-01&lastDate=2016-08-08',
-                        cache: true,
-                        type: 'GET',
-                        data: {
-                            judge: judge,
-                            earliestDate: earliestDate,
-                            lastDate: lastDate
-                        },
-                        error: function() {
-                            alert('there was an error while fetching events!');
-                        },
-                    },
-
-                    eventDrop: function(event, delta) {
-                        alert(event.title + ' was moved ' + delta + ' days\n' +
-                        '(should probably update your database)');
-                    },
-
-                    eventMouseover: function(calEvent, domEvent) {
-                        var layer ="<div id='events-layer' class='fc-transparent' style='position:absolute; width:100%; height:100%; top:-1px; text-align:right; z-index:100'></div>";
-                        $(this).append(layer);
-                    },
-
-                    eventMouseout: function(calEvent, domEvent) {
-                        },
-
-                    loading: function(bool) {
-                        if (bool) $('#loading').show();
-                        else $('#loading').hide();
-                    }
-
-                });
-
-
-
-                
-            });
             
-        </script>
-    </head>
-    <body>
-        <div id="searchFields">
-            <div style="text-align:center; position:relative; left:0; top:2px; " id="titleBanner" >
-                <h1>Hamilton County<br>
-                Court of Common Pleas<br>
-                Schedule</h1>
-            </div>
-            <div id="statusLine">This is the status line</div>
-            <div id="basicSearch" >
-                <p>
-                    <label for="startDate" >From: </label><input type="text" value="" id="toDate" />
-                    <label for="endDate" >To: </label><input type="text" id="endDate" />
-                    </p>
-                    <p><label for="judge" >Judge:&nbsp;</label><input type="text" value="" />
-                    <label for="counsel" >&nbsp;&nbsp;Counsel:&nbsp;</label><input type="text" value="" />
-                    </p>
-                    <p>Case Type: 
-                    <input type="radio" name="type" value="all" checked /> <label for="all" >All</label>&nbsp;|&nbsp;
-                    <input type="radio" name="type" value="criminal" /><label for="criminal" >Criminal</label>&nbsp;|&nbsp;
-                    <input type="radio" name="type" value="civil" /><label for="civil" >Civil: </label></p>
-            <div><a href="#toggle" id="toggleAdvancedOptions" >Show Advanced Search Options</a></div>
-            </div>
-            <fieldset id="advancedOptions" >
-                <legend>Advanced Options</legend>
-                <label for="prosecutor" >Prosecutor/Plaintiff's Counsel: </label><input type="text" value="" id="prosecutor" />
-                <label for="defense" >Defense Counsel: </label><input type="text" value="" id="defense" />
-                <br>
-                <label for="plaintiff" >Plaintiff: </label><input type="text" value="" id="plaintiff" />
-                <label for="defendant" >Defendant: </label><input type="text" value="" id="defendant" />
-                <br>
-                <label for="setting" >Setting: </label><input type="text" value="" id="setting" />
-                <label for="cause" >Cause: </label><input type="text" value="" id="cause" />
-                <br>
-                <hr/>
-                <label for="anyField" >Any field: </label><input type="text" value="" id="anyField" />
-            </fieldset>
-    		<div id="buttons" ><p>
-    			<input type="submit" value="Display Resuts" />
-                Subscribe:
-                <a href="#ical" ><img alt="Subscribe to iCal feed" src="images/ical.gif" /></a></p>
-            </div>
-        </div>
-        <div>
-            <a id="toggleSearchFields" href="#toggleSearch">Hide Search Fields</a>
-        </div>
-        <div id="tabs">
-            <ul>
-        		<li><a href="dataTable.php">Next 7 Days</a></li>
-        		<li><a href="fullCalendar.php?judge=allen&earliestDate=2011-08-01&lastDate=2016-08-08">Full Calendar</a></li>
-        		<li><a href="#bookmarks">Bookmarks</a></li>
-                <li><a href="#faq">FAQs</a></li>
-                <li><a href="#noCalendar">Code in this page</a></li>
-        		<li><a href="#tabs-4">Clerk's Case Summary</a></li>
-        	</ul>
-        	
-        	<div id="bookmarks">
-                  <p>These are my bookmarks.</p>
-                </iframe>
-            </div>
-        	<div id="faq">
-                  <p>These are my faqs.</p>
-                </iframe>
-            </div>
+
             
             
+            // Get any paramaters from the url and build a url
+            // inNumber removes the getURlVars results that are keyed
+            // to a numberic index.  WTF.  This is a kludge.
+            function isNumber(n) {
+              return !isNaN(parseFloat(n)) && isFinite(n);
+            }
             
-            <div id='loading' style='display:none'>loading...</div>
-            <div id='calendar'></div>
-            <p>json-events.php needs to be running in the same directory.</p>
-            
-        	
-            <div id="tabs-4">
-                <iframe src="http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=A%201010684" width="100%" height="800">
-                  <p>Your browser does not support iframes.</p>
-                </iframe>
-            </div>
-
-        </div>
-	</body>
+            JSONdata = "/dataTableJSON.php?";
+            myParams = getUrlVars();
+            for(var index in myParams) {
+                if  (isNumber(index)) {continue;}
+                JSONdata = JSONdata + index + "=" + myParams[index] + "&";
+            }
+        
+        //  adds an event to all links with class .popup to open in a popup window
+        $(document).ready(function() {
+            jQuery('a.popup').live('click', function(){
+                newwindow=window.open($(this).attr('href'),'','height=580,width=790');
+                if (window.focus) {newwindow.focus()}
+                return false;
+                
+            $(document).keydown(function(e) {
+                  switch(e.keyCode) { 
+                     // User pressed "right" arrow
+                     case 39:
+                        $('#example').fullCalendar('next');
+                     break;
+                     // User pressed "left" arrow
+                     case 37:
+                        $('#example').fullCalendar('prev');
+                     break;
+                  }
+               })
+                
+          });
+          
+          
+        var oTable = $('#example').dataTable( {
+          "bProcessing": true,
+          "sAjaxSource": JSONdata,
+          "aoColumns": [
+            { "mDataProp": "NAC_date", "bVisible": false },
+            { "mDataProp": "NAC_date_formatted", "iDataSort": 0 },
+            { "mDataProp": "caption" },
+            { "mDataProp": "case_number", "bVisible": false},
+            { "mDataProp": "NAC" },
+            { "mDataProp": "judge" },
+            { "mDataProp": "location","bVisible": false },
+            { "mDataProp": "counsel" },
+            { "mDataProp": "prosecutor", "bVisible": false},
+            { "mDataProp": "defense", "bVisible": false}
+            ]
+        } );
+        
+      } );
+    </script>
+  </head>
+  <body id="dt_example">
+    <div id="dynamic">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+  <thead>
+    <tr>
+      <th width="8%">Date &amp; Time</th>
+      <th width="8%">Date &amp; Time</th>
+      <th width="25%">Caption</th>
+      <th width="8%">Case Number</th>
+      <th width="15%">Action</th>
+      <th width="2%">Judge</th>
+      <th width="2%">Location</th>
+      <th width="18%">Counsel</th>
+      <th width="5%">Plaintiff's Counsel</th>
+      <th width="5%">Defense's Counsel</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Date &amp; Time</th>
+        <th>Date &amp; Time</th>
+        <th>Caption</th>
+      <th>Case Number</th>
+      <th>Action</th>
+      <th>Judge</th>
+      <th>Location</th>
+      <th>Counsel</th>
+      <th>Plaintiff's Counsel</th>
+      <th>Defense's Counsel</th>
+      
+    </tr>
+  </tfoot>
+</table>
+      </div>
+          <a href="javascript:findCounsel(); function findCounsel(){var CounselEntered=window.prompt('Enter the last name of the attorney whose schedule you seek, e.g.,Brenner', 'Brenner');win=window.open('http://29r.net/index.html?start=today&counsel=' + CounselEntered ,'Find Counsel','width=900,height=780,resizable=1,scrollbars=1,status=1,toolbar=1,directories=1,menubar=1,location=1')}">Find Counsel Bookmarlet</a>
+</body>
 </html>

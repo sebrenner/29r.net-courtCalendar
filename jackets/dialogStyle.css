@@ -1,0 +1,51 @@
+
+.web_dialog_overlay
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    opacity: .15;
+    filter: alpha(opacity=15);
+    -moz-opacity: .15;
+    z-index: 101;
+    display: none;
+}
+.web_dialog
+{
+    display: none;
+    position: fixed;
+    width: 780px;
+    height: 600px;
+    margin-left: 40px;
+    margin-top: -140px;
+    background-color: #ffffff;
+    border: 2px solid #336699;
+    padding: 0px;
+    z-index: 102;
+    font-family: Verdana;
+    font-size: 7pt;
+}
+.web_dialog_title
+{
+    border-bottom: solid 2px #336699;
+    background-color: #336699;
+    padding: 4px;
+    color: White;
+    font-weight:bold;
+}
+.web_dialog_title a
+{
+    color: White;
+    text-decoration: none;
+}
+.align_right
+{
+    text-align: right;
+}
