@@ -745,3 +745,11 @@
 [27-Sep-2011 18:45:45] PHP Parse error:  syntax error, unexpected ',' in /home3/todayspo/public_html/29r/calendarHistogram.php on line 120
 [27-Sep-2011 18:46:56] PHP Parse error:  syntax error, unexpected ',' in /home3/todayspo/public_html/29r/calendarHistogram.php on line 120
 [27-Sep-2011 18:55:28] PHP Fatal error:  Call to undefined method PDF::setNumber() in /home3/todayspo/public_html/29r/calendarHistogram.php on line 210
+[27-Sep-2011 19:08:40] PHP Warning:  Missing argument 1 for activityHistogram::__construct(), called in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 233 and defined in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 106
+[27-Sep-2011 19:26:20] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 105
+[27-Sep-2011 19:26:35] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 105
+[27-Sep-2011 19:26:36] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_FUNCTION in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 226
+[27-Sep-2011 19:26:49] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_FUNCTION in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 226
+[27-Sep-2011 19:26:50] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_FUNCTION in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 226
+[27-Sep-2011 19:26:51] PHP Parse error:  syntax error, unexpected T_STRING, expecting T_FUNCTION in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 226
+[27-Sep-2011 19:34:08] PHP Fatal error:  Call to undefined function  getjudgesnames() in /home3/todayspo/public_html/29r/calendarHistogram2.php on line 107
