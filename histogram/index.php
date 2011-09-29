@@ -9,6 +9,7 @@
  *  
  */
 require('../fpdf17/fpdf.php');
+require('../iCalcnv-2.0/iCalcnv/iCal2csv.php');
 
 class PDF extends FPDF
 {
@@ -91,7 +92,7 @@ class PDF extends FPDF
 	        $this->Cell($w[0],$lineHeight,date_format($date, 'D m/d'),'LR' . $border,0,'L',$fill);
 	        $this->Cell($w[1],$lineHeight,$row[1],'L' . $border  ,0,'L',$fill);	            
 	        $this->Cell($w[2],$lineHeight,$row[2],'R' . $border ,0,'R',$fill);
-	        $this->Cell($w[3],$lineHeight,$row[3],'LR' . $border ,0,'C',$fill);
+	        $this->Cell($w[3],$lineHeight,$row[3],'LR' . $border ,0,'L',$fill);
 	        $this->Ln();
 	        $fill = !$fill;
 	    }
@@ -102,8 +103,13 @@ class PDF extends FPDF
 
 class activityHistogram
 {
-	// Contruct object
+    //  Class variables
+    private $holidays;
+    // Contruct object
 	function __construct() {
+	    // Create holidays array
+	    $this->holidays = self::getHolidays( 'http://www.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics' , "holidayIcal.csv");
+        
 	    if (isset($_GET["judge"])){
 	        if ($_GET["judge"] == "all"){
 	            $judgesArray = self::getJudgesNames();
@@ -186,8 +192,9 @@ class activityHistogram
 		// Convert dictionary to array of arrays 
 		$notes = "1234567890";
 		$totalSettings = 0;
+		
 		foreach ($NACData as $key => $value){
-            $results[] = array($key, self::sortString($value),  strlen($value) ,$notes);
+            $results[] = array($key, self::sortString($value), strlen($value), self::getNotes($key));
             $totalSettings += (int)strlen($value);
 		}
         // print_r ($results);
@@ -236,6 +243,13 @@ class activityHistogram
         "WINKLER/ROBERT/C");
     }
 
+    protected function getNotes( $date ){
+        // print_r($this->holidays);
+        return $this->holidays[str_replace ( "-" , "" , $date )];
+        return "Notes";
+	}
+	
+
 	protected function sortString($string){
 		for ($i = 0; $i <= strlen($string); $i++) {
 			$myArray[] = $string[$i];
@@ -247,6 +261,41 @@ class activityHistogram
 		}
 		return $newString;
 	}
+	
+    protected function getHolidays($holidayCalURI, $serverFileName){
+        iCal2csv( '$holidayCalURI' , $conf=FALSE, $save=TRUE, $diskfilename = $serverFileName, $log=FALSE );
+
+        $holidayCalendarArray = self::csv2Array($serverFileName);
+
+        foreach ($holidayCalendarArray as $key => $value) {
+            $dateKey = substr($value[DTSTART],-8);
+            $note =   $value[SUMMARY];
+            $holidayNotes[$dateKey] .= $note;
+        }
+        // print_r($holidayNotes);
+        return $holidayNotes;
+    }
+
+    protected function csv2Array($serverFileName){
+        $row = 1;
+        if (($handle = fopen($serverFileName, "r")) !== FALSE) {
+            while (($line = fgetcsv($handle, 1000)) !== FALSE) {
+                if ($line[0] == "X-WR-CALNAME") $calName = $line[1];
+                if ($line[0] == "TYPE") $header = $line;
+                if ($line[0] == "vevent"){
+                    // Loop through line and create and array with headers as keys
+                    for ($i = 0; $i < count($line); $i++) $event[$header[$i]] = $line[$i];
+                    // Add calName to event
+                    $event["calName"] = $calName;
+                    // Add event to array of events
+                    $eventsArray[] = $event;
+                }
+            }
+            fclose($handle);
+            // print_r($eventsArray);
+            return $eventsArray;
+        }
+    }
 }
 
 $myHistogram = new activityHistogram();
