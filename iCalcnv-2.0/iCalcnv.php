@@ -27,9 +27,11 @@ require_once 'iCalcnv/iCal2csv.php';
 require_once 'iCalcnv/iCal2xls.php';
 require_once 'iCalcnv/csv2iCal.php';
 require_once 'iCalcnv/fileCheck.php';
+
 // if( !class_exists( 'Log', FALSE )) include_once 'Log.php';                   // using PEAR Log class
 if( !class_exists( 'eClog', FALSE )) include_once 'iCalcnv/eClog.class.php'; // or using eClog class
  /* if called from the web */
+
 if( isset( $_REQUEST ) && isset( $_REQUEST['iCalfcn'] ) && isset( $_REQUEST['filename'] )) {
   $iCalcnv_VERSION = 'iCalcnv 2.0';
   $filename  =          $_REQUEST['filename'];
@@ -55,7 +57,8 @@ if( isset( $_REQUEST ) && isset( $_REQUEST['iCalfcn'] ) && isset( $_REQUEST['fil
   $eClog->log( 'input='.var_export( $_REQUEST, TRUE ), 7 );
   switch( $_REQUEST['iCalfcn'] ) {
     case 'iCal2csv':
-      iCal2csv( $filename, $conf, $save, $dfname, $eClog );
+      $myString = iCal2csv( $filename, $conf, $save, $dfname, $eClog );
+      print $myString;
       break;
     case 'iCal2xls':
       iCal2xls( $filename, $conf, $save, $dfname, $eClog );

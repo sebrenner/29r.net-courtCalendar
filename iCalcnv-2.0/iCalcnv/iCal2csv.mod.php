@@ -50,8 +50,7 @@ function iCal2csv( $filename, $conf=FALSE, $save=FALSE, $diskfilename=FALSE, $lo
   if( !function_exists( 'fileCheckRead' ))
     require_once 'fileCheck.php';
   if( !class_exists( 'vcalendar', FALSE ))
-    require_once '/home/todayspo/public_html/29r/iCalcreator.class.php';
-    //    'iCalcreator.class.php';
+    require_once 'iCalcreator.class.php';
   if( $log ) $log->log( "$iCal2csv_VERSION input=$filename, conf=".var_export($conf,TRUE).", save=$save, diskfilename=$diskfilename", 7 );
   $remoteInput = (( 'http://' == strtolower( substr( $filename, 0, 7 ))) || ( 'webcal://' == strtolower( substr( $filename, 0, 9 )))) ? TRUE : FALSE;
   // field DELimiter && field SEParator && NewLine character(-s) etc.
@@ -567,6 +566,7 @@ function iCal2csv( $filename, $conf=FALSE, $save=FALSE, $diskfilename=FALSE, $lo
     $log->log( $msg, 6 );
   }
   /* save or send the file */
+  return $output;
   if( $save ) {
     if( FALSE !== file_put_contents( $diskfilename, $output )) {
       if( $log ) $log->flush();
