@@ -122,7 +122,7 @@ if($result = mysql_query($query))
         $caseNumber = str_replace(" ", "", $row["case_number"]);
         $NAC_URI = "http://www.courtclerk.org/case_summary.asp?sec=history&casenumber={$caseNumber}"; 
         
-        $description = "\nPlaintiffs Counsel:" . $row["prosecutor"] . "\nDefense Counsel:" . $row["defense"] .  "\n" . $row["cause"]  . "\n" . $NAC_URI;
+        $description = "\nPlaintiffs Counsel:" . $row["prosecutor"] . "\nDefense Counsel:" . $row["defense"] .  "\n" . $row["cause"]  . "\n" . $NAC_URI . "\n\nAs of " . $row["freshness"];
 
         // Build stateTimeDate
         $year = substr ( $row["NAC_date"] , 0 , 4);
@@ -145,11 +145,11 @@ if($result = mysql_query($query))
         $e->setProperty( 'location', $row["location"] );             // locate the event
   }
     // Cal Name
-    $calName = ucfirst($judgeReq) . " - " . $caseTypeWord . " - " . $firstDateReq;
+    $calName = ucfirst($judgeReq) . " - " . $caseTypeWord;
     $v->setProperty( "x-wr-calname", $calName );
 
     // required of some calendar software
-    $v->setProperty( "X-WR-CALDESC", "This is the calendar for Hamilton County Common Pleas Court covering " . $firstDateReq . " through " . $lastDateReq . "." );
+    $v->setProperty( "X-WR-CALDESC", "This is the calendar for Hamilton County Common Pleas Court covering " . $firstDateReq . " through " . $lastDateReq . ". It was created at " . date("F j, Y, g:i a") );
   
 }
 else
@@ -164,7 +164,7 @@ switch ($_GET["output"]) {
     case 1:
         $str = $v->createCalendar();    // generate and get output in string, for testing?
         echo $str;
-        echo "<br />\n\n";
+        // echo "<br />\n\n";
         break;
     case 2:
         echo $query;                    // with query

@@ -159,7 +159,7 @@ class activityHistogram
 			FROM nextActions WHERE
 			NAC_date between '{$startDate}' 
 			and '{$endDate }' 
-			AND case_number like '%B %'
+			AND case_number NOT like '%B %'
 			AND judge like '%{$judgeName}%'";
         
         //echo $query;

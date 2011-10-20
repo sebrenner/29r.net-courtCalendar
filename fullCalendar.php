@@ -39,17 +39,8 @@
             lazyFetching: true,     // will rely on cache when switching views.
             
 //          events: "fullCalendarJSONData.php?judge=allen&mystart=2010-08-01&end=2011-12-01",
-//  https://www.google.com/calendar/feeds/en.usa%23holiday%40group.v.calendar.google.com/public/basic
-			events: {
-                url: 'fullCalendarJSONData.php',
-                cache: true,
-                type: 'GET',
-                data: {
-                    judge: judge,
-                    earliestDate: earliestDate,
-                    lastDate: lastDate
-                },
-                error: function() {
+            events: "https://www.google.com/calendar/feeds/en.usa%23holiday%40group.v.calendar.google.com/public/basic"
+            error: function() {
                     alert('there was an error while fetching events!');
                 },
                 // color: 'yellow',   // a non-ajax option
