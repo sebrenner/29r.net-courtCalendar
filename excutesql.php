@@ -56,8 +56,8 @@ if ( file_exists( $dateFile ) && file_exists( $crimFile ) && file_exists( $civFi
         $sqlQuery = 'LOAD DATA LOCAL INFILE "/home3/todayspo/public_html/29r/logs/TS_final_list_crim.csv" INTO 
                     TABLE nextActions 
                     FIELDS TERMINATED BY ","
-                    ENCLOSED BY """
-                    LINES TERMINATED BY "\r\n\"
+                    ENCLOSED BY \'"\'
+                    LINES TERMINATED BY "\r\n"
                     SET judgeId_fk = (SELECT judgeId FROM judges where CMSRName = judge );';        
         $dbh->query( $sqlQuery );
 

@@ -1,0 +1,8 @@
+[25-Oct-2011 18:38:29] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 33 bytes) in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 68
+[25-Oct-2011 18:38:41] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 33 bytes) in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 68
+[25-Oct-2011 18:38:45] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 33 bytes) in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 68
+[25-Oct-2011 18:41:06] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 74
+[25-Oct-2011 18:41:08] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 74
+[25-Oct-2011 18:41:09] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 74
+[25-Oct-2011 18:41:30] PHP Parse error:  syntax error, unexpected ',', expecting ']' in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 72
+[25-Oct-2011 18:41:32] PHP Parse error:  syntax error, unexpected ',', expecting ']' in /home3/todayspo/public_html/29r/demos/fullCalendarJSON.php on line 72

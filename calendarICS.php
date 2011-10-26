@@ -122,7 +122,7 @@ if($result = mysql_query($query))
         $caseNumber = str_replace(" ", "", $row["case_number"]);
         $NAC_URI = "http://www.courtclerk.org/case_summary.asp?sec=history&casenumber={$caseNumber}"; 
         
-        $description = "\nPlaintiffs Counsel:" . $row["prosecutor"] . "\nDefense Counsel:" . $row["defense"] .  "\n" . $row["cause"]  . "\n" . $NAC_URI . "\n\nAs of " . $row["freshness"];
+        $description = "\nPlaintiffs Counsel:" . $row["prosecutor"] . "\nDefense Counsel:" . $row["defense"] .  "\n" . $row["cause"]  . "\n" . $NAC_URI . "\n\n" . $row["caption"] . "\n\nAs of " . $row["freshness"];
 
         // Build stateTimeDate
         $year = substr ( $row["NAC_date"] , 0 , 4);
