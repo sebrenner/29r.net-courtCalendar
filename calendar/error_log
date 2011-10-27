@@ -1,2 +1,23 @@
 [25-Oct-2011 19:26:01] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 83
 [25-Oct-2011 19:26:20] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 83
+[27-Oct-2011 16:52:34] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 30
+[27-Oct-2011 16:52:39] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 30
+[27-Oct-2011 16:54:21] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 31
+[27-Oct-2011 16:55:16] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 32
+[27-Oct-2011 16:55:33] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 35
+[27-Oct-2011 16:56:39] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 35
+[27-Oct-2011 16:56:43] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 35
+[27-Oct-2011 16:56:56] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 35
+[27-Oct-2011 16:56:58] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 35
+[27-Oct-2011 16:57:41] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 35
+[27-Oct-2011 17:00:15] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 22
+[27-Oct-2011 17:01:44] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 34
+[27-Oct-2011 17:02:03] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 34
+[27-Oct-2011 17:02:04] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 34
+[27-Oct-2011 17:03:17] PHP Parse error:  syntax error, unexpected ';' in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 21
+[27-Oct-2011 17:04:15] PHP Parse error:  syntax error, unexpected ';' in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 21
+[27-Oct-2011 17:05:54] PHP Catchable fatal error:  Object of class DateTime could not be converted to string in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 36
+[27-Oct-2011 17:26:27] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 34
+[27-Oct-2011 17:26:48] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 34
+[27-Oct-2011 17:27:19] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 34
+[27-Oct-2011 17:27:25] PHP Fatal error:  Call to a member function format() on a non-object in /home3/todayspo/public_html/29r/calendar/fullCalendarJSON.php on line 34

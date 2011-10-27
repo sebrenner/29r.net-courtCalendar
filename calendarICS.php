@@ -7,6 +7,8 @@
  * This application queries my database of court date and returns an ical.
  */
 require_once 'iCalcreator.class.php';
+// This command will cause the script to serve any output compressed with either gzip or deflate if accepted by the client.
+ob_start('ob_gzhandler');
 
 // initiate new CALENDAR
 $v = new vcalendar( array( 'unique_id' => 'Court Schedule' ));

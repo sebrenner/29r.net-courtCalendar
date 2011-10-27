@@ -36,7 +36,6 @@
 			},
 
             defaultView: 'agendaWeek',      
-            weekends: false,        // will hide Saturdays and Sundays
             lazyFetching: true,     // will rely on cache when switching views.
             
 /*            events: "fullCalendarJSONData.php?judge=allen&mystart=2010-08-01&end=2011-12-01",*/

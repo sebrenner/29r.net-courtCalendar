@@ -16,18 +16,24 @@ ob_start('ob_gzhandler');
 //  Get dates from uri paramater.  If none given, sert firstDate to
 //  5 days ago. Last to 10 days out.
 //  Expects 2011-03-22 format
-if(isset($_GET["start"]))
-    $firstDateReq = date("Y-m-d", strtotime(htmlspecialchars($_GET["start"])));
-else
+if(isset($_GET["start"])){
+    $firstDateReq = date('Y-m-d', $_GET["start"]);
+}
+else{
     $firstDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d"),date("Y")));
+}
 
-if(isset($_GET["last"]))
-    $lastDateReq = date("Y-m-d", strtotime(htmlspecialchars($_GET["last"])));
-else
-    $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d") + 300,date("Y")));
+if(isset($_GET["end"])){
+    $lastDateReq = date('Y-m-d', $_GET["end"]);
+}
+else{
+    $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d") + 400,date("Y")));
+}
 
 // Build the query.
 $query = "SELECT case_number, caption, NAC, NAC_date, judge, location, prosecutor, defense FROM nextActions WHERE judge LIKE '%allen%' AND NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' ";
+
+// echo $query;
 
 //  If counsel is given: try to find counsel's name in either prosecutor or defense.
 if(isset($_GET["counsel"])){
@@ -52,7 +58,6 @@ if(isset($_GET["cnum"])){
 /*** connect to SQLite database ***/
 try 
 {
-    $dbh = new PDO("sqlite:the_nacs.db");
     $dbh = mysql_connect('localhost', 'todayspo_ctDbRdr', '4W(Rn*aLgdXi') or die(mysql_error());
     mysql_select_db("todayspo_courtCal2") or die(mysql_error());
     
