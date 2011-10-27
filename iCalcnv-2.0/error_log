@@ -1,0 +1,4 @@
+[28-Oct-2011 01:27:18] PHP Warning:  file_get_contents(http://29r.net/calendariCS.php?start=-1weeks) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 500 Internal Server Error
+ in /home3/todayspo/public_html/29r/iCalcreator.class.php on line 1565
+[28-Oct-2011 01:27:24] PHP Warning:  file_get_contents(http://29r.net/calendariCS.php?start=-1weeks) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 500 Internal Server Error
+ in /home3/todayspo/public_html/29r/iCalcreator.class.php on line 1565
