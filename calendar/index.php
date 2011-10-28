@@ -32,7 +32,7 @@
                 agendaDay:'Day',
                 basicDay: 'List'
                 },
-            defaultView: 'agendaWeek',
+            defaultView: 'month',
             minTime: 8,
             maxTime: 17,
             slotMinutes: 30,
