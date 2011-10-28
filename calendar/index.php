@@ -38,23 +38,39 @@
             slotMinutes: 30,
             lazyFetching: true,
             
-            eventSources: [ {
-                url: 'fullCalendarJSON.php',
-                data: {
-                    judge: '<?php
-                        // If judge is given append and ... to the query
-                        if(isset($_GET["judge"])){
-                            $judgeReq = htmlspecialchars($_GET["judge"]);
-                            $query = $query . " AND judge like '%{$judgeReq}%'";
-                        }
-                        echo $judgeReq
-                        ?>'  
-                    
+            eventSources: [
+                {
+                    cache: true,
+                    url: 'fullCalendarJSON.php',
+                    data: {
+                        judge: '<?php
+                            if(isset($_GET["judge"])){
+                                echo htmlspecialchars($_GET["judge"]);
+                            }
+                            ?>',
+                        casetype: 0
+                    },
+                    color: 'blue',   // a non-ajax option
+                    textColor: 'white' // a non-ajax option
                 },
-                cache: true,
-                color: 'blue',   // a non-ajax option
-                textColor: 'white' // a non-ajax option
-            }],
+                {
+                    cache: true,
+                    url: 'fullCalendarJSON.php',
+                    data: {
+                        judge: '<?php
+                            if(isset($_GET["judge"])){
+                                echo htmlspecialchars($_GET["judge"]);
+                            }
+                            ?>',
+                        casetype: 1
+                    },
+                    color: 'red',   // a non-ajax option
+                    textColor: 'white' // a non-ajax option
+                }
+            
+            
+            
+            ],
             
             loading: function(bool) {
                 if (bool) $('#loading').show();

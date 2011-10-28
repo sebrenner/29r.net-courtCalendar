@@ -46,12 +46,23 @@ if(isset($_GET["judge"])){
     $judgeReq = htmlspecialchars($_GET["judge"]);
     $query = $query . " AND judge like '%{$judgeReq}%'";
 }
-// If cnum is given pull all date for that case number
-//  Get cnum: return cal only for this case
-if(isset($_GET["cnum"])){
-    $cnum = htmlspecialchars($_GET["cnum"]);
-    $query = "SELECT * FROM nextActions WHERE case_number = '{$cnum}' ";
+
+//  If type is specified  0: non-criminal; 1: criminal; 2 || null: all.
+switch ($_GET["casetype"]) {
+    case 0:     // non-criminal
+        $query = $query . " AND case_number not like '%B %' ";
+        $caseTypeWord = "Civil";
+        break;
+    case 1:     // Criminal
+        $query = $query . " AND case_number like '%B %' ";
+        $caseTypeWord = "Criminal";
+        break;
+    case 2:     // All
+        $caseTypeWord = "All";
+        break;
 }
+
+
 
 // echo $query . "\n\n";
 
