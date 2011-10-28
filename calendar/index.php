@@ -7,72 +7,99 @@
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
 <script type='text/javascript' src='fullcalendar/fullcalendar.min.js'></script>
 <script type='text/javascript'>
+    $(document).ready(function() {
+        
+        $.urlParam = function(name){
+            var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            return results[1] || 0;
+        }
+        
 
-	$(document).ready(function() {
-	
-		$('#calendar').fullCalendar({
-            		header: {
-				left: 'prev,next today,prevYear,nextYear',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay,basicDay'
-			},
-			 buttonText: {
-		   		 prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
-		   		 next:     '&nbsp;&#9658;&nbsp;',  // right triangle
-		  		  prevYear: '&nbsp;Last Year&nbsp;', // <<
-		   		 nextYear: '&nbsp;Next Year&nbsp;', // >>
-		    		today:    'Today',
-		   		 month:    'Month',
-		    		agendaWeek:'Week',
-		    		agendaDay:'Day',
-		    		basicDay:      'List'
-    			},
-		        defaultView: 'agendaWeek',
-			minTime: 8,
-		  	maxTime: 17,
-		  	slotMinutes: 30,
-		        lazyFetching: true,
-            		events: "fullCalendarJSON.php",
-			loading: function(bool) {
-				if (bool) $('#loading').show();
-				else $('#loading').hide();
-			}
-			
-		});
-		
-		jQuery('a.fc-event').live('click', function(){
-                	newwindow=window.open($(this).attr('href'),'','height=580,width=790');
-                	if (window.focus) {newwindow.focus()}
-                		return false;
-		});
-	});
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today,prevYear,nextYear',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,basicDay'
+            },
+            buttonText: {
+                prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
+                next:     '&nbsp;&#9658;&nbsp;',  // right triangle
+                prevYear: '&nbsp;Last Year&nbsp;', // <<
+                nextYear: '&nbsp;Next Year&nbsp;', // >>
+                today:    'Today',
+                month:    'Month',
+                agendaWeek:'Week',
+                agendaDay:'Day',
+                basicDay: 'List'
+                },
+            defaultView: 'agendaWeek',
+            minTime: 8,
+            maxTime: 17,
+            slotMinutes: 30,
+            lazyFetching: true,
+            
+            eventSources: [ {
+                url: 'fullCalendarJSON.php',
+                data: {
+                    judge: '<?php
+                        // If judge is given append and ... to the query
+                        if(isset($_GET["judge"])){
+                            $judgeReq = htmlspecialchars($_GET["judge"]);
+                            $query = $query . " AND judge like '%{$judgeReq}%'";
+                        }
+                        echo $judgeReq
+                        ?>'  
+                    
+                },
+                cache: true,
+                color: 'blue',   // a non-ajax option
+                textColor: 'white' // a non-ajax option
+            }],
+            
+            loading: function(bool) {
+                if (bool) $('#loading').show();
+                else $('#loading').hide();
+            }
+            
+        });
+        
+        jQuery('a.fc-event').live('click', function(){
+                    newwindow=window.open($(this).attr('href'),'','height=580,width=790');
+                    if (window.focus) {newwindow.focus()}
+                        return false;
+        });
+    });
 
 </script>
 <style type='text/css'>
 
-	body {
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		}
-		
-	#loading {
-		position: absolute;
-		top: 5px;
-		right: 5px;
-		}
+    body {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 14px;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        }
+        
+    #loading {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        }
 
-	#calendar {
-		width: 900px;
-		margin: 0 auto;
-		}
+    #calendar {
+        width: 900px;
+        margin: 0 auto;
+        }
 
 </style>
 </head>
 <body>
 <div id='loading' style='display:none'>loading...</div>
-<div id='calendar'><p>json-events.php needs to be running in the same directory.</p></div>
+<div id='calendar'><p>json-events.php needs to be running in the same directory.</p><p>
+
+
+
+    </p></div>
 
 </body>
 </html>

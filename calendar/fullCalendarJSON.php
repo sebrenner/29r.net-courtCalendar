@@ -31,7 +31,7 @@ else{
 }
 
 // Build the query.
-$query = "SELECT case_number, caption, NAC, NAC_date, judge, location, prosecutor, defense FROM nextActions WHERE judge LIKE '%allen%' AND NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' ";
+$query = "SELECT case_number, caption, NAC, NAC_date, judge, location, prosecutor, defense FROM nextActions WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' ";
 
 // echo $query;
 
