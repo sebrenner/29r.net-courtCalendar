@@ -32,11 +32,22 @@
               return !isNaN(parseFloat(n)) && isFinite(n);
             }
             
-            JSONdata = "/dataTableJSON.php?";
+            JSONdata = "../dataTableJSON.php?";
             myParams = getUrlVars();
             for(var index in myParams) {
                 if  (isNumber(index)) {continue;}
                 JSONdata = JSONdata + index + "=" + myParams[index] + "&";
+                if ( index == "judge" )    { $judge = decodeURIComponent( myParams[index] ); 
+                	//document.write ( $judge );
+                	}
+                if ( index == "start" )    { $start = decodeURIComponent ( myParams[index] ); 
+               		//document.write ( $start);
+               		}
+                if ( index == "last" )	   { $last =  decodeURIComponent( myParams[index] ); 
+                	//document.write ( $last );
+                	}
+                if ( index == "contact" )  { $contact = decodeURIComponent( myParams[index] ); }
+                if ( index == "casetype" ) { $casetype = decodeURIComponent( myParams[index] ); }
             }
         
         //  adds an event to all links with class .popup to open in a popup window
@@ -44,23 +55,14 @@
             jQuery('a.popup').live('click', function(){
                 newwindow=window.open($(this).attr('href'),'','height=580,width=790');
                 if (window.focus) {newwindow.focus()}
-                return false;
-                
-            $(document).keydown(function(e) {
-                  switch(e.keyCode) { 
-                     // User pressed "right" arrow
-                     case 39:
-                        $('#example').fullCalendar('next');
-                     break;
-                     // User pressed "left" arrow
-                     case 37:
-                        $('#example').fullCalendar('prev');
-                     break;
-                  }
-               })
-                
+                return false;        
           });
           
+       	$("#judge").val( decodeURIComponent( $judge ) );     
+	$("#start").val( decodeURIComponent( $start ) );
+     	$("#last").val($last);
+ 	$("#casetype").val($casetype);
+	$("#contact").val($contact);   
           
         var oTable = $('#example').dataTable( {
           "bProcessing": true,
@@ -84,8 +86,13 @@
   </head>
   <body id="dt_example">
     <div id="dynamic">
-   <form name="input" action="testing.php" method="get">
-
+   <form name="input" action="jackettagsPicker.php" method="get">
+   <input type="hidden" id="judge" name="judge" value="23" />
+   <input type="hidden" id="start" name="start" value="23" />
+   <input type="hidden" id="last" name="last" value="23" />
+   <input type="hidden" id="contact" name="contact" value="23" />
+   <input type="hidden" id="casetype" name="casetype" value="23" />
+   
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
   <thead>
     <tr>
@@ -125,6 +132,6 @@
 
 </form>
       </div>
-          <a href="javascript:findCounsel(); function findCounsel(){var CounselEntered=window.prompt('Enter the last name of the attorney whose schedule you seek, e.g.,Brenner', 'Brenner');win=window.open('http://29r.net/index.html?start=today&counsel=' + CounselEntered ,'Find Counsel','width=900,height=780,resizable=1,scrollbars=1,status=1,toolbar=1,directories=1,menubar=1,location=1')}">Find Counsel Bookmarlet</a>
+          
 </body>
 </html>

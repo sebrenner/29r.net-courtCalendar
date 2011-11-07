@@ -1,0 +1,1 @@
+[02-Nov-2011 08:03:16] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 79 bytes) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 81

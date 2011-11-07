@@ -37,6 +37,7 @@
             maxTime: 17,
             slotMinutes: 30,
             lazyFetching: true,
+            weekends: false,
             
             eventSources: [
                 {

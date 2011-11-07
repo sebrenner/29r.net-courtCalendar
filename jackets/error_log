@@ -1,0 +1,40 @@
+[07-Nov-2011 13:30:39] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct() [<a href='datetime.--construct'>datetime.--construct</a>]: Failed to parse time string (23) at position 0 (2): Unexpected character' in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php:23
+Stack trace:
+#0 /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php(23): DateTime->__construct('23')
+#1 {main}
+  thrown in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 23
+[07-Nov-2011 13:54:37] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct() [<a href='datetime.--construct'>datetime.--construct</a>]: Failed to parse time string (23) at position 0 (2): Unexpected character' in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php:23
+Stack trace:
+#0 /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php(23): DateTime->__construct('23')
+#1 {main}
+  thrown in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 23
+[07-Nov-2011 13:56:34] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct() [<a href='datetime.--construct'>datetime.--construct</a>]: Failed to parse time string (23) at position 0 (2): Unexpected character' in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php:23
+Stack trace:
+#0 /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php(23): DateTime->__construct('23')
+#1 {main}
+  thrown in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 23
+[07-Nov-2011 14:14:15] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct() [<a href='datetime.--construct'>datetime.--construct</a>]: Failed to parse time string (23) at position 0 (2): Unexpected character' in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php:23
+Stack trace:
+#0 /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php(23): DateTime->__construct('23')
+#1 {main}
+  thrown in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 23
+[07-Nov-2011 14:15:06] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct() [<a href='datetime.--construct'>datetime.--construct</a>]: Failed to parse time string (23) at position 0 (2): Unexpected character' in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php:23
+Stack trace:
+#0 /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php(23): DateTime->__construct('23')
+#1 {main}
+  thrown in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 23
+[07-Nov-2011 14:18:02] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct() [<a href='datetime.--construct'>datetime.--construct</a>]: Failed to parse time string (11%2F18%2F2011) at position 0 (1): Unexpected character' in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php:23
+Stack trace:
+#0 /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php(23): DateTime->__construct('11%2F18%2F2011')
+#1 {main}
+  thrown in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 23
+[07-Nov-2011 14:18:27] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct() [<a href='datetime.--construct'>datetime.--construct</a>]: Failed to parse time string (11%2F18%2F2011) at position 0 (1): Unexpected character' in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php:23
+Stack trace:
+#0 /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php(23): DateTime->__construct('11%2F18%2F2011')
+#1 {main}
+  thrown in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 23
+[07-Nov-2011 14:23:48] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 20
+[07-Nov-2011 14:23:51] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 20
+[07-Nov-2011 14:23:53] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 20
+[07-Nov-2011 14:41:33] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 20
+[07-Nov-2011 14:41:35] PHP Parse error:  syntax error, unexpected T_ELSE in /home3/todayspo/public_html/29r/jackets/jackettagsPicker.php on line 20

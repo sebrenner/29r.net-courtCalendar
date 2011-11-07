@@ -70,17 +70,19 @@ if($result = mysql_query($query))
   while($row = mysql_fetch_array( $result, MYSQL_ASSOC ))
   {
       // add the url as the list item in array
+    $checkbox =  '<input type="checkbox" name="' . "case_number" . '" value="' . $row["case_number"] . '" />'; 
+  
     $row["case_number"] =  "<a class ='popup' href = 'http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=" . str_replace (" ", "", $row["case_number"]) . "' target='_blank'>" . $row["case_number"] . "</a>"; 
     //echo $row["case_number"];
     $row["judge"] = $row["judge"] . "<br />" . $row["location"];
     
-    $date= new DateTime($row["NAC_date"]);
-    $row["NAC_date_formatted"]= $date->format('D m/d/y  g:iA');
+    $date = new DateTime($row["NAC_date"]);
+    $row["NAC_date_formatted"]=  $checkbox . $date->format('D m/d/y  g:iA');
     
-    $row["caption"] =  $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
+    $row["caption"] = $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
     $row["counsel"] = "&pi;: " . $row["prosecutor"] . "<br />&Delta;: " . $row["defense"];
       
-      $events[] = $row;
+    $events[] = $row;
       //print json_encode($rows);
   }
   print "{\"aaData\":" . json_encode($events) . "}";
