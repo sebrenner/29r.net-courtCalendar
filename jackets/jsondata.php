@@ -25,7 +25,7 @@ else
     $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d") + 8,date("Y")));
 
 // Build the query.
-$query = "SELECT case_number, caption, NAC, NAC_date, judge, location, prosecutor, defense FROM nextActions WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' ";
+$query = "SELECT case_number, caption, NAC, NAC_date, judge, location, prosecutor, defense, NA_id FROM nextActions WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' ";
 
 //  If counsel is given: try to find counsel's name in either prosecutor or defense.
 if(isset($_GET["counsel"])){
@@ -70,17 +70,13 @@ if($result = mysql_query($query))
   while($row = mysql_fetch_array( $result, MYSQL_ASSOC ))
   {
       // add the url as the list item in array
-    //$checkbox =  '<input type="checkbox" name="' . "case_number" . '" value="' . $row["case_number"] . '" />'; 
+    $row["check_box"] =  '<input type="checkbox" class="case" name="r"' . ' value="' . $row["NA_id"] . '" />'; 
    
     $row["case_number"] =  "<a class ='popup' href = 'http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=" . str_replace (" ", "", $row["case_number"]) . "' target='_blank'>" . $row["case_number"] . "</a>"; 
     
-    $row["judge"] = $row["judge"] . "<br />" . $row["location"];
-    
     $date = new DateTime($row["NAC_date"]);
-    // $row["NAC_date_formatted"]=  $checkbox . $date->format('D m/d/y  g:iA');
-    $row["NAC_date_formatted"]=  $date->format('D m/d/y  g:iA');
-    
-    $row["caption"] = $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
+    $row["NAC_date_formatted"]=  $date->format('D m/d/y  g:iA'); 
+    $row["caption"] = $row["case_number"] . " " . $row["caption"] . "</a>"; 
     $row["counsel"] = "&pi;: " . $row["prosecutor"] . "<br />&Delta;: " . $row["defense"];
       
     $events[] = $row;

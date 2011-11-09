@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     
-    <title>DataTables example</title>
+    <title>Case Jacket Tag Picker</title>
     <style type="text/css" title="currentStyle">
       @import "/DataTables/media/css/demo_page.css";
       @import "/DataTables/media/css/demo_table.css";
@@ -32,20 +32,32 @@
         }
             
 	JSONdata = "/dataTableJSON.php?";
+	JSONdata = "/jackets/jsondata.php?";
 	myParams = getUrlVars();
 	for(var index in myParams) {
 		if  (isNumber(index)) {continue;}
 		JSONdata = JSONdata + index + "=" + myParams[index] + "&";
+		
+		if ( index == "judge" )    { judge = decodeURIComponent( myParams[index] ); 
+			//document.write ( $judge );
+			}
+		if ( index == "start" )    { start = decodeURIComponent ( myParams[index] ); 
+			//document.write ( $start);
+			}
+		if ( index == "last" )	   { last =  decodeURIComponent( myParams[index] ); 
+			//document.write ( $last );
+			}
+		if ( index == "contact" )  { contact = decodeURIComponent( myParams[index] ); }
+		if ( index == "casetype" ) { casetype = decodeURIComponent( myParams[index] ); }
 	}
         
         //  adds an event to all links with class .popup to open in a popup window
         $(document).ready(function() {
             jQuery('a.popup').live('click', function(){
                 newwindow=window.open($(this).attr('href'),'','height=580,width=790');
-                if (window.focus) {newwindow.focus()}
+                if ( window.focus ) { newwindow.focus() }
                 return false;
-                
-            $(document).keydown(function(e) {
+                $(document).keydown(function(e) {
                   switch(e.keyCode) { 
                      // User pressed "right" arrow
                      case 39:
@@ -63,39 +75,60 @@
           
         var oTable = $('#example').dataTable( {
           "bProcessing": true,
+          "bAutoWidth": false,
+          "bPaginate": false,
+          "aaSorting": [[ 3, "asc" ]],
           "sAjaxSource": JSONdata,
           "aoColumns": [
-            { "mDataProp": "NAC_date", "bVisible": false },
-            { "mDataProp": "NAC_date_formatted", "iDataSort": 0 },
-            { "mDataProp": "caption" },
-            { "mDataProp": "case_number", "bVisible": false},
-            { "mDataProp": "NAC" },
-            { "mDataProp": "judge" },
-            { "mDataProp": "location","bVisible": false },
-            { "mDataProp": "counsel" },
-            { "mDataProp": "prosecutor", "bVisible": false},
-            { "mDataProp": "defense", "bVisible": false}
+		{ "mDataProp": "check_box" },
+		{ "mDataProp": "NAC_date_formatted" },
+		{ "mDataProp": "caption" },
+		{ "mDataProp": "NAC"}
             ]
         } );
         
+        $("#judge").val( decodeURIComponent( judge ) );     
+		$("#start").val( decodeURIComponent( start ) );
+		$("#last").val( last );
+		$("#casetype").val( casetype );
+		$("#contact").val( decodeURIComponent( contact ) );        
       } );
+      
+      $(function(){
+
+          // add multiple select / deselect functionality
+          $("#selectall").click(function () {
+                $('.case').attr('checked', this.checked);
+          });
+
+          // if all checkbox are selected, check the selectall checkbox
+          // and viceversa
+          $(".case").click(function(){
+
+              if($(".case").length == $(".case:checked").length) {
+                  $("#selectall").attr("checked", "checked");
+              } else {
+                  $("#selectall").removeAttr("checked");
+              }
+
+          });
+      });
+      
     </script>
   </head>
   <body id="dt_example">
     <div id="dynamic">
+      <form name="input" action="pdf.php" method="get">
+          <input type="hidden" id="contact" name="contact" value="23" />     
+       <input type="checkbox" id="selectall"/>Select / Deselect All 
+    
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
   <thead>
     <tr>
-      <th width="8%">Date &amp; Time</th>
-      <th width="8%">Date &amp; Time</th>
-      <th width="25%">Caption</th>
-      <th width="8%">Case Number</th>
-      <th width="15%">Action</th>
-      <th width="2%">Judge</th>
-      <th width="2%">Location</th>
-      <th width="18%">Counsel</th>
-      <th width="5%">Plaintiff's Counsel</th>
-      <th width="5%">Defense's Counsel</th>
+      <th width="5%">Select</th>
+      <th width="25%">Date &amp; Time</th>
+      <th width="50%">Caption</th>
+      <th width="20%">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -103,21 +136,17 @@
   </tbody>
   <tfoot>
     <tr>
-      <th>Date &amp; Time</th>
+      <th>Select</th>      
         <th>Date &amp; Time</th>
         <th>Caption</th>
-      <th>Case Number</th>
       <th>Action</th>
-      <th>Judge</th>
-      <th>Location</th>
-      <th>Counsel</th>
-      <th>Plaintiff's Counsel</th>
-      <th>Defense's Counsel</th>
-      
+    
     </tr>
   </tfoot>
 </table>
+<input type="submit" value="Create Tags" />
 
+</form>
       </div>
 </body>
 </html>
