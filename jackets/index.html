@@ -7,27 +7,38 @@
   <script src="../date.js"></script> 
   
 <script>
-    $(document).ready(function(){
-        // Set default values from local storage and calculate dates
-        $('#contact').val($.Storage.get("contactLine"));
-        $('#judge').val($.Storage.get("judge"));
-        var nextMonday = Date.today().next().monday();
-        $('#start').val(nextMonday.toString("M/d/yyyy"));
-        var nextFriday = nextMonday.add(4).days();
-        $('#last').val(nextFriday.toString("M/d/yyyy"));    
+    $(document).ready(
+        function(){
+            // Set default values from local storage and calculate dates
+            $('#contact').val($.Storage.get("contactLine"));
+            $('#judge').val($.Storage.get("judge"));
+            var nextMonday = Date.today().next().monday();
+            $('#start').val(nextMonday.toString("M/d/yyyy"));
+            var nextFriday = nextMonday.add(4).days();
+            $('#last').val(nextFriday.toString("M/d/yyyy"));    
         
-        // Store local data
-        $('#contact').blur(function(){
-            //alert('Handler for .blur() called.');
-            $.Storage.set({"contactLine": $('#contact').val() });
-        });
-        $('#judge').blur(function(){
-            //alert('Handler for .blur() called.');
-            $.Storage.set({"judge": $('#judge').val() });
-        });
-        
-    });
-
+            // Store local data
+            $('#contact').blur(function(){
+                //alert('Handler for .blur() called.');
+                $.Storage.set({"contactLine": $('#contact').val() });
+            });
+            $('#judge').blur(function(){
+                //alert('Handler for .blur() called.');
+                $.Storage.set({"judge": $('#judge').val() });
+            });
+            $( "#picker" ).change(function(){
+                    //alert('Handler for picker called.');
+                    $("#jacketsForm").attr("action", "table.php");
+                    
+            });
+            $( "#pdf" ).change(function(){
+                    //alert('Handler for PDF called.');
+                    $("#jacketsForm").attr("action", "jacketTags.php");
+                    
+            });            
+            
+        }
+    );
 
     // Create date pickers with no weekends
     $(function() {
@@ -36,11 +47,11 @@
 
     $(function() {
         $( "#last" ).datepicker({ beforeShowDay: $.datepicker.noWeekends });
-    });
+    });    
     
-    //
-    $.Storage.set("name", "value") -
-    $.Storage.get("name")
+    // 
+    $.Storage.set("name", "value");
+    $.Storage.get("name");
     
 </script>
 
@@ -56,18 +67,28 @@ td.ui-datepicker-week-end {
 
 </head>
 <body>
-<basefont size="15">
 
 <h2>Create Jacket Tags:</h2>
 <p>
-<form action="jacketTags.php" method="get" id="jacketsForm">
+<form name="jacketsForm" action="jacketTags.php" method="get" id="jacketsForm">
     Judge (last name)
     <input type="text" name="judge" id="judge"><br />
     From: <input type="text" name="start" id="start"> to: 
     <input type="text" name="last" id="last"><br />
     Contact line:
     <input type="text" id="contact" name="contact"><br />
-    Case type: <input type="radio" name="casetype" value="0"> Civil <input type="radio" name="casetype" value="1" checked> Criminal <input type="radio" name="casetype" value="2"> Both   
+    <fieldset>
+        <legend>Case type:</legend>
+<input type="radio" name="casetype" value="0"> Civil <input type="radio" name="casetype" value="1" checked> Criminal <input type="radio" name="casetype" value="2"> Both</fieldset>   <fieldset>
+        <legend>Ticket Printing Format</legend>
+        
+    <label> 
+        <input type="radio" name="group1" id="picker" value="table.php"> 
+      Allow me to select individual cases/ticket to be printed</label> 
+        <br> 
+        <label> 
+        <input type="radio" name="group1" id="pdf" value="jacketTags.php" checked> 
+      Print tags for all cases in date range for the specified judge.</label></fieldset>
     
     <input type="submit" value="Create">
     <input type="reset" value="Clear">

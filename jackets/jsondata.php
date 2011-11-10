@@ -25,27 +25,28 @@ else
     $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d") + 8,date("Y")));
 
 // Build the query.
-$query = "SELECT case_number, caption, NAC, NAC_date, judge, location, prosecutor, defense, NA_id FROM nextActions WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' ";
+$query = "SELECT case_number, caption, NAC, NAC_date, NA_id 
+	FROM nextActions 
+	WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' 
+	and judge like '%" . $_GET["judge"] . "%'";
 
-//  If counsel is given: try to find counsel's name in either prosecutor or defense.
-if(isset($_GET["counsel"])){
-    $counsel = htmlspecialchars($_GET["counsel"]);
-    $query = $query . " AND (prosecutor like '%$counsel%' or defense like '%$counsel%')";
+
+// Append case type
+if(isset($_GET["casetype"])){
+	// Civl = 0; crim = 1; both = 2;
+	switch ( $_GET["casetype"] ) {
+	    case 0:
+	        $query = $query . " AND case_number  NOT like '%B %'";
+	        break;
+	    case 1:
+	        $query = $query . " AND case_number like '%B %'";
+	        break;
+	    case 2:
+	        break;
+	}
 }
 
-// If judge is given append and ... to the query
-if(isset($_GET["judge"])){
-    $judgeReq = htmlspecialchars($_GET["judge"]);
-    $query = $query . " AND judge like '%{$judgeReq}%'";
-}
-// If cnum is given pull all date for that case number
-//  Get cnum: return cal only for this case
-if(isset($_GET["cnum"])){
-    $cnum = htmlspecialchars($_GET["cnum"]);
-    $query = "SELECT * FROM nextActions WHERE case_number = '{$cnum}' ";
-}
-
-// echo $query . "\n\n";
+//echo $query . "\n\n";
 
 /*** connect to SQLite database ***/
 try 
