@@ -76,13 +76,17 @@ if(isset($_GET["cnum"])){
     $query = "SELECT * FROM nextActions WHERE case_number = '{$cnum}' ";
 }
 
-/*** connect to MySql database ***/
+/*** connect to MySql database ***//*** connect to MySQL database ***/
+
+// Get the sql password from an external file.
+require_once("_ignore_git/reader_pswd.php");
+
 try 
 {
-    $dbh = mysql_connect('localhost', 'todayspo_ctDbRdr', '4W(Rn*aLgdXi') or die(mysql_error());
-    mysql_select_db("todayspo_courtCal2") or die(mysql_error());
-    
+    $dbh = mysql_connect('localhost', $dbuser, $dbpassword) or die(mysql_error());
+    mysql_select_db("todayspo_courtCal2") or die(mysql_error());    
 }
+
 catch(PDOException $e)
 {
     echo $e->getMessage();

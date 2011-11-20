@@ -2,3 +2,4 @@
 [18-Nov-2011 07:43:31] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 79 bytes) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 84
 [18-Nov-2011 07:44:11] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 79 bytes) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 84
 [18-Nov-2011 07:44:32] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 79 bytes) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 84
+[20-Nov-2011 13:56:57] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'todayspo_ctDbRdr'@'localhost' (using password: YES) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 53

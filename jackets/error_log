@@ -29,3 +29,21 @@
 [08-Nov-2011 20:49:12] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/jackets/pdf.php on line 110
 [08-Nov-2011 20:49:14] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/jackets/pdf.php on line 110
 [08-Nov-2011 20:49:18] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home3/todayspo/public_html/29r/jackets/pdf.php on line 110
+[20-Nov-2011 14:08:37] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'todayspo_ctDbRdr'@'localhost' (using password: YES) in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 89
+[20-Nov-2011 14:10:17] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'todayspo_ctDbRdr'@'localhost' (using password: YES) in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 89
+[20-Nov-2011 14:10:20] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'todayspo_ctDbRdr'@'localhost' (using password: YES) in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 89
+[20-Nov-2011 14:10:22] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'todayspo_ctDbRdr'@'localhost' (using password: YES) in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 89
+[20-Nov-2011 14:10:24] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'todayspo_ctDbRdr'@'localhost' (using password: YES) in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 89
+[20-Nov-2011 14:33:36] PHP Parse error:  syntax error, unexpected T_RETURN in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 89
+[20-Nov-2011 14:33:41] PHP Parse error:  syntax error, unexpected T_RETURN in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 89
+[20-Nov-2011 14:41:58] PHP Parse error:  syntax error, unexpected ',' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 159
+[20-Nov-2011 15:07:46] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:07:48] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:08:11] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:08:12] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:08:16] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:11:56] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:11:59] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:12:06] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:12:15] PHP Parse error:  syntax error, unexpected '{' in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 93
+[20-Nov-2011 15:13:07] PHP Fatal error:  Cannot redeclare getdate() in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 96
