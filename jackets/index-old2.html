@@ -7,52 +7,8 @@
   <script src="../date.js"></script> 
   
 <script>
-    var jsonList = {"Table" : [{ "judgeid" : "allen", "judgename" : "ALLEN/NADINE"},
-    { "judgeid" : "BACHMAN", "judgename" : "BACHMAN/MICHAEL/L"},
-    { "judgeid" : "BURKE", "judgename" : "BURKE/KIM/WILSON"},
-    { "judgeid" : "CARTOLANO", "judgename" : "CARTOLANO/FRED/J"},
-    { "judgeid" : "COMMON PLEAS ARRAIGNMENT", "judgename" : "COMMON PLEAS ARRAIGNMENT"},
-    { "judgeid" : "COOPER", "judgename" : "COOPER/ETHNA/M"},
-    { "judgeid" : "CROUSE", "judgename" : "CROUSE/JOHN"},
-    { "judgeid" : "CRUSH", "judgename" : "CRUSH/THOMAS/H"},
-    { "judgeid" : "CURRAN", "judgename" : "CURRAN/THOMAS/P"},
-    { "judgeid" : "DEWINE", "judgename" : "DEWINE/PAT"},
-    { "judgeid" : "FOLEY", "judgename" : "FOLEY/PATRICK/J"},
-    { "judgeid" : "GORMAN", "judgename" : "GORMAN/ROBERT"},
-    { "judgeid" : "GUCKENBERGER", "judgename" : "GUCKENBERGER/GUY/C"},
-    { "judgeid" : "HELMICK", "judgename" : "HELMICK/DENNIS/S"},
-    { "judgeid" : "HOGAN", "judgename" : "HOGAN/TIMOTHY"},
-    { "judgeid" : "KOTHMAN", "judgename" : "KOTHMAN/DAVID/M"},
-    { "judgeid" : "KUBICKI", "judgename" : "KUBICKI JR/CHARLES/J"},
-    { "judgeid" : "LUEBBERS", "judgename" : "LUEBBERS/JODY/M"},
-    { "judgeid" : "LUSE", "judgename" : "LUSE/JAMES/W"},
-    { "judgeid" : "MARSH", "judgename" : "MARSH/MELBA/D"},
-    { "judgeid" : "MARTIN", "judgename" : "MARTIN/STEVEN/E"},
-    { "judgeid" : "METZ", "judgename" : "METZ/JEROME/J"},
-    { "judgeid" : "MYERS", "judgename" : "MYERS/BETH/A"},
-    { "judgeid" : "NADEL", "judgename" : "NADEL/NORBERT/A"},
-    { "judgeid" : "NIEHAUS", "judgename" : "NIEHAUS/RICHARD/A"},
-    { "judgeid" : "NURRE", "judgename" : "NURRE/THOMAS/C"},
-    { "judgeid" : "O'CONNOR", "judgename" : "O'CONNOR/JOHN/P"},
-    { "judgeid" : "RENTZ", "judgename" : "RENTZ/MARGARET"},
-    { "judgeid" : "ROBERTS", "judgename" : "ROBERTS/NORTON/B"},
-    { "judgeid" : "RUEHLMAN", "judgename" : "RUEHLMAN/ROBERT/P"},
-    { "judgeid" : "SAGE", "judgename" : "SAGE/MICHAEL/JOSEPH"},
-    { "judgeid" : "SUNDERLAND", "judgename" : "SUNDERLAND/DAVID/G"},
-    { "judgeid" : "VISITING", "judgename" : "VISITING/JUDGE"},
-    { "judgeid" : "WEST", "judgename" : "WEST/JOHN/ANDREW"},
-    { "judgeid" : "WINKLER/RALPH", "judgename" : "WINKLER/RALPH"},
-    { "judgeid" : "WINKLER/RALPH/E", "judgename" : "WINKLER/RALPH/E"},
-    { "judgeid" : "WINKLER/ROBERT", "judgename" : "WINKLER/ROBERT/C"}]}
-
     $(document).ready(
         function(){
-            var listItems= "";
-            for (var i = 0; i < jsonList.Table.length; i++){
-                listItems+= "<option value='" + jsonList.Table[i].judgeid + "'>" + jsonList.Table[i].judgename + "</option>";
-            }
-            $("#judge").html(listItems);
-            
             // Set default values from local storage and calculate dates
             $('#contact').val($.Storage.get("contactLine"));
             $('#judge').val($.Storage.get("judge"));
@@ -70,7 +26,6 @@
                 //alert('Handler for .blur() called.');
                 $.Storage.set({"judge": $('#judge').val() });
             });
-            
             $( "#picker" ).change(function(){
                     //alert('Handler for picker called.');
                     $("#jacketsForm").attr("action", "table.php");
@@ -116,8 +71,8 @@ td.ui-datepicker-week-end {
 <h2>Create Jacket Tags:</h2>
 <p>
 <form name="jacketsForm" action="jacketTags.php" method="get" id="jacketsForm">
-    Judge:
-    <select id="judge" name="judge"></select><br />
+    Judge (last name)
+    <input type="text" name="judge" id="judge"><br />
     From: <input type="text" name="start" id="start"> to: 
     <input type="text" name="last" id="last"><br />
     Contact line:
@@ -128,14 +83,12 @@ td.ui-datepicker-week-end {
         <legend>Ticket Printing Format</legend>
         
     <label> 
-        <input type="radio" name="pdfOrPicker" id="picker" value="table.php"> 
+        <input type="radio" name="group1" id="picker" value="table.php"> 
       Allow me to select individual cases/ticket to be printed</label> 
         <br> 
         <label> 
-        <input type="radio" name="pdfOrPicker" id="pdf" value="jacketTags.php" checked> 
+        <input type="radio" name="group1" id="pdf" value="jacketTags.php" checked> 
       Print tags for all cases in date range for the specified judge.</label></fieldset>
-    
-      
     
     <input type="submit" value="Create">
     <input type="reset" value="Clear">

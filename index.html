@@ -7,10 +7,19 @@
     <style type="text/css" title="currentStyle">
       @import "/DataTables/media/css/demo_page.css";
       @import "/DataTables/media/css/demo_table.css";
+      @import "/jqueryThemes/css/smoothness/jquery-ui-1.8.16.custom.css";
+            
     </style>
     
     <script type="text/javascript" language="javascript" src="/DataTables/js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    
+    
+    
     <script type="text/javascript" language="javascript" src="/DataTables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="/DataTables/extras/TableTools/media/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" language="javascript" src="/DataTables/extras/TableTools/media/js/TableTools.js"></script>
+    <script type="text/javascript" language="javascript" src="/DataTables/plugins/jquery.dataTables.columnFilter.js"></script>
     <script type="text/javascript" charset="utf-8">
         function getUrlVars(){
                 var vars = [], hash;
@@ -36,14 +45,30 @@
 	for(var index in myParams) {
 		if  (isNumber(index)) {continue;}
 		JSONdata = JSONdata + index + "=" + myParams[index] + "&";
+		
+		if ( index == "judge" )    { judge = decodeURIComponent( myParams[index] );
+			//alert("judge");
+			//document.write ();
+			}
+		if ( index == "start" )    { start = decodeURIComponent ( myParams[index] ); 
+			//document.write ( $start);
+			}
+		if ( index == "last" )	   { last =  decodeURIComponent( myParams[index] ); 
+			//document.write ( $last );
+			}
+		if ( index == "contact" )  { contact = decodeURIComponent( myParams[index] ); }
+		if ( index == "casetype" ) { casetype = decodeURIComponent( myParams[index] ); }
 	}
         
         //  adds an event to all links with class .popup to open in a popup window
         $(document).ready(function() {
             jQuery('a.popup').live('click', function(){
-                newwindow=window.open($(this).attr('href'),'','height=580,width=790');
+				newwindow=window.open($(this).attr('href'),'','height=580,width=790');
                 if (window.focus) {newwindow.focus()}
                 return false;
+
+				$('#judge_line').text( 'Schedule for J. ');
+
                 
             $(document).keydown(function(e) {
                   switch(e.keyCode) { 
@@ -60,8 +85,12 @@
                 
           });
           
-          
+        TableTools.DEFAULTS.aButtons = [ "copy", "csv", "xls", "pdf" ];
+
         var oTable = $('#example').dataTable( {
+		"sDom": '<"H"fip>t<"F"iTrp>',
+        
+          "sSwfPath": "/DataTables/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
           "bProcessing": true,
           "sAjaxSource": JSONdata,
           "aoColumns": [
@@ -76,12 +105,28 @@
             { "mDataProp": "prosecutor", "bVisible": false},
             { "mDataProp": "defense", "bVisible": false}
             ]
-        } );
+        } ).columnFilter();
+        
+        var oTableTools = new TableTools( oTable, {
+        	"sSwfPath": "/DataTables/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
+		"buttons": [
+			"copy",
+			"csv",
+			"xls",
+			"pdf",
+			{ "type": "print", "buttonText": "Print me!" }
+		]
+	} );
+	
+	$('#demo').before( oTableTools.dom.container );
         
       } );
     </script>
   </head>
   <body id="dt_example">
+	<h1>Hamilton County Court of Common Pleas</h1>
+	
+	
     <div id="dynamic">
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
   <thead>
