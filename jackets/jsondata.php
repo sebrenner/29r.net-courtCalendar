@@ -27,7 +27,6 @@ else
 // Build the query.
 $query = "SELECT case_number, caption, NAC, NAC_date, NA_id 
 	FROM nextActions
-	ORDER BY NAC_date ASC	 
 	WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' 
 	and judge like '%" . $_GET["judge"] . "%'";
 
@@ -44,7 +43,7 @@ if(isset($_GET["casetype"])){
 	        break;
 	    case 2:
 	        break;
-	}
+	}	
 }
 
 //echo $query . "\n\n";
@@ -56,7 +55,7 @@ require_once("../_ignore_git/dbreader_pswd.php");
 
 try 
 {
-    $dbh = mysql_connect('localhost', $dbuser, $dbpassword) or die(mysql_error());
+    $dbh = mysql_connect( 'localhost', $dbuser, $dbpassword ) or die(mysql_error());
     mysql_select_db("todayspo_courtCal2") or die(mysql_error());    
 }
 catch(PDOException $e)
@@ -80,8 +79,8 @@ if($result = mysql_query($query))
     $row["case_number"] =  "<a class ='popup' href = 'http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=" . str_replace (" ", "", $row["case_number"]) . "' target='_blank'>" . $row["case_number"] . "</a>"; 
     
     $date = new DateTime($row["NAC_date"]);
-    $row["NAC_date_formatted"]=  $date->format('D m/d/y  g:iA'); 
-    $row["caption"] = $row["case_number"] . " " . $row["caption"] . "</a>"; 
+	$row["NAC_date_formatted"]=  $date->format('D m/d/y  g:iA'); 
+	$row["caption"] = $row["case_number"] . " " . $row["caption"] . "</a>"; 
     $row["counsel"] = "&pi;: " . $row["prosecutor"] . "<br />&Delta;: " . $row["defense"];
       
     $events[] = $row;

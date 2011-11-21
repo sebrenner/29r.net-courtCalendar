@@ -166,9 +166,10 @@ class activityHistogram
 		
         
 		/*** connect to MySql database ***/
+		require_once("../_ignore_git/dbreader_pswd.php");
 		try 
 		{
-		    $dbh = mysql_connect('localhost', 'todayspo_ctDbRdr', '4W(Rn*aLgdXi') 
+		    $dbh = mysql_connect('localhost', $dbuser, $dbpassword) 
 		    or die(mysql_error());
 		    mysql_select_db("todayspo_courtCal2") or die(mysql_error());
 		}

@@ -102,11 +102,12 @@ function getCaption( $caption )
 	$caption = str_replace( "State Of Ohio", "Ohio", $caption );
 	$vIndex = strpos( $caption, "Vs" );
 	if ( strlen ( $caption ) > 33 ) {
-		if ( $vIndex !== false ) {
-			// return "The string v. was found in the string";
+		if ( $vIndex > 12 ) {
+			// return first 12 of plaintiff and first 12 of def.
 			return substr( $caption, 0, 12 ) . "... v. " . substr( $caption, $vIndex + 3, 12 );			
 		} else {
-			return "The string v. was not found in the string."; // " '$caption'";
+			// return all of plaintiff and first 12 of def.
+			return substr( $caption, 0, $vIndex ) . "v. " . substr( $caption, $vIndex + 3, 12 );
 		}
 	}
 	return $caption;
