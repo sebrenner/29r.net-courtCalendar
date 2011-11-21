@@ -58,16 +58,53 @@ class PDF extends FPDF {
     	$this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
     }
 }
-try {
-    $dbh = mysql_connect('localhost', 'todayspo_ctDbRdr', '4W(Rn*aLgdXi') or die(mysql_error());
-    mysql_select_db("todayspo_courtCal2") or die(mysql_error());
+
+
+// Function to format the Judge's name and room number
+function getJudge( $judge )
+{
+	$judge = str_replace( "/", ", ", $judge );
+	return "J. " .  mb_convert_case( $judge, MB_CASE_TITLE );
 }
-catch( PDOException $e )    {
+
+// Function to format the NAC date
+function formatNacDate( $nacDate ){
+	$tmpDate = strtotime( $nacDate );
+	return date( "D, Y-n-j @ H:i A" , $tmpDate );
+}
+
+// Function to format the case caption
+function getCaption( $caption )
+{
+	$caption = mb_convert_case( $caption, MB_CASE_TITLE );
+	$caption = str_replace( "State Of Ohio", "Ohio", $caption );
+	$vIndex = strpos( $caption, "Vs" );
+	if ( strlen ( $caption ) > 33 ) {
+		if ( $vIndex !== false ) {
+			// return "The string v. was found in the string";
+			return substr( $caption, 0, 12 ) . "... v. " . substr( $caption, $vIndex + 3, 12 );			
+		} else {
+			return "The string v. was not found in the string."; // " '$caption'";
+		}
+	}
+	return $caption;
+}
+
+
+// Get the sql password from an external file.
+require_once("../_ignore_git/dbreader_pswd.php");
+
+try 
+{
+    $dbh = mysql_connect('localhost', $dbuser, $dbpassword) or die(mysql_error());
+    mysql_select_db("todayspo_courtCal2") or die(mysql_error());    
+}
+catch(PDOException $e)
+{
     echo $e->getMessage();
     echo "<br><br>Database -- NOT -- loaded successfully .. ";
     die( "<br><br>Query Closed !!! $error");
 }
-
 // Query the database and loop through the results.
 //$result = mysql_query($query) or die(mysql_error());
 
@@ -84,12 +121,12 @@ if($result = mysql_query($query))
         // create PDF cells
         $pdf->SetFont('Arial','B',24);
         $pdf->Cell(95,12, $row["case_number"],0,2);
-        $pdf->SetFont('Times','I',13);
-        $pdf->Cell(95, 5, substr($row["caption"],0, 34),0,2);
+        $pdf->SetFont('Times','I',18);
+        $pdf->Cell(95, 5, getCaption( $row["caption"] ), 0,2);
         $pdf->SetFont('Times','',13);
-        $pdf->Cell(95,7, $row["judge"] . " ----- " . $row["location"],0,2);
-        $pdf->Cell(95,7,$row["NAC_date"],0,2);
-        $pdf->Cell(95,7,'  '.$row["NAC"],0,2);
+        $pdf->Cell(95,7, getJudge( $row["judge"] ) . " - Room: " . $row["location"], 0,2);
+        $pdf->Cell(95,7, formatNacDate( $row["NAC_date"] ), 0, 2 );
+        $pdf->Cell(95,7,'  '. mb_convert_case( $row["NAC"], MB_CASE_TITLE ), 0, 2);
         $pdf->Cell(95,7,$contact,0,2);
         $pdf->Cell(95,5,'',0,2);
 
