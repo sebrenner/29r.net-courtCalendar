@@ -11,8 +11,6 @@
 // This command will cause the script to serve any output compressed with either gzip or deflate if accepted by the client.
 ob_start('ob_gzhandler');
 
-
-
 //  Get dates from uri paramater.  If none given, sert firstDate to
 //  5 days ago. Last to 10 days out.
 //  Expects 2011-03-22 format
@@ -66,10 +64,11 @@ switch ($_GET["casetype"]) {
 
 // echo $query . "\n\n";
 
-/*** connect to SQLite database ***/
+/*** connect to MySlq database ***/
+require_once("../_ignore_git/dbreader_pswd.php");
 try 
 {
-    $dbh = mysql_connect('localhost', 'todayspo_ctDbRdr', '4W(Rn*aLgdXi') or die(mysql_error());
+    $dbh = mysql_connect( 'localhost', $dbuser, $dbpassword ) or die(mysql_error());
     mysql_select_db("todayspo_courtCal2") or die(mysql_error());
     
 }
