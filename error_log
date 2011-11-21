@@ -3,3 +3,5 @@
 [18-Nov-2011 07:44:11] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 79 bytes) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 84
 [18-Nov-2011 07:44:32] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 79 bytes) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 84
 [20-Nov-2011 13:56:57] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'todayspo_ctDbRdr'@'localhost' (using password: YES) in /home3/todayspo/public_html/29r/dataTableJSON.php on line 53
+[21-Nov-2011 03:44:24] PHP Warning:  require_once(_ignore_git/reader_pswd.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home3/todayspo/public_html/29r/calendarICS.php on line 82
+[21-Nov-2011 03:44:24] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '_ignore_git/reader_pswd.php' (include_path='.:/usr/lib64/php:/usr/lib/php') in /home3/todayspo/public_html/29r/calendarICS.php on line 82
