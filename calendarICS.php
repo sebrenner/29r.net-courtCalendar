@@ -4,11 +4,15 @@
  * 29r.net/calendar.php
  * scott@scottbrenner.com
  *
- * This application queries my database of court date and returns an ical.
+ * This application queries my database of court dates and returns an ical file.
  */
 require_once 'iCalcreator.class.php';
 // This command will cause the script to serve any output compressed with either gzip or deflate if accepted by the client.
 ob_start('ob_gzhandler');
+
+function getCaption( $case_number, $caption, $NAC ){
+	return $case_number . "<br />" . $caption . "</a>"; 
+}
 
 // initiate new CALENDAR
 $v = new vcalendar( array( 'unique_id' => 'Court Schedule' ));
@@ -18,6 +22,8 @@ $v->setProperty( 'method', 'PUBLISH' );
 
 // required of some calendar software
 $v->setProperty( "X-WR-TIMEZONE", "America/New_York" );
+
+
 
 //  Get dates from uri paramater.  If none given set to first 1 days ago. Last to 5 days out.
 //  Will take almost any date/time string.  See http://php.net/manual/en/function.strtotime.php
@@ -79,7 +85,7 @@ if(isset($_GET["cnum"])){
 /*** connect to MySql database ***//*** connect to MySQL database ***/
 
 // Get the sql password from an external file.
-require_once("_ignore_git/reader_pswd.php");
+require_once("_ignore_git/dbreader_pswd.php");
 
 try 
 {
@@ -115,7 +121,7 @@ if($result = mysql_query($query))
             $NACdate = new DateTime($row["NAC_date"]);
             $row["NAC_date"]= $NACdate->format('Y-m-d H:i');
             
-            $row["caption"] =  $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
+			$row["caption"] =  $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
             $row["counsel"] = "&pi;: " . $row["prosecutor"] . "<br />&Delta;: " . $row["defense"];
             
             $events[] = $row;

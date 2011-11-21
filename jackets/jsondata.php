@@ -26,7 +26,8 @@ else
 
 // Build the query.
 $query = "SELECT case_number, caption, NAC, NAC_date, NA_id 
-	FROM nextActions 
+	FROM nextActions
+	ORDER BY NAC_date ASC	 
 	WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' 
 	and judge like '%" . $_GET["judge"] . "%'";
 

@@ -11,9 +11,6 @@
 // This command will cause the script to serve any output compressed with either gzip or deflate if accepted by the client.
 ob_start('ob_gzhandler');
 
-// Get the sql password from an external file.
-require_once("_ignore_git/reader_pswd.php");
-
 //  Get dates from uri paramater.  If none given, sert firstDate to
 //  5 days ago. Last to 10 days out.
 //  Expects 2011-03-22 format
@@ -50,7 +47,10 @@ if(isset($_GET["cnum"])){
 
 // echo $query . "\n\n";
 
-/*** connect to SQLite database ***/
+/*** connect to MySql database ***/
+// Get the sql password from an external file.
+require_once("_ignore_git/dbreader_pswd.php");
+
 try 
 {
     $dbh = mysql_connect('localhost', $dbuser, $dbpassword) or die(mysql_error());
