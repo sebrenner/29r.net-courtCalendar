@@ -70,3 +70,5 @@
 [20-Nov-2011 20:03:29] PHP Parse error:  syntax error, unexpected T_RETURN in /home3/todayspo/public_html/29r/jackets/jacketTags.php on line 108
 [20-Nov-2011 20:14:41] PHP Warning:  require_once(../_ignore_git/reader_pswd.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home3/todayspo/public_html/29r/jackets/jsondata.php on line 54
 [20-Nov-2011 20:14:41] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '../_ignore_git/reader_pswd.php' (include_path='.:/usr/lib64/php:/usr/lib/php') in /home3/todayspo/public_html/29r/jackets/jsondata.php on line 54
+[22-Nov-2011 06:45:54] PHP Warning:  Invalid argument supplied for foreach() in /home3/todayspo/public_html/29r/jackets/pdf.php on line 33
+[22-Nov-2011 06:46:31] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home3/todayspo/public_html/29r/jackets/pdf.php on line 84

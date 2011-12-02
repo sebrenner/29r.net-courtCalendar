@@ -16,11 +16,14 @@ if ( file_exists( $dateFile ) && file_exists( $crimFile ) && file_exists( $civFi
     $end = trim($lines[1]);
 
     /*** connect to MySql database ***/
+	// Get the sql password from an external file.
+	require_once("_ignore_git/dbreader_pswd.php");
+
     try 
     {
         $dsn = 'mysql:host=localhost;dbname=todayspo_courtCal2';
-        $username = 'todayspo_calAdm';
-        $password = '77Tacr%';
+        $username = $dbuser;
+        $password = $dbpassword;
         $options = array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
         ); 
@@ -41,7 +44,7 @@ if ( file_exists( $dateFile ) && file_exists( $crimFile ) && file_exists( $civFi
     try {
         // First of all, let's begin a transaction
         $dbh->beginTransaction();
-        // A set of queries ; of one fails, an exception should be thrown   
+        // A set of queries; if one fails, an exception should be thrown   
         $sqlQuery = 'DELETE FROM nextActions WHERE NAC_date between "'. $start . '" and "' . $end . '";';
         $dbh->query( $sqlQuery );
         $sqlQuery = 'Optimize nextActions;' ;
@@ -64,10 +67,10 @@ if ( file_exists( $dateFile ) && file_exists( $crimFile ) && file_exists( $civFi
         // If we arrive here, it means that no exception was thrown
         // i.e. no query has failed ; and we can commit the transaction
         $dbh->commit();
-        echo "dbTransactionSuccess = True";
-        unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_civil.csv');
-        unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_crim.csv');
-        unlink('/home3/todayspo/public_html/29r/logs/dates.txt');
+        echo "The SQL Statement executed successfully";
+        // unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_civil.csv');
+        // unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_crim.csv');
+        // unlink('/home3/todayspo/public_html/29r/logs/dates.txt');
     
     
     } catch (Exception $e) {
