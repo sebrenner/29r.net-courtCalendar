@@ -82,9 +82,11 @@ class CMSR1231Docket:
         # self.upload( file = "/home3/todayspo/public_html/29r/up/parser/logs/" + "TS_final_list_civil.csv" )
         # self.upload( file = "/home3/todayspo/public_html/29r/up/parser/logs/" + "TS_final_list_crim.csv" )
         # self.upload( file = "/home3/todayspo/public_html/29r/up/parser/logs/" + "dates.txt" )
-#        f = urllib2.urlopen('http://29r.net/')
- #       f = urllib2.urlopen('http://29r.net/excutesql.php')
-  #      print f.read(1300)
+	uri = 'http://29r.net/up/parser/excutesql.php?cmsr=' + self._CMSR1231Path2File
+	print "\n\n" + uri
+	f = urllib2.urlopen( uri )
+	f = urllib2.urlopen('http://29r.net/up/parser/excutesql.php')
+        print f.read(1300)
     
     # ======================================================
     # = Function for parsing CMS docket                    =

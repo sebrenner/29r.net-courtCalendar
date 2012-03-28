@@ -1,0 +1,1 @@
+[28-Mar-2012 08:36:06] PHP Warning:  rename(/home3/todayspo/public_html/29r/up/server/php/files/cmsr1231.P49,/home3/todayspo/public_html/29r/up/parser/archive/2012-03-26-&gt;2018-03-27.cmsr) [<a href='function.rename'>function.rename</a>]: No such file or directory in /home3/todayspo/public_html/29r/up/parser/excutesql.php on line 104
