@@ -53,10 +53,13 @@
 		if ( index == "start" )    { start = decodeURIComponent ( myParams[index] ); 
 			//document.write ( $start);
 			}
+                if ( index == "caption" )    { caption = decodeURIComponent ( myParams[index] ); 
+			//document.write ( $start);
+			}
 		if ( index == "last" )	   { last =  decodeURIComponent( myParams[index] ); 
 			//document.write ( $last );
 			}
-		if ( index == "contact" )  { contact = decodeURIComponent( myParams[index] ); }
+		if ( index == "counsel" )  { contact = decodeURIComponent( myParams[index] ); }
 		if ( index == "casetype" ) { casetype = decodeURIComponent( myParams[index] ); }
 	}
         
@@ -85,12 +88,11 @@
                 
           });
           
-        TableTools.DEFAULTS.aButtons = [ "copy", "csv", "xls", "pdf" ];
+        // TableTools.DEFAULTS.aButtons = [ "copy", "csv", "xls", "pdf" ];
 
         var oTable = $('#example').dataTable( {
-		"sDom": '<"H"fip>t<"F"iTrp>',
-        
-          "sSwfPath": "/DataTables/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
+	  "sDom": '<"H"fip>t<"F"iTrp>',
+          //"sSwfPath": "/DataTables/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
           "bProcessing": true,
           "sAjaxSource": JSONdata,
           "aoColumns": [
@@ -106,19 +108,6 @@
             { "mDataProp": "defense", "bVisible": false}
             ]
         } ).columnFilter();
-        
-        var oTableTools = new TableTools( oTable, {
-        	"sSwfPath": "/DataTables/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
-		"buttons": [
-			"copy",
-			"csv",
-			"xls",
-			"pdf",
-			{ "type": "print", "buttonText": "Print me!" }
-		]
-	} );
-	
-	$('#demo').before( oTableTools.dom.container );
         
       } );
     </script>

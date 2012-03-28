@@ -20,10 +20,7 @@ else
     $firstDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d"),date("Y")));
 
 if(isset($_GET["last"])){
-    $lastDateReq = date("Y-m-d", strtotime(htmlspecialchars($_GET["last"])));
-    // $interval = date_interval_create_from_date_string('1 month'); 
-    // add_date( $lastDateReq, date_interval_create_from_date_string( "10 days" ) );
-    // echo $lastDateReq;
+    $lastDateReq = date("Y-m-d H:i:s", strtotime(htmlspecialchars($_GET["last"])));
     }
 else
     $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d") + 8,date("Y")));
