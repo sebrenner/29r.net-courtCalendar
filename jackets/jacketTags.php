@@ -66,7 +66,7 @@ if(isset($_GET["cnum"])){
     $query = "SELECT * FROM nextActions WHERE case_number = '{$cnum}' ";
 }
 
-//echo $query . "\n\n";
+// echo $query . "\n\n";
 class PDF extends FPDF
 {
 
