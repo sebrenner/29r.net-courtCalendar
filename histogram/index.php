@@ -124,6 +124,8 @@ class activityHistogram
 	    
 	    $pdf = new PDF();
         $header = array('Date', 'Criminal Settings','', 'Notes');
+
+		//	Loop through judges add a page for each.
 	    foreach ($judgesArray as $key => $value) {
 	        $pdf->setJudge($value);
 	        $pdf->setTotal($NACandTotal[1]);
@@ -131,7 +133,7 @@ class activityHistogram
             $NACandTotal = self::createNACData($value);
             $pdf->setTotal($NACandTotal[1]);
             // print_r ($data);
-    		$pdf->FancyTable($header, $NACandTotal[0]);
+    		$pdf->FancyTable( $header, $NACandTotal[0] );
 	    }
 		$pdf->Output();
 	}
@@ -164,9 +166,8 @@ class activityHistogram
         
         //echo $query;
 		
-        
 		/*** connect to MySql database ***/
-		require_once("../_ignore_git/dbreader_pswd.php");
+		require_once( "../passwordfiles/dbreader_pswd.php" );
 		try 
 		{
 		    $dbh = mysql_connect('localhost', $dbuser, $dbpassword) 
@@ -255,7 +256,6 @@ class activityHistogram
         return "Notes";
 	}
 	
-
 	protected function sortString($string){
 		for ($i = 0; $i <= strlen($string); $i++) {
 			$myArray[] = $string[$i];
