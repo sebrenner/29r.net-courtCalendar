@@ -21,7 +21,7 @@ class PDF extends FPDF
 	    // Move to the right
 	    $this->Cell(80);
 	    // Title  Prepared on: " . date('l F j') . ". 
-	    $title = "Judge " . ucfirst($this->judge) . " - Criminal Trial Settings Histogram";
+	    $title = "Judge " . ucfirst($this->judge) . " - Criminal Trial Settings Histogram - Updated: " . ;
 	    $memo = "No criminal jury trials on Mondays.  No more that 10 settings per day.";
 	    $this->Cell(30,5,$title,0,1,'C');
 	    $this->Cell(80);
@@ -157,7 +157,7 @@ class activityHistogram
         reset($NACData);
         
 		// Build the query.
-		$query = "SELECT NAC_date, NAC, lockup 
+		$query = "SELECT NAC_date, NAC, lockup, freshness 
 			FROM nextActions WHERE
 			NAC_date between '{$startDate}' 
 			and '{$endDate }' 

@@ -17,7 +17,7 @@ if ( file_exists( $dateFile ) && file_exists( $crimFile ) && file_exists( $civFi
 
     /*** connect to MySql database ***/
 	// Get the sql password from an external file.
-	require_once("/home3/todayspo/public_html/29r/_ignore_git/dbadmin_pswd.php");
+	require_once("/home3/todayspo/public_html/29r/passwordfiles/dbadmin_pswd.php");
 
     try 
     {
