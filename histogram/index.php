@@ -20,8 +20,7 @@ class PDF extends FPDF
 	    $this->SetFont('Arial','B',10);
 	    // Move to the right
 	    $this->Cell(80);
-	    // Title  Prepared on: " . date('l F j') . ". 
-	    $title = "Judge " . ucfirst($this->judge) . " - Criminal Trial Settings Histogram - Updated: " . ;
+	    $title = "Judge " . ucfirst( $this->judge ) . " - Criminal Trial Settings Histogram     " . "                  " . $this->freshness;
 	    $memo = "No criminal jury trials on Mondays.  No more that 10 settings per day.";
 	    $this->Cell(30,5,$title,0,1,'C');
 	    $this->Cell(80);
@@ -50,6 +49,10 @@ class PDF extends FPDF
 
     function setTotal($number){
         $this->totalSettings = $number;
+    }
+
+	function setFreshness( $dateTime ){
+		$this->freshness = date( 'l F jS h:i:s A', strtotime( $dateTime ) );
     }
 	
 	// Colored table
@@ -104,8 +107,10 @@ class PDF extends FPDF
 class activityHistogram
 {
     //  Class variables
-    private $holidays;
-    // Contruct object
+    protected $holidays;
+	protected $freshess;
+	    
+	// Contruct object
 	function __construct() {
 	    // Create holidays array
         // $this->holidays = self::getHolidays( 'http://www.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics' , "holidayIcal.csv");
@@ -122,17 +127,16 @@ class activityHistogram
 	        $judgesArray[] = "Allen";
 	    }
 	    
-	    $pdf = new PDF();
         $header = array('Date', 'Criminal Settings','', 'Notes');
+		$pdf = new PDF();
 
 		//	Loop through judges add a page for each.
 	    foreach ($judgesArray as $key => $value) {
-	        $pdf->setJudge($value);
-	        $pdf->setTotal($NACandTotal[1]);
-            $pdf->AddPage();
-            $NACandTotal = self::createNACData($value);
-            $pdf->setTotal($NACandTotal[1]);
-            // print_r ($data);
+	        $pdf->setJudge( $value );
+            $NACandTotal = self::createNACData( $value );
+			$pdf->setTotal( $NACandTotal[1] );
+			$pdf->setFreshness( $this->freshness );
+			$pdf->AddPage();
     		$pdf->FancyTable( $header, $NACandTotal[0] );
 	    }
 		$pdf->Output();
@@ -157,14 +161,14 @@ class activityHistogram
         reset($NACData);
         
 		// Build the query.
-		$query = "SELECT NAC_date, NAC, lockup, freshness 
+		$query = "SELECT NAC_date, NAC, lockup, freshness
 			FROM nextActions WHERE
 			NAC_date between '{$startDate}' 
 			and '{$endDate }' 
 			AND case_number like '%B %'
 			AND judge like '%{$judgeName}%'";
         
-        //echo $query;
+        // echo $query;
 		
 		/*** connect to MySql database ***/
 		require_once( "../passwordfiles/dbreader_pswd.php" );
@@ -183,20 +187,22 @@ class activityHistogram
 
 		// Query the database and loop through the results.		
 		if($result = mysql_unbuffered_query($query)){
-        // print_r ($NACData);
-        
-        // Add histogram to NACData dictionary
-		   while($row = mysql_fetch_array( $result, MYSQL_ASSOC )){
-		   	$NACData[substr($row["NAC_date"], 0, 10)] .= 
-                self::getLetter( $row["NAC"], $row["lockup"] );
-		   }
+			// Add histogram to NACData dictionary
+			while($row = mysql_fetch_array( $result, MYSQL_ASSOC )){
+				$NACData[ substr( $row[ "NAC_date" ], 0, 10 ) ] .= 
+				self::getLetter( $row[ "NAC" ], $row[ "lockup" ] );
+				
+				// pass freshness to $pdf.  Most recent freshness will be retained by $pdf.
+				self::getFreshness( $row[ "freshness" ]);
+			}
 		}
 		// Convert dictionary to array of arrays 
 		$notes = "1234567890";
 		$totalSettings = 0;
 		
+		//	Loop through array building results to populat the histogram
 		foreach ($NACData as $key => $value){
-            $results[] = array($key, self::sortString($value), strlen($value), self::getNotes($key));
+            $results[] = array( $key, self::sortString($value), strlen($value), self::getNotes($key) );
             $totalSettings += (int)strlen($value);
 		}
         // print_r ($results);
@@ -248,6 +254,12 @@ class activityHistogram
         "WINKLER/RALPH",
         "WINKLER/RALPH/E",
         "WINKLER/ROBERT/C");
+    }
+
+	protected function getFreshness( $dateTime ){
+		if( $dateTime > $this->freshness ){
+			$this->freshness = $dateTime;
+		}
     }
 
     protected function getNotes( $date ){
@@ -305,4 +317,7 @@ class activityHistogram
 }
 
 $myHistogram = new activityHistogram();
+?>Histogram = new activityHistogram();
+?>;
+?>;
 ?>
