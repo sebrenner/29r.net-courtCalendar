@@ -7,7 +7,7 @@ cmsr1231Class.py
 Created by Scott Brenner on 2011-08-25.
 Copyright (c) 2011 Scott Brenner. All rights reserved.
 
-Defines a class for parseing a cmsr1231 docket and accessing the docket data.
+Defines a class for parseing a cmsr1231 docket and creatign two CSVs files-one of civil settings, one of criminal settings.
 
 headers = ["freshness", "judge", "location" , "NAC_date", "NAC_time", "NAC", "case_num", "JMS", "AP_PO", "out_of_state_D", "caption", "counts", "counsel"]
 
@@ -16,79 +16,63 @@ timeFMT = "%Y-%m-%dT%H:%M"
 """
 
 # = Modules =
-import sys, os, datetime, time, csv, pdb, ftplib, pickle, urllib2
-from file_functions import *        # these are my file management functions
+import sys, os, datetime, time, csv, pdb
 from string import *
-# from collections import Counter
-
 
 class CMSR1231Docket:
-    def __init__(self, CMSRFilePath = 0,  verbose = False):
+    def __init__(self, CMSRFilePath,  verbose = False):
         """
-        Parses CMSR1231 flatfile and stores the result in two lists-
-            self._civilList
-            self._crimList
-        
-        Public methods for accessing the lists individually and as a full list.
         """
         # initialize variables
-        self._verbose = verbose        
-        opperationStartTime = datetime.datetime.now()
-        if CMSRFilePath == 0:
-            self._CMSR1231Path2File = self.__getLatestFile("/home3/todayspo/public_html/29r/up/server/php/files/")
-        else:
-            self._CMSR1231Path2File = CMSRFilePath
-        if self._verbose:
-            print "\n", "*" * 75, "\n\tNew CMSR1231Docket Object\n\tfrom %s." % self._CMSR1231Path2File, "\n", "*" * 75
-        
-        if self._verbose: print "Loading ", self._CMSR1231Path2File        
-        self._lastDate, self._firstDate = "",""
+        self._verbose = verbose
+        self._freshness, self._lastDate, self._firstDate = "","",""
         self._addedEvents = []
         self._droppedEvents = []
         self._unprocessedRows = []
-        self._dbUpdateStatus = False
+        self._dbUpdateStatus = False        
+        self._CMSR1231Path2File = CMSRFilePath
+        opperationStartTime = datetime.datetime.now()   # For measuring performance
+        if self._verbose:
+            print "\n", "*" * 75, "\n\tNew CMSR1231Docket Object\n\tfrom %s." % self._CMSR1231Path2File, "\n", "*" * 75
+            print "Loading ", self._CMSR1231Path2File
         
-        # Parse the CMSR1231
+        # =======================
+        # = Parse the CMSR1231  =
+        # =======================
         if self._verbose: print "Parseing ", self._CMSR1231Path2File
-        self._myList = self.__parse_file_lines(self._CMSR1231Path2File)
-		
-        self._crimFileName = "crim_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
-        self._civilFileName = "civil_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
+        self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
+        if self._verbose:
+            print "The CMSRfile was created on %s. It covers %s to %s." %( self._freshness, self._firstDate, self._lastDate )
         
-        if self._verbose: print "The CMSRfile covers %s to %s." %( self._firstDate, self._lastDate )
+        if ( self.__isFresher and self.__isAllJudges ):
+            # Create filenames based on time frames.
+            self._crimFileName = "crim_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
+            self._civilFileName = "civil_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
         
-        if self._verbose: print "Normalizing ", self._CMSR1231Path2File
-        self._crimList, self._civilList = self.__normalize_split_crim_civil(self._myList)
+            if self._verbose: print "Normalizing and spitting ", self._CMSR1231Path2File
+            self._crimList, self._civilList = self.__normalize_split_crim_civil(self._myList)
         
-        self._crimList = self.__final_pass_crim(self._crimList)
-        self._civilList = self.__final_pass_civil(self._civilList)
+            if self._verbose: print "Executing final passes on criminal and civil lists."
+            self._crimList = self.__final_pass_crim(self._crimList)
+            self._civilList = self.__final_pass_civil(self._civilList)
+        else:
+            print
         
-        self._currentFullList = self._civilList + self._crimList
-        opperationFinishTime = datetime.datetime.now()
+        opperationFinishTime = datetime.datetime.now() # For measuring performance
         
-        # Log and report on progress
-        logString = "%s - %s was processed.  Began: %s Finished %s  Total time: %s.  %s Criminal events processed. %s Civil events processed. " %(  str(datetime.datetime.now())[:18], self._CMSR1231Path2File, str(opperationStartTime)[:10], str(opperationFinishTime)[:10], str(opperationFinishTime - opperationStartTime)[:10], len(self._crimList), len(self._civilList))
-        
+        # =================
+        # = Log progress  =
+        # =================
+        logString = "%s - %s was processed.  Began: %s Finished %s  Total time: %s.  %s Criminal events processed. %s Civil events processed. Freshness: %s" %(  str( datetime.datetime.now())[:18], self._CMSR1231Path2File, str( opperationStartTime )[:10], str( opperationFinishTime )[:10], str( opperationFinishTime - opperationStartTime )[:10], len( self._crimList ), len( self._civilList ), self._freshness )
         self.__logFileProcessing( logString )
-        if self._verbose: print "Processing CMSR1231 %s completed.  \nBegan: \t\t%s \nFinished: \t%s  \nTotal time: %s.\n%s Criminal events processed. %s Civil events processed. Total Events: %i" %( self._CMSR1231Path2File, str(opperationStartTime)[:20], str(opperationFinishTime)[:20], str(opperationFinishTime - opperationStartTime)[:10], len(self._crimList), len(self._civilList), len(self._crimList) + len(self._civilList) )
-
-		# create the dates file
-        dateList=[[self._firstDate],[self._lastDate]]
-        self.__write_lists_csv( dateList, "/home3/todayspo/public_html/29r/up/parser/logs/dates.txt")
-
-		# Upload files
-        # localFile = "/home3/todayspo/public_html/29r/up/CSVs/" + self._crimFileName
-        # 
-        # self.upload( file = "/home3/todayspo/public_html/29r/up/parser/logs/" + "TS_final_list_civil.csv" )
-        # self.upload( file = "/home3/todayspo/public_html/29r/up/parser/logs/" + "TS_final_list_crim.csv" )
-        # self.upload( file = "/home3/todayspo/public_html/29r/up/parser/logs/" + "dates.txt" )
-	uri = 'http://29r.net/up/parser/excutesql.php?cmsr=' + self._CMSR1231Path2File
-	print "\n\n" + uri
-	f = urllib2.urlopen( uri )
-	f = urllib2.urlopen('http://29r.net/up/parser/excutesql.php')
-        print f.read(1300)
+        if self._verbose: print logString
+        
+    def __del__(self):
+        """
+        This function is called when the object is deleted.
+        """
     
-    # ======================================================
+# ======================================================
     # = Function for parsing CMS docket                    =
     # ======================================================
     def __parse_file_lines(self, docket_file):
@@ -106,7 +90,7 @@ class CMSR1231Docket:
         lines = inFile.readlines()  #create list each item is a line from file.
         clean_lines = ['++++++']
         
-        self._firstDate, self._lastDate = self.__getReportTimeFrame( lines )        
+        self._freshness, self._firstDate, self._lastDate = self.__getReportTimeFrame( lines )        
                 
         # ================
         # = Delimit blocks =
@@ -210,7 +194,7 @@ class CMSR1231Docket:
                 location = each[-2][6:]
                 date_index_pos = each[1].find(": ") + 2
                 freshness =  each[1][date_index_pos:date_index_pos+10]
-                freshness = self.__make_date(freshness, ' 7:00AM', '%m/%d/%Y %I:%M%p')
+                freshness = self.__make_date(freshness, ' 4:00PM', '%m/%d/%Y %I:%M%p')
                 if "TODAYS DATE" in each[1]:
                     pass
                 else:
@@ -506,42 +490,15 @@ class CMSR1231Docket:
     def getCivilList(self):
         return self._civilList
     
-    def getAddedEvents(self):
-        return self._addedEvents
-    
-    def getDroppedEvents(self):
-        return self._droppedEvents
-    
-    def getFullList(self):
-        return self._currentFullList
-    
     def getPeriod(self):
         return self._firstDate, self._lastDate
+    
+    def getFreshness(self):
+        return self._freshness
     
     # =========================================
     # = Functions for manipulating the lists  =
     # =========================================
-    def __saveFullList( self, savefileName ):
-        """
-        Saves the full list to a pickle file.
-        Returns true if successful.
-        """
-        try:
-            pickle.dump( self._currentFullList, open( savefileName, "wb" ) )
-        except Exception, e:
-            print "Failed to save pickle file in CMSR1231 object"
-            raise e
-            return False
-            
-        return True
-    
-    def loadFullList( self ):
-        """
-        Load the full list from a pickle file.
-        Returns the full list.
-        """
-        return pickle.load( open( self._lastCMSR1231Path2Pickle ) )
-    
     def __logFileProcessing( self, logString):
         """
         Append a line to a log file.
@@ -560,54 +517,29 @@ class CMSR1231Docket:
     def __getReportTimeFrame( self, rawReportList ):
         """
         Takes the file as a list of lines.
-        Returns the start date and last date.
+        Saves the date range and freshness is a text file.
+        Returns the start date and last date, and the freshness of the report.
         """
         startDate = ""
         lastDate = ""
         for index, each in enumerate( rawReportList ):
+            if "TODAYS DATE" in rawReportList[ index ]:
+                freshness = rawReportList[ index ][13:23]
             if "REPORT FROM" in rawReportList[ index ]:
                 startDate = rawReportList[ index ][13:23]
-                lastDate = rawReportList[ (index + 1) ][13:23]
-            if (startDate != "" and lastDate != ""): 
-                startDate = self.__makeDateSortable(startDate)
-                lastDate = self.__makeDateSortable(lastDate)
-                return startDate, lastDate
-    
-    def __createDropAddLists( self ):
-        """
-        Creates two lists: the events to be dropped, the events to be added.
-        
-        Using the start date and the finsih date, filter the last list and 
-        the current list to cover the same time frame, i.e., the latest start date
-        and the earliest finish date.
-        
-        Create a list of the items that are in the last list but not in the current list--
-        these are the items to be dropped.
-        
-        Create a list of the items that are in the current list but not in the last list--
-        these are the items to be added.
-        
-        """        
-        #load lastlist
-        self._lastCMSR1231Path2Pickle = "log/lastCMSR1231List.pkle"
-        try:    
-           self._lastFullList = self.loadFullList( )
-           if self._verbose: print "%s loaded; %i events in pickled file.  Filtering last list and current list to event within current date range." %( self._lastCMSR1231Path2Pickle, len( self._lastFullList ) )
-           
-        except IOError as e:
-           print e ,'Oh dear, no lastFullList.'
-           self._lastFullList = []
-            
-        # filter list to only cover the date range
-        normalLastList = [event for event in self._lastFullList if (event[2] >= self._firstDate and event[2] <= self._lastDate )]
-        normalCurrentList = [event for event in self._currentFullList if (event[2] >= self._firstDate and event[2] <= self._lastDate )]
-        
-        # Find differences in covered date range
-        if self._verbose: print "Finding events to add."
-        self._addedEvents = filter(lambda x:x not in self._lastFullList, self._currentFullList)
-        if self._verbose: print "Finding events to drop."
-        self._droppedEvents = filter(lambda x:x not in self._currentFullList, self._lastFullList)
-        print "Found %i new events.  Found %i dropped events." %(len(self._addedEvents), len(self._droppedEvents))
+                lastDate = rawReportList[ (index + 1) ][13:23]    
+            if (startDate != "" and lastDate != "" and freshness != ""):
+                freshness = self.__makeDateSortable( freshness )
+                startDate = self.__makeDateSortable( startDate )
+                lastDate = self.__makeDateSortable( lastDate )
+                
+                # Log the in the dates file
+                dateList=[ [ self._firstDate ],[ self._lastDate ], [self._freshness] ]
+                dateListFilePath ="logs/dates.txt"
+                self.__write_lists_csv( dateList, dateListFilePath )
+                if self._verbose: print "Date range was stored in " , dateListFilePath
+                
+                return freshness, startDate, lastDate
     
     def __makeDateSortable( self, date ):
         """
@@ -624,29 +556,6 @@ class CMSR1231Docket:
             return year + "-" + month + "-" + day
         print "the date passed %s, is not a date." % date
     
-    def __getLatestFile( self, passedDirctory ):
-        try:
-            # get files from the self._passedDirctory
-            filelist = os.listdir( passedDirctory )
-            
-            # filtor out directories
-            filelist = filter(lambda x: not os.path.isdir(x), filelist)
-            
-            # add the path to the CMSRfiles name
-            CMSRfiles = []
-            for index, item in enumerate(filelist):
-                # Only consider files that start wirh "cmsr1231"
-                if item[:8] == "cmsr1231":
-                    CMSRfiles.append( passedDirctory + item) 
-                    
-            mostRecent = max(CMSRfiles, key=lambda x: os.stat(x).st_mtime)
-            if self._verbose:
-                print"The last modified file is: %s" % mostRecent
-            return mostRecent
-        except Exception, e:
-            print "There are no CMSR1231 files in the %s directory." % passedDirctory
-            raise e
-    
     def __write_lists_csv( self, block_list, file_name ):
         """
         Takes a list of blocks (each block is a list of items), a files location//name, and a list of headers
@@ -657,24 +566,6 @@ class CMSR1231Docket:
         # fileWriter.writerow(headers)
         for each in block_list:
             fileWriter.writerow(each)
-    
-    def setdbUpdateStatus(self, status):
-        """"
-        Sets db update status so the object knows whther to 
-        save the pickle file.
-        """
-        self._dbUpdateStatus = status
-    
-    def __del__(self):
-        """
-        This function is called when the object is deleted.  The full list is only save when the object is destroyed.  This ensures that the full list is only saved after the db object has successfully updated the db.
-        Save new list
-        """
-        if self._dbUpdateStatus:
-            print "\n","*" * 75, "\n\tDb was successfully updated.\n\tSaving pickle file.", "\n", "*" * 75
-            self.__saveFullList( self._lastCMSR1231Path2Pickle )
-        else:
-            print "\n","*" * 75, "\n\tDb was not successfully updated.\n\t%s will not be pickled." %self._CMSR1231Path2File, "\n","*" * 75
     
     def __gangAtComma( self, myList ):
         """
@@ -704,36 +595,17 @@ class CMSR1231Docket:
         # print myList
         return myList
     
-    def upload( self, file ):
-        site = "ftp.todayspodcast.com"
-        dir = "public_html/29r/"
-        user = ( 'todayspo', 'onal44Resp!' )
-        verbose = True
-        if verbose: print 'Uploading', file
-        local = open(file, 'rb')
-        remote = ftplib.FTP(site)
-        remote.login(*user)
-        remote.cwd(dir)
-        remote.storbinary('STOR ' + file, local, 1024)
-        remote.quit()
-        local.close()
-        if verbose: print 'Upload done.'
-
-	def __getCMSRFileName( self ):
-		return self._CMSR1231Path2File
+    def __isFresher( self, date ):
+            """
+            Takes a date string, e.g., 9/29/2011 and converts it to a sortable string 2011-09-29.
+            """
+    def __isAllJduges( self, date ):
+        
+        self.__isFresher and self.__isAllJudges
     
-
 if __name__ == '__main__':
     """
     Testing the class
     """
-    testDocket = CMSR1231Docket( verbose = True )
-       
-    # print "\nThese events were added:"
-    # for each in testDocket.getAddedEvents():
-    #     print each[3], each[4], each[5]
-    # print "\nThese events were dropped:" 
-    # for each in testDocket.getDroppedEvents():
-    #     print each[3], each[4], each[5]
-    # print "\nThese events were saved in the lastListFile:"
-    #     # print each[3], each[4], each[5]
+    CMSRforTesting = "TK"
+    testDocket = CMSR1231Docket( CMSRforTesting, verbose = True )
