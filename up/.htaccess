@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "up"
+AuthUserFile "/home3/todayspo/.htpasswds/public_html/29r/up/passwd"
+require valid-user
