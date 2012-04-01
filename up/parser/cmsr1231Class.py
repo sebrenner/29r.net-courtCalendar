@@ -24,81 +24,54 @@ except:
    import pickle
 
 class CMSR1231Docket:
-    def __init__(self, CMSRFilePath,  verbose = False):
+    def __init__( self, CMSRFilePath,  verbose = False ):
         """
         """
         # initialize variables
         self._dateDictFilePath ="logs/dates.pkl"
         self._verbose = verbose
+        self._success = False
         self._freshness, self._lastDate, self._firstDate = "","",""
-        self._addedEvents = []
-        self._droppedEvents = []
-        self._unprocessedRows = []
-        self._judges = set()    
+        self._dateOfPriorParse = ""
+        self._judges = set()    # for counting judge's schedules
         self._CMSR1231Path2File = CMSRFilePath
-        
-        opperationStartTime = datetime.datetime.now()   # For measuring performance
-        if self._verbose:
-            print "\n", "*" * 75, "\n\tNew CMSR1231Docket Object\n\tfrom %s." % self._CMSR1231Path2File, "\n", "*" * 75
-            print "Loading ", self._CMSR1231Path2File
+        self._opperationStartTime = datetime.datetime.now()   # For measuring performance
+        self._opperationFinishTime = ""
+        print "\nStart->", "*" * 70, "\n\tNew CMSR1231Docket Object from %s" % self._CMSR1231Path2File
         
         # =======================
         # = Parse the CMSR1231  =
         # =======================
-        if self._verbose: print "Parseing ", self._CMSR1231Path2File
-        self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
-        # Create filenames based on time frames.
-        self._crimFilePath = "CSVs/crim_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
+        self.__firstPass()
         
-        self._civFilePath = "CSVs/civil_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
-        if self._verbose:
-            print "The CMSRfile was created on %s. It covers %s to %s." %( self._freshness, self._firstDate, self._lastDate )
-        
-        if self._verbose: print "Normalizing and spitting", self._CMSR1231Path2File
-        self._crimList, self._civilList = self.__normalize_split_crim_civil(self._myList)   # This function gets the judges
+        # Run the second pass if the passed file is fresher than the last
+        # file successfully parsed.
+        if ( self.__isFresher() ):
+            if self._verbose: print "The passed file is fresher."
+            self.__secondPass()
             
-        if ( self.__isFresher() and self.__isAllJudges() ):
-            if self._verbose: 
-                print "The passed file is fresher and contains all judges."
-                print "Executing final passes on criminal and civil lists."
-            self._crimList = self.__final_pass_crim(self._crimList)
-            self._civilList = self.__final_pass_civil(self._civilList)
-        else:
-            print "The file: ", self._CMSR1231Path2File , " could not be imported. It is either not fresh enough or it does not contain schedules for all the judges."
-            # TK --> clean up files
-            raise Exception()
+            # Run the final passes if the passed file contains shedules 
+            # for all the judges.        
+            if ( self.__isAllJudges() ):
+                if self._verbose: 
+                    print "The passed file contains all judges."
+                    print "Executing final passes on criminal and civil lists."
+                self._crimList = self.__final_pass_crim( self._crimList )
+                self._civilList = self.__final_pass_civil( self._civilList )
+                self._opperationFinishTime = datetime.datetime.now() # For measuring performance
+                self.__onSuccess()
+            else:   # CMSRFile doesn't cover all judges.
+                print "Status ", "*" * 70, "\nThe file:", self._CMSR1231Path2File , "could not be imported.\nIt does not contain schedules for all the judges.", "\nEnd--->", "*" * 70
         
-        opperationFinishTime = datetime.datetime.now() # For measuring performance
-        
-        # ===========================
-        # = Log dates               =
-        # ===========================
-        if self._verbose:
-            print "\nSaving dates to file:", self._dateDictFilePath,
-        dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'feshness':self._freshness, 'dbUpdate': ""}
-        self.__write_obj_to_file( dateDict, self._dateDictFilePath )
-        if self._verbose: print "Date range and freshness successfully saved."
-        
-        # ===========================
-        # = Log progress            =
-        # ===========================
-        
-        logString = "%s - %s was processed.  Processing time: %s.  %s Criminal events processed. %s Civil events processed. Freshness: %s" %(  str( datetime.datetime.now())[:18], self._CMSR1231Path2File, str( opperationFinishTime - opperationStartTime )[:10], len( self._crimList ), len( self._civilList ), self._freshness )
-        self.__logFileProcessing( logString )
-        if self._verbose: print logString
-        
-        # ===============================
-        # = Delete interstitial files   =
-        # ===============================
-        # 
-        # unlink( "logs/TS_parse_file_lines.csv" )
-        #         unlink( "logs/TS_normalized_crim.csv" )
-        #         unlink( "logs/TS_normalized_civil.csv" )
+        else:   # CMSRFile isn't fresher
+            print "Here is self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse:"
+            print self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse
+            print "Status ", "*" * 70, "\n\nThis file %s (%s) is not fresher than the previous import (%s).\nEnd--->", "*" * 70 %( self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse )
     
     # ======================================================
     # = Function for parsing CMS docket                    =
     # ======================================================
-    def __parse_file_lines(self, docket_file):
+    def __parse_file_lines( self, docket_file ):
         """
         Iterate through a docket file, line by line, returns a list with lines as a list item.
         It also cleans out some of the cruft.
@@ -200,7 +173,7 @@ class CMSR1231Docket:
         
         return block_list
     
-    def __normalize_split_crim_civil(self, block_list):
+    def __normalize_split_crim_civil( self, block_list ):
         """
         Take Block list.
         Normailize blocks, add judge, date, time, and freshness to each block.
@@ -295,12 +268,13 @@ class CMSR1231Docket:
         if self._verbose:
             print "Saving normalized list."
             headers = ["freshness", "judge", "location" , "NAC_date", "NAC_time", "NAC", "case_num", "JMS", "AP_PO", "out_of_state_D", "caption", "counts", "counsel"]
-            self.__write_lists_csv( criminal_block_list, "logs/TS_normalized_crim.csv" )
-            self.__write_lists_csv( civil_block_list, "logs/TS_normalized_civil.csv" )
+        
+        self.__write_lists_csv( criminal_block_list, "logs/TS_normalized_crim.csv" )        
+        self.__write_lists_csv( civil_block_list, "logs/TS_normalized_civil.csv" )
         
         return criminal_block_list, civil_block_list
     
-    def __final_pass_crim(self, crim_list):
+    def __final_pass_crim( self, crim_list ):
         """
         Take list of Crim NAC and walkthough list items after counts to make sure all counts are ganged.
         Cases:
@@ -398,13 +372,10 @@ class CMSR1231Docket:
         if self._verbose:
             print "Saving final pass crim list."
             headers = ["freshness", "judge", "location" , "NAC_date", "NAC_time", "NAC", "case_num", "JMS", "AP_PO", "out_of_state_D", "caption", "counts", "counsel"]
-            self.__write_lists_csv( crim_list, "logs/TS_final_list_crim.csv" )
-        print "Saving out crim_list, self._crimFilePath... ",
         self.__write_lists_csv( crim_list, self._crimFilePath )
-        print "success."
         return crim_list
     
-    def __final_pass_civil(self, civil_list):
+    def __final_pass_civil( self, civil_list ):
         """
         Take the civil list and finish normalizing the fields
         creates a list of unprocessedRow.
@@ -475,14 +446,13 @@ class CMSR1231Docket:
         if self._verbose:
             print "Saving final pass civil list."
             headers = ["freshness", "judge", "location" , "NAC_date", "NAC_time", "NAC", "case_num", "JMS", "AP_PO", "out_of_state_D", "caption", "counts", "counsel"]
-            self.__write_lists_csv( civil_list, self._civFilePath )
         self.__write_lists_csv( civil_list, self._civFilePath )
         return civil_list
     
     # ====================================
     # = Functions for creating NAC data  =
     # ====================================
-    def __make_date(self, the_date,the_time,format):
+    def __make_date( self, the_date,the_time,format ):
         """
         Takes date string, returns date object/string
         """
@@ -491,11 +461,10 @@ class CMSR1231Docket:
         try:
             return datetime.datetime.strptime(the_date + the_time, format)
         except ValueError:
-            # print "__make_date failed.\n ",the_date,the_time,format
-            # print
+            print "__make_date failed.\n ",the_date,the_time,format
             return "tacotaco"
     
-    def __split_counsel(self, counsel_block):
+    def __split_counsel( self, counsel_block ):
         """
         Takes counsel block and splits Plaintiff and Defense counsel at the :.
         Delimit counsel by \n
@@ -507,17 +476,23 @@ class CMSR1231Docket:
     # ========================================
     # = Functions for accessing docket data  =
     # ========================================
-    def getCrimList(self):
+    def getCrimList( self ):
         return self._crimList
     
-    def getCivilList(self):
+    def getCivilList( self ):
         return self._civilList
     
-    def getPeriod(self):
+    def getPeriod( self ):
         return self._firstDate, self._lastDate
     
-    def getFreshness(self):
+    def getFreshness( self ):
         return self._freshness
+    
+    def isSuccesful( self ):
+        """
+        Returns true if the import was successful.
+        """
+        return self._success
     
     # =========================================
     # = Functions for manipulating the lists  =
@@ -578,16 +553,24 @@ class CMSR1231Docket:
         Writes the blocks as rows in a CSV file.  Each item of the blocks is a comma-separated value.
         Returns the location of the CSV file.
         """
-        fileWriter = csv.writer( open(file_name, 'wb' ), delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for each in block_list:
-            fileWriter.writerow(each)
+        try:
+            fileWriter = csv.writer( open( file_name, 'wb' ), delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL )
+        except Exception, e:
+            print "Can't open fileWriter = csv.writer for ", file_name
+            raise e
+            
+        try:
+            for each in block_list:
+                fileWriter.writerow(each)
+        except Exception, e:
+            print "Can't write ", each, " in __write_lists_csv writting: ", file_name
+            raise e
     
     def __write_obj_to_file( self, data_obj,location_name ):
         """
         Takes a data object and file path and pickles and writes the object
         to the given path.
         """
-        print "In __write_obj_to_file."
         output = open(location_name, 'wb')
         pickle.dump(data_obj, output,-1)
         output.close()
@@ -598,8 +581,16 @@ class CMSR1231Docket:
         Takes a file path and returns the data object.
         """
         try:
-            return pickle.load(open(location_name, 'rb'))
+            if self._verbose:
+                print "In read_obj... Trying to read %s." %( location_name )
+            savedObject = pickle.load( open( location_name, 'rb'))
+            if self._verbose:
+                print "Saved Object:", savedObject
+            return savedObject 
         except Exception, e:
+            print "\n", "*" * 75, "Failed to read %s." %( location_name )
+            print "Threw error:", e
+            print "\n", "*" * 75
             return False    
     
     def __gangAtComma( self, myList ):
@@ -637,21 +628,45 @@ class CMSR1231Docket:
         If the passed file is fresher, it returns true.
         """
         try:
+            if self._verbose: print "Trying to read freshness from dates file."
             dateDict = self.__read_obj_from_file( self._dateDictFilePath )
+            if self._verbose:
+                print "In isFresher. This is the object we got back:", dateDict
         except Exception, e:
-            print "\n\n**** e:", e
-            print "\n\nThere is no previous freshness date in the log file."
+            print "\n", "*" * 75, "\nThere is no previous freshness date in the log file.", "\nError:", e, "\n", "*" * 75
             return False
-        if self._freshness >= dateDict[ "freshness" ]:
-            print "here?"
-            # if self._verbose:
-            #     print "\n\nThe last successfully imported CMSRfile was created on %s. Now we will import the CMSR files created on %s." %( previousFreshness, self._freshness )
-            print "here2?"
+        self._dateOfPriorParse = dateDict[ "freshness" ]
+        if self._freshness >= self._dateOfPriorParse:
+            if self._verbose:
+                print "The last parsed CMSRfile created on %s. Now importing CMSR created on %s." %( dateDict[ "freshness" ], self._freshness )
             return True
         else:
-            print "\n\nThis files is not fresher than the previous import.\n"
             return False
     
+    def __onSuccess( self ):
+        """
+        This function is called when the file successfully parsed.
+        It logs the relevant data.
+        """
+        self._success = True
+        
+        # ==================================
+        # = Store date range and freshness =
+        # ==================================
+        if self._verbose:
+            print "\nSaving dates to file:", self._dateDictFilePath,
+        dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
+        self.__write_obj_to_file( dateDict, self._dateDictFilePath )
+        if self._verbose: print "Date range and freshness successfully saved."
+        
+        # ===========================
+        # = Log progress            =
+        # ===========================
+        logString = "%s - %s was processed.  Processing time: %s.  %s Criminal events processed. %s Civil events processed. Freshness: %s" %(  str( datetime.datetime.now())[:18], self._CMSR1231Path2File, str( self._opperationFinishTime - self._opperationStartTime )[:10], len( self._crimList ), len( self._civilList ), self._freshness )
+        self.__logFileProcessing( logString )
+        if self._verbose: print "\n", logString
+        
+        print "Status ","*" * 70, "\n", self._CMSR1231Path2File, " was successfuly parsed.\nThe parsed files are available at:\n\t\t", self._crimFilePath, "\n\t\t", self._civFilePath, "\n", "End--->", "*" * 70
     
     def __isAllJudges( self ):
         """
@@ -666,60 +681,80 @@ class CMSR1231Docket:
         if len( self._judges ) > 1: return True
         return False
     
+    def __secondPass( self ):
+        """
+        This helper funciton normalizes the lines and splits
+        them into two lists crim and civ.
+        self.__normalize_split_crim_civil creates a dictionary of judges
+        """
+        if self._verbose: 
+            print "Normalizing and splitting", self._CMSR1231Path2File
+        self._crimList, self._civilList = self.__normalize_split_crim_civil(self._myList)   # This function gets the judges
+        if self._verbose: 
+            print "The events were normalized and split into to lists. Now testing frshness and judge count."
+    
+    def __firstPass( self ):
+        """
+        This helper function parses the cmsrfile into a list of lines.
+        It calls self.__parse_file_lines which sets the freshness and time frame of the CMSR file.
+        It sets the self._crimFilePath and self._civFilePath.
+        """
+        if self._verbose: print "Parseing ", self._CMSR1231Path2File
+        self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
+        # Create filenames based on time frames.
+        self._crimFilePath = "CSVs/crim_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
+        
+        self._civFilePath = "CSVs/civil_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
+        if self._verbose:
+            print "The CMSRfile was created on %s. It covers %s to %s." %( self._freshness, self._firstDate, self._lastDate )
+    
 
 
 if __name__ == '__main__':
     """
     Testing the class
     """
+    print "\n", "^" * 75, "\n", "^" * 75, "\n\t\t\tRunning Test Cases","\n", "^" * 75, "\n", "^" * 75
     # Move current dates file to dates.tmp
     # Create dates file that will work with text cases.
     # .p50:
-    #   fresheness: 2012-03-28
+    #   freshness: 2012-03-28
     #   start:      2012-03-27
     #   end:        2012-03-28
     #
     # .p53:
-    #   fresheness: 2012-03-30
+    #   freshness: 2012-03-30
     #   start:      2012-03-29
     #   end:        2018-03-30
     #
+    # cmsr1231-Allen00.txt:
+    #   freshness:  2012-01-10
+    #   start:      2012-01-09
+    #   end:        2018-01-10
+    #
+    
     try:
         shutil.move( "logs/dates.pkl", "logs/dates.production" )
     except Exception, e:
         print "logs/dates.pkl doesn't exist."
-    dateDict = { 'firstDate': "2012-03-29" , 'lastDate': "2018-03-29", 'freshness': "2012-03-27", 'dbUpdate': ""}
-    
-    
+    dateDict = { 'firstDate': "2012-03-29" , 'lastDate': "2018-03-29", 'freshness': "2012-01-01", 'dbUpdate': ""}
     output = open( "logs/dates.pkl", 'wb')
     pickle.dump( dateDict, output,-1)
     output.close()
     
-    # import
-    try:
-        # Should import successfully
-        CMSRforTesting = "testFiles/cmsr1231.P50"
-        print "\n\nProcessing ", CMSRforTesting
-        testDocket = CMSR1231Docket( CMSRforTesting, verbose = True )
-        
-        # Should import successfully    
-        CMSRforTesting = "testFiles/cmsr1231.P53"
-        print "\n\nProcessing ", CMSRforTesting
-        testDocket = CMSR1231Docket( CMSRforTesting, verbose = True )
-        
-        # Should fail not fresher.
-        CMSRforTesting = "testFiles/cmsr1231.P50"
-        print "\n\nProcessing ", CMSRforTesting
-        testDocket = CMSR1231Docket( CMSRforTesting, verbose = True )
-
-        # Should fail only covers one judge.
-        CMSRforTesting = "testFiles/cmsr1231-Allen00.txt"
-        print "\n\nProcessing ", CMSRforTesting
-        testDocket = CMSR1231Docket( CMSRforTesting, verbose = True )
-    except Exception, e:
-        print "We hit an exeption in our testing try."
-        print "e:", e
+    # Test imports
+    CMSRsForTesting = [ "testFiles/cmsr1231-Allen00.txt", "testFiles/cmsr1231.P50", "testFiles/cmsr1231.P53", "testFiles/cmsr1231.P50",  ]
+    for each in CMSRsForTesting:
         try:
-            shutil.move( "logs/dates.production", "logs/dates.pkl" )
+            # print "\n\nProcessing ", each
+            testDocket = CMSR1231Docket( each, verbose = False )
         except Exception, e:
-            print "No logs/dates.production to move back."
+            print "\n!!!!!!Processing", each, "threw an exception: ", e
+    
+    # Put the old dates file back in place
+    try:
+        shutil.move( "logs/dates.production", "logs/dates.pkl" )
+        print "The production logs/dates.pkl file was restored."
+    except Exception, e:
+        print "No logs/dates.production to move back."
+    
