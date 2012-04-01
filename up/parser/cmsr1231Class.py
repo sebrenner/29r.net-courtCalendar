@@ -717,7 +717,7 @@ if __name__ == '__main__':
         print "\n\nProcessing ", CMSRforTesting
         testDocket = CMSR1231Docket( CMSRforTesting, verbose = True )
     except Exception, e:
-        print "We hit an exeption."
+        print "We hit an exeption in our testing try."
         print "e:", e
         try:
             shutil.move( "logs/dates.production", "logs/dates.pkl" )
