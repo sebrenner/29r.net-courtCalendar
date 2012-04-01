@@ -64,9 +64,11 @@ class CMSR1231Docket:
                 print "Status ", "*" * 70, "\nThe file:", self._CMSR1231Path2File , "could not be imported.\nIt does not contain schedules for all the judges.", "\nEnd--->", "*" * 70
         
         else:   # CMSRFile isn't fresher
-            print "Here is self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse:"
-            print self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse
-            print "Status ", "*" * 70, "\n\nThis file %s (%s) is not fresher than the previous import (%s).\nEnd--->", "*" * 70 %( self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse )
+            print "self._CMSR1231Path2File:", self._CMSR1231Path2File
+            print "self._freshness:",self._freshness
+            print "self._dateOfPriorParse:", self._dateOfPriorParse
+            
+            print "Status ", "*" * 70, "\n\nThis file %s (%s) is not fresher than the previous import (%s).\nEnd--->" %(  self._CMSR1231Path2File, self._dateOfPriorParse, self._freshness  ), "*" * 70
     
     # ======================================================
     # = Function for parsing CMS docket                    =
@@ -750,11 +752,11 @@ if __name__ == '__main__':
             testDocket = CMSR1231Docket( each, verbose = False )
         except Exception, e:
             print "\n!!!!!!Processing", each, "threw an exception: ", e
-    
+        print "The parsing success is %s." % testDocket.isSuccesful()
+        
     # Put the old dates file back in place
     try:
         shutil.move( "logs/dates.production", "logs/dates.pkl" )
-        print "The production logs/dates.pkl file was restored."
+        print "\nThe production logs/dates.pkl file was restored."
     except Exception, e:
-        print "No logs/dates.production to move back."
-    
+        print "\nNo logs/dates.production to move back."
