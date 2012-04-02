@@ -480,6 +480,12 @@ class CMSR1231Docket:
     # ========================================
     def getCrimList( self ):
         return self._crimList
+
+    def getCrimFilePath( self ):
+        return self._crimFilePath
+
+    def getCivFilePath( self ):
+        return self._civFilePath
     
     def getCivilList( self ):
         return self._civilList
