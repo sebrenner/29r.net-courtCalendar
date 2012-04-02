@@ -6,9 +6,16 @@
  *
  * This application queries my database of court date and returns an ical.
  */
+ 
+// These ones are for parsing by parser
 $dateFile = '/home3/todayspo/public_html/29r/up/parser/logs/dates.txt';
 $crimFile = '/home3/todayspo/public_html/29r/up/parser/logs/TS_final_list_crim.csv';
 $civFile  = '/home3/todayspo/public_html/29r/up/parser/logs/TS_final_list_civil.csv';
+
+
+$dateFile = '/home3/todayspo/public_html/29r/logs/dates.txt';
+$crimFile = '/home3/todayspo/public_html/29r/logs/TS_final_list_crim.csv';
+$civFile  = '/home3/todayspo/public_html/29r/logs/TS_final_list_civil.csv';
 
 if ( file_exists( $dateFile ) && file_exists( $crimFile ) && file_exists( $civFile ) ){
     $lines = file('/home3/todayspo/public_html/29r/up/parser/logs/dates.txt');
@@ -92,9 +99,9 @@ if ( file_exists( $dateFile ) && file_exists( $crimFile ) && file_exists( $civFi
 		$result = $dbh->commit();
 
         echo "The SQL Statement executed successfully";
-        unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_civil.csv');
-        unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_crim.csv');
-        unlink('/home3/todayspo/public_html/29r/logs/dates.txt');
+        //unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_civil.csv');
+        //unlink('/home3/todayspo/public_html/29r/logs/TS_final_list_crim.csv');
+        //unlink('/home3/todayspo/public_html/29r/logs/dates.txt');
     
     
     } catch (Exception $e) {
