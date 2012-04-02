@@ -43,3 +43,4 @@
 2012-03-28 08:41:4 - /home3/todayspo/public_html/29r/up/server/php/files/cmsr1231.P49 was processed.  Began: 2012-03-28 Finished 2012-03-28  Total time: 0:00:04.04.  3830 Criminal events processed. 9823 Civil events processed. 
 2012-03-28 21:52:3 - /home3/todayspo/public_html/29r/up/server/php/files/cmsr1231.P50 was processed.  Began: 2012-03-28 Finished 2012-03-28  Total time: 0:00:04.03.  3831 Criminal events processed. 9855 Civil events processed. 
 2012-03-30 16:29:3 - /home3/todayspo/public_html/29r/up/server/php/files/cmsr1231.P53 was processed.  Began: 2012-03-30 Finished 2012-03-30  Total time: 0:00:04.37.  3797 Criminal events processed. 9826 Civil events processed. 
+2012-04-01 20:41:2 - /home3/todayspo/public_html/29r/up/server/php/files/cmsr1231.P53 was processed.  Began: 2012-04-01 Finished 2012-04-01  Total time: 0:00:06.63.  3797 Criminal events processed. 9826 Civil events processed. 
