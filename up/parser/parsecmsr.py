@@ -125,8 +125,12 @@ def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
 printHeader()
 print "<pre>"
 testDocket = CMSR1231Docket( getLastestFile(),  verbose = True )
-dates = testDocket.getPeriod()
-importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
-
+print "testDocket.isSuccessful()", testDocket.isSuccessful()
+if testDocket.isSuccessful():
+    print "Why heer?"
+    dates = testDocket.getPeriod()
+    importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
+else:
+    print "No changes to the database were made."
 print "</pre>"
 printFooter()
