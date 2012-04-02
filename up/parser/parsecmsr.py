@@ -1,30 +1,132 @@
 #!/usr/bin/python
-# encoding: utf-8
 
 """
 parsecmsr.py
 
-This code creates a cmsr class.  The class:
-	1) parses the most recent cmsr file to csvs
-	2) calls the php code for importing the csvs into mysql.
+This code passes a cmsr1231.pxx file path to the CMSR231 class.
+The class parse the .pxx file and creates to csv viles.
+This code then executes sql statements importing the csv files into the Mysql db.
+Then the csv files are moved to an archive and deletes the oldest file in the archive using the file name to determine age.
 
 Created by Scott Brenner on Saturday, March 24, 2012 7:23:37 PM
 .
-Copyright (c) 2011 Scott Brenner. All rights reserved.
+Copyright (c) 2012 Scott Brenner. All rights reserved.
 
 """
 
 # = Modules =
-import urllib2
 from cmsr1231Class import *  # this is the CMSR class
-from file_functions import *  # these are my file management functions
+import sys
+import MySQLdb as mdb
 
-print "\n\n\n\nThe CMSR file is being parsed.\n\n\n\n"
-testDocket = CMSR1231Docket( verbose = True )
-print "\n\n\n\nCalling http://29r.net/excutesql.php?cmsr.\n\n\n\n"
+def importCSV( CSVs, startDate, endDate):
+    """
+    Takes CSV path and date range.
+    In a single transaction, all the matching records in the date range
+    """
+    
+    # ====================
+    # = Connec to the db =
+    # ====================
+    con = None
+    try:
+        con = mdb.connect('localhost', 'todayspo_calAdm',  'Gmu1vltrkLOX4n', 'todayspo_courtCal2')
+    except mdb.Error, e:
+        print "Error %d: %s" % (e.args[0], e.args[1])
+        sys.exit(1)
+    
+    # ================================================
+    # = Execute the sql atomically, rollback on fail =
+    # ================================================
+    cursor = con.cursor()
+    try:
+        try:
+            # Delete the rows from the relevant period
+            sqlQueryDELETE = "  DELETE FROM nextActions \
+                                WHERE NAC_date between \'%s\' and \'%s\'" \
+                                %( startDate, endDate )
+            # print sqlQueryDELETE ,"\n\n"
+            print "cursor.execute( sqlQueryDELETE ):", cursor.execute( sqlQueryDELETE )
+            print "OPTIMIZE TABLE nextActions: ", cursor.execute( "OPTIMIZE TABLE nextActions;" ) 
+            
+            # Load each CSV
+            for each in CSVs:
+                sqlQueryLOADCSV = "LOAD DATA LOCAL INFILE \"%s\" INTO \
+                                TABLE nextActions \
+                                FIELDS TERMINATED BY \",\" \
+                                ENCLOSED BY \'\"\'   \
+                                LINES TERMINATED BY \"\\r\\n\" \
+                                SET judgeId_fk = (SELECT judgeId FROM judges \
+                                where CMSRName = judge );" %( each )
+                # print "\n", sqlQueryLOADCSV
+                print "Result of cursor.execute( sqlQueryLOADCSV ):", cursor.execute( sqlQueryLOADCSV )
+                print "cursor.execute( sqlQueryDELETE ):", cursor.execute( sqlQueryDELETE )
+        except:
+            print "Result of rollback:", con.rollback()
+            raise
+        else:
+            print "Result of commit:", con.commit()
+    finally:
+        print "Result of commit:", con.commit()
+        print "Result cursor.close:", cursor.close()
 
-url = 'http://29r.net/up/parser/excutesql.php?cmsr=' + testDocket._CMSR1231Path2File
-print "\n\n\n\nURI\n"
-print url
+def printHeader():
+    print "Content-type: text/html"
+    print
+    print "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
+    print "<html lang=\"en\">"
+    print "<head>"
+    print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
+    print "<title>CMSR1231 Parser</title>"
+    print "<meta name=\"author\" content=\"Scott Brenner\">"
+    print "</head><body>"
 
-urllib2.urlopen('http://29r.net/up/parser/excutesql.php?cmsr=' + testDocket._CMSR1231Path2File )
+def printFooter():
+    """
+    Prints html footer code
+    """
+    print "</body>"
+    print "</html>"
+
+def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
+    """
+    Gets the file path to the latest .pxx file from
+    the passed diretory, by default ../server/php/files/
+    
+    ~/public_html/29r.git/up/server/php/files/
+    """
+    try:
+        # get files from the passedDirectory
+        filelist = os.listdir( passedDirectory )
+        print filelist
+        
+        # filter out directories
+        filelist = filter(lambda x: not os.path.isdir(x), filelist)
+        print filelist
+        
+        # add the path to the CMSRfiles name
+        CMSRfiles = []
+        for index, item in enumerate(filelist):
+            # Only consider files that start wirh "cmsr1231"
+            if item[:8] == "cmsr1231":
+                print "File name starts with cmsr1231."
+                CMSRfiles.append( passedDirectory + item) 
+        print CMSRfiles
+        
+        mostRecent = max(CMSRfiles, key=lambda x: os.stat(x).st_mtime)
+        if verbose:
+            print"The last modified file is: %s" % mostRecent
+        return mostRecent
+    except Exception, e:
+        print "There are no CMSR1231 files in the %s directory." % passedDirectory
+        raise e
+
+
+printHeader()
+print "<pre>"
+testDocket = CMSR1231Docket( getLastestFile(),  verbose = True )
+dates = testDocket.getPeriod()
+importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
+
+print "</pre>"
+printFooter()
