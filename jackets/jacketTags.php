@@ -46,7 +46,6 @@ if($_GET["casetype"] == 0){
     $query = $query . " AND case_number not like '%B %' ";   
 }
 
-
 //  If counsel is given: try to find counsel's name in either prosecutor or defense.
 if(isset($_GET["counsel"])){
     $counsel = htmlspecialchars($_GET["counsel"]);
@@ -115,7 +114,7 @@ function getCaption( $caption )
 
 
 // Get the sql password from an external file.
-require_once("../_ignore_git/dbreader_pswd.php");
+require_once("../passwordfiles/dbreader_pswd.php");
 
 try 
 {
