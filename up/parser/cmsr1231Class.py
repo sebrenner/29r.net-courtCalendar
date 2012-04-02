@@ -496,7 +496,7 @@ class CMSR1231Docket:
     def getFreshness( self ):
         return self._freshness
     
-    def isSuccesful( self ):
+    def isSuccessful( self ):
         """
         Returns true if the import was successful.
         """
@@ -657,7 +657,7 @@ class CMSR1231Docket:
         """
         self.getPeriod()
         dates = self.getPeriod()
-        archivePage = dates[0] + "->" + dates[1] + ".cmsr"
+        archivePage = "archives/" + dates[0] + "->" + dates[1] + ".cmsr"
         try:
             shutil.move( self._CMSR1231Path2File, archivePage )
         except Exception, e:
