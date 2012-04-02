@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# encoding: utf-8
 
 """
 parsecmsr.py
@@ -31,7 +30,7 @@ def importCSV( CSVs, startDate, endDate):
     # ====================
     con = None
     try:
-        con = mdb.connect('localhost', 'todayspo_calAdm',  'Gmu1vltrkLOX4n', 'todayspo_courtCal2')        
+        con = mdb.connect('localhost', 'todayspo_calAdm',  'Gmu1vltrkLOX4n', 'todayspo_courtCal2')
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
         sys.exit(1)
@@ -46,8 +45,9 @@ def importCSV( CSVs, startDate, endDate):
             sqlQueryDELETE = "  DELETE FROM nextActions \
                                 WHERE NAC_date between \'%s\' and \'%s\'" \
                                 %( startDate, endDate )
-            print sqlQueryDELETE ,"\n\n"
-            cursor.execute( sqlQueryDELETE )
+            # print sqlQueryDELETE ,"\n\n"
+            print "cursor.execute( sqlQueryDELETE ):", cursor.execute( sqlQueryDELETE )
+            print "OPTIMIZE TABLE nextActions: ", cursor.execute( "OPTIMIZE TABLE nextActions;" ) 
             
             # Load each CSV
             for each in CSVs:
@@ -55,49 +55,31 @@ def importCSV( CSVs, startDate, endDate):
                                 TABLE nextActions \
                                 FIELDS TERMINATED BY \",\" \
                                 ENCLOSED BY \'\"\'   \
-                                LINES TERMINATED BY \"\\r\\n\";" %( each )
-                print "\n", sqlQueryLOADCSV
-                cursor.execute( sqlQueryLOADCSV )
-                cursor.execute( 'Optimize nextActions;' ) 
-            con.rollback()
+                                LINES TERMINATED BY \"\\r\\n\" \
+                                SET judgeId_fk = (SELECT judgeId FROM judges \
+                                where CMSRName = judge );" %( each )
+                # print "\n", sqlQueryLOADCSV
+                print "Result of cursor.execute( sqlQueryLOADCSV ):", cursor.execute( sqlQueryLOADCSV )
+                print "cursor.execute( sqlQueryDELETE ):", cursor.execute( sqlQueryDELETE )
         except:
-            con.rollback()
+            print "Result of rollback:", con.rollback()
             raise
         else:
-            con.commit()
+            print "Result of commit:", con.commit()
     finally:
-        cursor.close()
-
-def getLatestFile( self, passedDirctory ):
-    try:
-        # get files from the self._passedDirctory
-        filelist = os.listdir( passedDirctory )
-        
-        # filtor out directories
-        filelist = filter(lambda x: not os.path.isdir(x), filelist)
-        
-        # add the path to the CMSRfiles name
-        CMSRfiles = []
-        for index, item in enumerate(filelist):
-            # Only consider files that start wirh "cmsr1231"
-            if item[:8] == "cmsr1231":
-                CMSRfiles.append( passedDirctory + item) 
-                
-        mostRecent = max(CMSRfiles, key=lambda x: os.stat(x).st_mtime)
-        if self._verbose:
-            print"The last modified file is: %s" % mostRecent
-        return mostRecent
-    except Exception, e:
-        print "There are no CMSR1231 files in the %s directory." % passedDirctory
-        raise e
+        print "Result of commit:", con.commit()
+        print "Result cursor.close:", cursor.close()
 
 def printHeader():
+    print "Content-type: text/html"
+    print
     print "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
     print "<html lang=\"en\">"
     print "<head>"
     print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
     print "<title>CMSR1231 Parser</title>"
     print "<meta name=\"author\" content=\"Scott Brenner\">"
+    print "</head><body>"
 
 def printFooter():
     """
@@ -106,20 +88,45 @@ def printFooter():
     print "</body>"
     print "</html>"
 
-def isCriminal( filePath ):
+def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
     """
-    Predicate function returns true if the file path is for a crim case CSV.
+    Gets the file path to the latest .pxx file from
+    the passed diretory, by default ../server/php/files/
+    
+    ~/public_html/29r.git/up/server/php/files/
     """
-    if "crim" in filePath:
-        return True
-    else:
-        return False
+    try:
+        # get files from the passedDirectory
+        filelist = os.listdir( passedDirectory )
+        print filelist
+        
+        # filter out directories
+        filelist = filter(lambda x: not os.path.isdir(x), filelist)
+        print filelist
+        
+        # add the path to the CMSRfiles name
+        CMSRfiles = []
+        for index, item in enumerate(filelist):
+            # Only consider files that start wirh "cmsr1231"
+            if item[:8] == "cmsr1231":
+                print "File name starts with cmsr1231."
+                CMSRfiles.append( passedDirectory + item) 
+        print CMSRfiles
+        
+        mostRecent = max(CMSRfiles, key=lambda x: os.stat(x).st_mtime)
+        if verbose:
+            print"The last modified file is: %s" % mostRecent
+        return mostRecent
+    except Exception, e:
+        print "There are no CMSR1231 files in the %s directory." % passedDirectory
+        raise e
 
 
 printHeader()
-
-testDocket = CMSR1231Docket( "testFiles/cmsr1231.P53",  verbose = True )
+print "<pre>"
+testDocket = CMSR1231Docket( getLastestFile(),  verbose = True )
 dates = testDocket.getPeriod()
 importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
 
+print "</pre>"
 printFooter()

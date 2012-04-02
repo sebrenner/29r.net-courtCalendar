@@ -283,3 +283,42 @@
 2012-04-01 19:01:1 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:03.44.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
 2012-04-01 19:05:5 - Judes set contains: 25 judges.
 2012-04-01 19:05:5 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:04.32.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 19:10:4 - Judes set contains: 25 judges.
+2012-04-01 19:10:4 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:03.26.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 19:12:5 - Judes set contains: 25 judges.
+2012-04-01 19:12:5 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:03.66.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 19:35:1 - Judes set contains: 25 judges.
+2012-04-01 19:35:1 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:05.50.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 19:38:0 - Judes set contains: 25 judges.
+2012-04-01 19:38:0 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:06.21.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 19:41:1 - Judes set contains: 25 judges.
+2012-04-01 19:41:1 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:05.50.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 19:46:2 - Judes set contains: 25 judges.
+2012-04-01 19:46:3 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:07.21.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 19:50:0 - Judes set contains: 25 judges.
+2012-04-01 19:50:0 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:04.32.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:05:3 - Judes set contains: 25 judges.
+2012-04-01 20:05:3 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:07.37.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:13:0 - Judes set contains: 25 judges.
+2012-04-01 20:13:0 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:05.16.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:14:4 - Judes set contains: 25 judges.
+2012-04-01 20:14:4 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:05.80.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:20:0 - Judes set contains: 25 judges.
+2012-04-01 20:20:1 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:05.33.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:31:1 - Judes set contains: 25 judges.
+2012-04-01 20:31:1 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:04.35.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:31:5 - Judes set contains: 25 judges.
+2012-04-01 20:31:5 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:05.57.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:32:2 - Judes set contains: 25 judges.
+2012-04-01 20:32:2 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:06.17.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:34:2 - Judes set contains: 25 judges.
+2012-04-01 20:34:2 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:05.38.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:36:0 - Judes set contains: 25 judges.
+2012-04-01 20:36:0 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:06.10.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:42:5 - Judes set contains: 25 judges.
+2012-04-01 20:42:5 - testFiles/cmsr1231.P53 was processed.  Processing time: 0:00:07.12.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 20:52:0 - Judes set contains: 25 judges.
+2012-04-01 21:06:4 - Judes set contains: 25 judges.
+2012-04-01 21:06:4 - /home3/todayspo/public_html/29r.git/up/server/php/files/cmsr1231.P53 was processed.  Processing time: 0:00:05.04.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30
+2012-04-01 21:12:3 - Judes set contains: 25 judges.
+2012-04-01 21:12:3 - ../server/php/files/cmsr1231.P53 was processed.  Processing time: 0:00:03.08.  3797 Criminal events processed. 9826 Civil events processed. Freshness: 2012-03-30

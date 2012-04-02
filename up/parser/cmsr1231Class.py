@@ -480,10 +480,10 @@ class CMSR1231Docket:
     # ========================================
     def getCrimList( self ):
         return self._crimList
-
+    
     def getCrimFilePath( self ):
         return self._crimFilePath
-
+    
     def getCivFilePath( self ):
         return self._civFilePath
     
@@ -651,6 +651,19 @@ class CMSR1231Docket:
         else:
             return False
     
+    def __archiveCMSR1231( self ):
+        """
+        Moves the successfully parsed file to archive/date->date.cmsr
+        """
+        self.getPeriod()
+        dates = self.getPeriod()
+        archivePage = dates[0] + "->" + dates[1] + ".cmsr"
+        try:
+            shutil.move( self._CMSR1231Path2File, archivePage )
+        except Exception, e:
+            print "Couldn't archive %s." %( self._CMSR1231Path2File )
+            print "Error:", e
+    
     def __onSuccess( self ):
         """
         This function is called when the file successfully parsed.
@@ -666,6 +679,11 @@ class CMSR1231Docket:
         dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
         self.__write_obj_to_file( dateDict, self._dateDictFilePath )
         if self._verbose: print "Date range and freshness successfully saved."
+        
+        # ==================================
+        # = Move parsed file to archive    =
+        # ==================================
+        self.__archiveCMSR1231()
         
         # ===========================
         # = Log progress            =
@@ -710,9 +728,9 @@ class CMSR1231Docket:
         if self._verbose: print "Parseing ", self._CMSR1231Path2File
         self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
         # Create filenames based on time frames.
-        self._crimFilePath = "CSVs/crim_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
+        self._crimFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_crim.csv"
         
-        self._civFilePath = "CSVs/civil_" + str( self._firstDate ) + "--" + str( self._lastDate ) + ".csv"
+        self._civFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_civil.csv"
         if self._verbose:
             print "The CMSRfile was created on %s. It covers %s to %s." %( self._freshness, self._firstDate, self._lastDate )
     
