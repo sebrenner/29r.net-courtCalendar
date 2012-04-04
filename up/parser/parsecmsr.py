@@ -25,15 +25,17 @@ def importCSV( CSVs, startDate, endDate):
     In a single transaction, all the matching records in the date range
     """
     
-    # ====================
-    # = Connec to the db =
-    # ====================
+    # =====================
+    # = Connect to the db =
+    # =====================
     con = None
+    print "Connecting to db... " ,
     try:
         con = mdb.connect('localhost', 'todayspo_calAdm',  'Gmu1vltrkLOX4n', 'todayspo_courtCal2')
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
         sys.exit(1)
+    print "success-connected."
     
     # ================================================
     # = Execute the sql atomically, rollback on fail =
@@ -42,15 +44,21 @@ def importCSV( CSVs, startDate, endDate):
     try:
         try:
             # Delete the rows from the relevant period
+            print "Deleting records... " ,
             sqlQueryDELETE = "  DELETE FROM nextActions \
                                 WHERE NAC_date between \'%s\' and \'%s\'" \
                                 %( startDate, endDate )
-            # print sqlQueryDELETE ,"\n\n"
-            print "cursor.execute( sqlQueryDELETE ):", cursor.execute( sqlQueryDELETE )
-            print "OPTIMIZE TABLE nextActions: ", cursor.execute( "OPTIMIZE TABLE nextActions;" ) 
+            
+            result = cursor.execute( sqlQueryDELETE )
+            print "success ( %i records dropped)." %result
+            
+            print "Optimizing nextActions... ",
+            result = cursor.execute( "OPTIMIZE TABLE nextActions;" )
+            print "success ( %i records optimized)." %result
             
             # Load each CSV
             for each in CSVs:
+                print "Loading %s ( X records)..." % each, 
                 sqlQueryLOADCSV = "LOAD DATA LOCAL INFILE \"%s\" INTO \
                                 TABLE nextActions \
                                 FIELDS TERMINATED BY \",\" \
@@ -58,17 +66,17 @@ def importCSV( CSVs, startDate, endDate):
                                 LINES TERMINATED BY \"\\r\\n\" \
                                 SET judgeId_fk = (SELECT judgeId FROM judges \
                                 where CMSRName = judge );" %( each )
-                # print "\n", sqlQueryLOADCSV
-                print "Result of cursor.execute( sqlQueryLOADCSV ):", cursor.execute( sqlQueryLOADCSV )
-                print "cursor.execute( sqlQueryDELETE ):", cursor.execute( sqlQueryDELETE )
+                result = cursor.execute( sqlQueryLOADCSV )
+                print "Success (%i records imported)", % result
         except:
-            print "Result of rollback:", con.rollback()
+            print "failure.  Records rolled back: ", con.rollback()
             raise
         else:
-            print "Result of commit:", con.commit()
+            print "Transaction committed: ", con.commit()
     finally:
-        print "Result of commit:", con.commit()
-        print "Result cursor.close:", cursor.close()
+        print "Transaction committed: ", con.commit()
+        print "Closing cursor... ", cursor.close(),
+        print "Success cursor closed."
 
 def printHeader():
     print "Content-type: text/html"

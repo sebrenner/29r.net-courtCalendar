@@ -30,13 +30,15 @@ class CMSR1231Docket:
         # initialize variables
         self._dateDictFilePath ="logs/dates.pkl"
         self._verbose = verbose
+        self._civRecordCount = 0
+        self._crimRecordCount = 0
         self._success = False
         self._freshness, self._lastDate, self._firstDate = "","",""
         self._dateOfPriorParse = ""
         self._judges = set()    # for counting judge's schedules
         self._CMSR1231Path2File = CMSRFilePath
         self._opperationStartTime = datetime.datetime.now()   # For measuring performance
-        self._opperationFinishTime = ""
+        self._opperationFinishTime = datetime.datetime.now()
         # print "\nStart->", "*" * 70, "\n\tNew CMSR1231Docket Object from %s" % self._CMSR1231Path2File
         
         # =======================
@@ -369,6 +371,7 @@ class CMSR1231Docket:
         print "Saving %s... " % self._crimFilePath ,
         self.__write_lists_csv( crim_list, self._crimFilePath )
         print " crim csv file saved."
+        self._crimRecordCount = len( crim_list )
         return crim_list
     
     def __final_pass_civil( self, civil_list ):
@@ -442,7 +445,7 @@ class CMSR1231Docket:
         print "Saving %s... " % self._crimFilePath ,
         self.__write_lists_csv( civil_list, self._civFilePath )
         print " civil csv file saved."
-        
+        self._civRecordCount = len( civil_list )
         return civil_list
     
     # ====================================
@@ -495,6 +498,12 @@ class CMSR1231Docket:
         Returns true if the import was successful.
         """
         return self._success
+    
+    def getCivRecordCnt( self ):
+        return self._civRecordCount
+    
+    def getCivRecordCnt( self ):
+        return self._crimRecordCount
     
     # =========================================
     # = Functions for manipulating the lists  =
