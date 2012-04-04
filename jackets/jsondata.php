@@ -51,7 +51,7 @@ if(isset($_GET["casetype"])){
 /*** connect to MySQL database ***/
 
 // Get the sql password from an external file.
-require_once("../_ignore_git/dbreader_pswd.php");
+require_once("../passwordfiles/dbreader_pswd.php");
 
 try 
 {

@@ -50,7 +50,7 @@ class CMSR1231Docket:
         # file successfully parsed.
         print "Confirming %s is fresher..." % self._CMSR1231Path2File ,
         if ( self.__isFresher() ):
-            print "\t\tSuccess Fresher"
+            print "\t\tSuccess (fresher)."
             self.__secondPass()
             
             # Run the final passes if the passed file contains shedules 
@@ -66,7 +66,7 @@ class CMSR1231Docket:
                 print "\n\t\t%s does not contain schedules for all the judges." % self._CMSR1231Path2File 
         
         else:   # CMSRFile isn't fresher
-            print "\n\t\t%s is NOT fresher. It was created on %s. The last imported file was created on %s." % ( self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse ) 
+            print "\n\t\t%s is NOT fresher.\n\t\tIt was created on %s. The last imported file was created on %s." % ( self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse ) 
     
     # ======================================================
     # = Function for parsing CMS docket                    =
@@ -368,7 +368,7 @@ class CMSR1231Docket:
         # save out csv file
         print "Saving %s... " % self._crimFilePath ,
         self.__write_lists_csv( crim_list, self._crimFilePath )
-        print "\t\t\t\t\tSuccess file saved."
+        print "\t\t\tSuccess (file saved)."
         self._crimRecordCount = len( crim_list )
         return crim_list
     
@@ -440,9 +440,9 @@ class CMSR1231Docket:
                     row[index] = item.strip(" ")
         
         # save out csv file
-        print "Saving %s... " % self._crimFilePath ,
+        print "Saving %s... " % self._civFilePath ,
         self.__write_lists_csv( civil_list, self._civFilePath )
-        print "\t\t\t\t\tSuccess file saved."
+        print "\t\t\tSuccess (file saved)."
         self._civRecordCount = len( civil_list )
         return civil_list
     
@@ -659,13 +659,13 @@ class CMSR1231Docket:
         self.getPeriod()
         dates = self.getPeriod()
         archivePage = "archive/" + dates[0] + "->" + dates[1] + ".cmsr"
-        print "Archiving %s..." % archivePage ,
+        print "Archiving %s..." % self._CMSR1231Path2File ,
         try:
             shutil.move( self._CMSR1231Path2File, archivePage )
         except Exception, e:
-            print "Couldn't archive %s." %( self._CMSR1231Path2File )
+            print "\n\t\tERROR Couldn't archive %s." %( self._CMSR1231Path2File )
             print "Error:", e
-        print "\t\t\t\t\tSuccess %s saved." % archivePage
+        print "\t\t\t\tSuccess (%s saved)." % archivePage
     
     def __onSuccess( self ):
         """
@@ -680,7 +680,7 @@ class CMSR1231Docket:
         print "Saving date file..." ,
         dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
         self.__write_obj_to_file( dateDict, self._dateDictFilePath )
-        print "\t\t\t\t\tSuccess date file saved."
+        print "\t\t\t\t\t\t\tSuccess (date file saved)."
         
         # ==================================
         # = Move parsed file to archive    =
@@ -729,7 +729,7 @@ class CMSR1231Docket:
         """
         print "*" * 70, "\nOpening %s ..." % self._CMSR1231Path2File , 
         self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
-        print "\t\t\t\t\tSuccess file opened."
+        print "\t\t\t\tSuccess (file opened)."
         
         # Create filenames based on time frames.
         self._crimFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_crim.csv"

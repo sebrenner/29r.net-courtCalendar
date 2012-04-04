@@ -35,7 +35,7 @@ def importCSV( CSVs, startDate, endDate):
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
         sys.exit(1)
-    print "\t\t\t\t\t\tSuccess (connected to dB)."
+    print "\t\t\t\t\t\t\tSuccess (connected to dB)."
     
     # ================================================
     # = Execute the sql atomically, rollback on fail =
@@ -44,17 +44,17 @@ def importCSV( CSVs, startDate, endDate):
     try:
         try:
             # Delete the rows from the relevant period
-            print "Deleting records... " ,
+            print "Deleting records..." ,
             sqlQueryDELETE = "  DELETE FROM nextActions \
                                 WHERE NAC_date between \'%s\' and \'%s\'" \
                                 %( startDate, endDate )
             
             result = cursor.execute( sqlQueryDELETE )
-            print "\t\t\t\t\tSuccess ( %i records dropped)." %result
+            print "\t\t\t\t\t\t\tSuccess (%i records dropped)." %result
             
-            print "Optimizing nextActions... ",
+            print "Optimizing nextActions...",
             result = cursor.execute( "OPTIMIZE TABLE nextActions;" )
-            print "\t\t\t\t\t\t\tSuccess ( %i records optimized)." %result
+            print "\t\t\t\t\t\tSuccess (%i records optimized)." %result
             
             # Load each CSV
             for each in CSVs:
@@ -67,16 +67,19 @@ def importCSV( CSVs, startDate, endDate):
                                 SET judgeId_fk = (SELECT judgeId FROM judges \
                                 where CMSRName = judge );" %( each )
                 result = cursor.execute( sqlQueryLOADCSV )
-                print "\t\tSuccess (%i records imported)" % result
+                print "\t\t\tSuccess (%i records imported)" % result
         except:
             print "\n\t\t\tFAILURE.  Records rolled back: ", con.rollback()
             raise
         else:
-            print "Success. Transaction committed: ", con.commit()
+            # print "Success. Transaction committed: ", 
+            con.commit()
     finally:
-        print "Success. Transaction committed: ", con.commit()
-        print "Success. Closing cursor... ", cursor.close() ,
-        print "Success. Cursor closed."
+        print "Committing Transaction...",
+        con.commit()
+        print "\t\t\t\t\t\tSuccess (transaction committed).\nClosing cursor...",
+        cursor.close() 
+        print "\t\t\t\t\t\t\tSuccess (Cursor closed)."
 
 def printHeader():
     print "Content-type: text/html"
@@ -96,7 +99,7 @@ def printFooter():
     print "</body>"
     print "</html>"
 
-def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
+def getLastestFile( passedDirectory ="../server/php/files/", verbose = False ):
     """
     Gets the file path to the latest .pxx file from
     the passed diretory, by default ../server/php/files/
@@ -117,7 +120,7 @@ def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
         for index, item in enumerate(filelist):
             # Only consider files that start wirh "cmsr1231"
             if item[:8] == "cmsr1231":
-                print "File name starts with cmsr1231."
+                # print "File name starts with cmsr1231."
                 CMSRfiles.append( passedDirectory + item) 
         # print CMSRfiles
         
@@ -134,11 +137,13 @@ def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
 printHeader()
 print "<pre>"
 cmsrPath = -1
-if ( getLastestFile() != -1  ):
+cmsrPath = getLastestFile()
+
+if ( cmsrPath != -1  ):
     testDocket = CMSR1231Docket( cmsrPath,  verbose = False )
     print "Confirming %s was parsed..." %cmsrPath,
     if testDocket.isSuccessful():
-        print "\t\t\t\t\tSuccess file parsed."
+        print "\t\tSuccess (file parsed)."
         dates = testDocket.getPeriod()
         importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
     else:
