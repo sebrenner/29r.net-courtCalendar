@@ -35,7 +35,7 @@ def importCSV( CSVs, startDate, endDate):
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
         sys.exit(1)
-    print "success-connected."
+    print "\t\t\t\t\t\tSuccess (connected to dB)."
     
     # ================================================
     # = Execute the sql atomically, rollback on fail =
@@ -50,15 +50,15 @@ def importCSV( CSVs, startDate, endDate):
                                 %( startDate, endDate )
             
             result = cursor.execute( sqlQueryDELETE )
-            print "success ( %i records dropped)." %result
+            print "\t\t\t\t\tSuccess ( %i records dropped)." %result
             
             print "Optimizing nextActions... ",
             result = cursor.execute( "OPTIMIZE TABLE nextActions;" )
-            print "success ( %i records optimized)." %result
+            print "\t\t\t\t\t\t\tSuccess ( %i records optimized)." %result
             
             # Load each CSV
             for each in CSVs:
-                print "Loading %s ( X records)..." % each, 
+                print "Loading %s..." % each, 
                 sqlQueryLOADCSV = "LOAD DATA LOCAL INFILE \"%s\" INTO \
                                 TABLE nextActions \
                                 FIELDS TERMINATED BY \",\" \
@@ -67,16 +67,16 @@ def importCSV( CSVs, startDate, endDate):
                                 SET judgeId_fk = (SELECT judgeId FROM judges \
                                 where CMSRName = judge );" %( each )
                 result = cursor.execute( sqlQueryLOADCSV )
-                print "Success (%i records imported)", % result
+                print "\t\tSuccess (%i records imported)" % result
         except:
-            print "failure.  Records rolled back: ", con.rollback()
+            print "\n\t\t\tFAILURE.  Records rolled back: ", con.rollback()
             raise
         else:
-            print "Transaction committed: ", con.commit()
+            print "Success. Transaction committed: ", con.commit()
     finally:
-        print "Transaction committed: ", con.commit()
-        print "Closing cursor... ", cursor.close(),
-        print "Success cursor closed."
+        print "Success. Transaction committed: ", con.commit()
+        print "Success. Closing cursor... ", cursor.close() ,
+        print "Success. Cursor closed."
 
 def printHeader():
     print "Content-type: text/html"
@@ -106,11 +106,11 @@ def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
     try:
         # get files from the passedDirectory
         filelist = os.listdir( passedDirectory )
-        print filelist
+        # print filelist
         
         # filter out directories
         filelist = filter(lambda x: not os.path.isdir(x), filelist)
-        print filelist
+        # print filelist
         
         # add the path to the CMSRfiles name
         CMSRfiles = []
@@ -119,26 +119,29 @@ def getLastestFile( passedDirectory ="../server/php/files/", verbose = True ):
             if item[:8] == "cmsr1231":
                 print "File name starts with cmsr1231."
                 CMSRfiles.append( passedDirectory + item) 
-        print CMSRfiles
+        # print CMSRfiles
         
         mostRecent = max(CMSRfiles, key=lambda x: os.stat(x).st_mtime)
         if verbose:
-            print"The last modified file is: %s" % mostRecent
+            print "The last modified file is: %s" % mostRecent
         return mostRecent
     except Exception, e:
-        print "There are no CMSR1231 files in the %s directory." % passedDirectory
-        raise e
+        print "\n\t\tERROR There are no CMSR1231 files in the %s directory." % passedDirectory
+        return -1
+        # raise e
 
 
 printHeader()
 print "<pre>"
-testDocket = CMSR1231Docket( getLastestFile(),  verbose = True )
-print "testDocket.isSuccessful()", testDocket.isSuccessful()
-if testDocket.isSuccessful():
-    print "Why heer?"
-    dates = testDocket.getPeriod()
-    importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
-else:
-    print "No changes to the database were made."
+cmsrPath = -1
+if ( getLastestFile() != -1  ):
+    testDocket = CMSR1231Docket( cmsrPath,  verbose = False )
+    print "Confirming %s was parsed..." %cmsrPath,
+    if testDocket.isSuccessful():
+        print "\t\t\t\t\tSuccess file parsed."
+        dates = testDocket.getPeriod()
+        importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
+    else:
+        print "\n\t\t\t\tFAILURE-  No changes to the database were made."
 print "</pre>"
 printFooter()

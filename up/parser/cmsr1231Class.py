@@ -50,25 +50,23 @@ class CMSR1231Docket:
         # file successfully parsed.
         print "Confirming %s is fresher..." % self._CMSR1231Path2File ,
         if ( self.__isFresher() ):
-            print " Success Fresher"
+            print "\t\tSuccess Fresher"
             self.__secondPass()
             
             # Run the final passes if the passed file contains shedules 
             # for all the judges.
             print "Confirming %s contains all the judges..." % self._CMSR1231Path2File ,
             if ( self.__isAllJudges() ):
-                if self._verbose: 
-                    print "The passed file contains all judges."
-                    print "Executing final passes on criminal and civil lists."
+                print "\tsuccess (%i judges)." % len( self._judges )
                 self._crimList = self.__final_pass_crim( self._crimList )
                 self._civilList = self.__final_pass_civil( self._civilList )
                 self._opperationFinishTime = datetime.datetime.now() # For measuring performance
                 self.__onSuccess()
             else:   # CMSRFile doesn't cover all judges.
-                print " %s does not contain schedules for all the judges." % self._CMSR1231Path2File 
+                print "\n\t\t%s does not contain schedules for all the judges." % self._CMSR1231Path2File 
         
         else:   # CMSRFile isn't fresher
-            print " %s is NOT fresher. It was created on %s. The last imported file was created on %s." % ( self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse ) 
+            print "\n\t\t%s is NOT fresher. It was created on %s. The last imported file was created on %s." % ( self._CMSR1231Path2File, self._freshness, self._dateOfPriorParse ) 
     
     # ======================================================
     # = Function for parsing CMS docket                    =
@@ -370,7 +368,7 @@ class CMSR1231Docket:
         # save out csv file
         print "Saving %s... " % self._crimFilePath ,
         self.__write_lists_csv( crim_list, self._crimFilePath )
-        print " crim csv file saved."
+        print "\t\t\t\t\tSuccess file saved."
         self._crimRecordCount = len( crim_list )
         return crim_list
     
@@ -444,7 +442,7 @@ class CMSR1231Docket:
         # save out csv file
         print "Saving %s... " % self._crimFilePath ,
         self.__write_lists_csv( civil_list, self._civFilePath )
-        print " civil csv file saved."
+        print "\t\t\t\t\tSuccess file saved."
         self._civRecordCount = len( civil_list )
         return civil_list
     
@@ -660,12 +658,14 @@ class CMSR1231Docket:
         """
         self.getPeriod()
         dates = self.getPeriod()
-        archivePage = "archives/" + dates[0] + "->" + dates[1] + ".cmsr"
+        archivePage = "archive/" + dates[0] + "->" + dates[1] + ".cmsr"
+        print "Archiving %s..." % archivePage ,
         try:
             shutil.move( self._CMSR1231Path2File, archivePage )
         except Exception, e:
             print "Couldn't archive %s." %( self._CMSR1231Path2File )
             print "Error:", e
+        print "\t\t\t\t\tSuccess %s saved." % archivePage
     
     def __onSuccess( self ):
         """
@@ -677,10 +677,10 @@ class CMSR1231Docket:
         # ==================================
         # = Store date range and freshness =
         # ==================================
-        print "Saving date file... " ,
+        print "Saving date file..." ,
         dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
         self.__write_obj_to_file( dateDict, self._dateDictFilePath )
-        print " Success saving date file."
+        print "\t\t\t\t\tSuccess date file saved."
         
         # ==================================
         # = Move parsed file to archive    =
@@ -694,7 +694,7 @@ class CMSR1231Docket:
         self.__logFileProcessing( logString )
         if self._verbose: print "\n", logString
         
-        print "Status ","*" * 70, "\n", self._CMSR1231Path2File, " was successfuly parsed.\nThe parsed files are available at:\n\t\t", self._crimFilePath, "\n\t\t", self._civFilePath, "\n", "End--->", "*" * 70
+        # print "Status ","*" * 70, "\n", self._CMSR1231Path2File, " was successfuly parsed.\nThe parsed files are available at:\n\t\t", self._crimFilePath, "\n\t\t", self._civFilePath, "\n", "End--->", "*" * 70
     
     def __isAllJudges( self ):
         """
@@ -727,9 +727,9 @@ class CMSR1231Docket:
         It calls self.__parse_file_lines which sets the freshness and time frame of the CMSR file.
         It sets the self._crimFilePath and self._civFilePath.
         """
-        print "*" * 70, "\n\nOpening %s..." % self._CMSR1231Path2File , 
+        print "*" * 70, "\nOpening %s ..." % self._CMSR1231Path2File , 
         self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
-        print " Success opening file."
+        print "\t\t\t\t\tSuccess file opened."
         
         # Create filenames based on time frames.
         self._crimFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_crim.csv"
