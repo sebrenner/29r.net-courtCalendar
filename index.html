@@ -4,18 +4,20 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     
     <title>Hamilton Country Common Pleas Schedule</title>
-	<style type="text/css" media="screen">
-				@import "/media/css/site.ccss";
-				@import "/Datatables/extras/TableTools/media/css/TableTools.css";
-				div.dataTables_wrapper { font-size: 13px; }
-				table.display thead th, table.display td { font-size: 13px; }
-			</style>
-
-	<script type="text/javascript" src="/media/javascript/complete.min.js"></script>
-	<script type="text/javascript" src="/release-datatables/media/js/jquery.dataTables.js"></script>
-	<script type="text/javascript" src="/release-datatables/extras/TableTools/media/js/TableTools.min.js"></script>
-	<script type="text/javascript" language="javascript" src="/DataTables/plugins/jquery.dataTables.columnFilter.js"></script>
-	<script type="text/javascript" charset="utf-8">
+    <style type="text/css" title="currentStyle">
+      @import "/DataTables/media/css/demo_page.css";
+      @import "/DataTables/media/css/demo_table.css";
+      @import "/jqueryThemes/css/smoothness/jquery-ui-1.8.16.custom.css";
+ 
+    </style>
+    
+    <script type="text/javascript" language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" language="javascript" src="/DataTables/media/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="/DataTables/extras/TableTools/media/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" language="javascript" src="/DataTables/extras/TableTools/media/js/TableTools.js"></script>
+    <script type="text/javascript" charset="utf-8">
         function getUrlVars(){
                 var vars = [], hash;
                 var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -59,52 +61,30 @@
 	}
         
         //  adds an event to all links with class .popup to open in a popup window
-        $(document).ready(function() {
-            jQuery('a.popup').live('click', function(){
+		$(document).ready(function() {
+			jQuery('a.popup').live('click', function(){
 				newwindow=window.open($(this).attr('href'),'','height=580,width=790');
-                if (window.focus) {newwindow.focus()}
-                return false;
-
-				$('#judge_line').text( 'Schedule for J. ');
-
-                
-            $(document).keydown(function(e) {
-                  switch(e.keyCode) { 
-                     // User pressed "right" arrow
-                     case 39:
-                        $('#example').fullCalendar('next');
-                     break;
-                     // User pressed "left" arrow
-                     case 37:
-                        $('#example').fullCalendar('prev');
-                     break;
-                  }
-               })
-                
-          });
+				if (window.focus) {newwindow.focus()}
+				return false;
+			});
           
-        // TableTools.DEFAULTS.aButtons = [ "copy", "csv", "xls", "pdf" ];
-
-        var oTable = $('#example').dataTable( {
-	  "sDom": '<"H"fip>t<"F"iTrp>',
-          //"sSwfPath": "/DataTables/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
-          "bProcessing": true,
-          "sAjaxSource": JSONdata,
-          "aoColumns": [
-            { "mDataProp": "NAC_date", "bVisible": false },
-            { "mDataProp": "NAC_date_formatted", "iDataSort": 0 },
-            { "mDataProp": "caption" },
-            { "mDataProp": "case_number", "bVisible": false},
-            { "mDataProp": "NAC" },
-            { "mDataProp": "judge" },
-            { "mDataProp": "location","bVisible": false },
-            { "mDataProp": "counsel" },
-            { "mDataProp": "prosecutor", "bVisible": false},
-            { "mDataProp": "defense", "bVisible": false}
-            ]
-        } ).columnFilter();
-        
-      } );
+		 	var oTable = $('#example').dataTable( {
+				"bProcessing": true,
+				"sAjaxSource": JSONdata,
+				"aoColumns": [
+					{ "mDataProp": "NAC_date", "bVisible": false },
+					{ "mDataProp": "NAC_date_formatted", "iDataSort": 0 },
+					{ "mDataProp": "caption" },
+					{ "mDataProp": "case_number", "bVisible": false},
+					{ "mDataProp": "NAC" },
+					{ "mDataProp": "judge" },
+					{ "mDataProp": "location","bVisible": false },
+					{ "mDataProp": "counsel" },
+					{ "mDataProp": "prosecutor", "bVisible": false},
+					{ "mDataProp": "defense", "bVisible": false}
+				]
+        	} )
+		} );
     </script>
   </head>
   <body id="dt_example">
