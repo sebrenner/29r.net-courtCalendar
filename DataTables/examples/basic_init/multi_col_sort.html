@@ -474,7 +474,7 @@
 			
 			
 			<h1>Initialisation code</h1>
-			<pre>/* Define two custom functions (asc and desc) for string sorting */
+			<pre class="brush: js;">/* Define two custom functions (asc and desc) for string sorting */
 jQuery.fn.dataTableExt.oSort['string-case-asc']  = function(x,y) {
 	return ((x &lt; y) ? -1 : ((x &gt; y) ?  1 : 0));
 };
@@ -496,6 +496,10 @@ $(document).ready(function() {
 		]
 	} );
 } );</pre>
+			<style type="text/css">
+				@import "../examples_support/syntax/css/shCore.css";
+			</style>
+			<script type="text/javascript" language="javascript" src="../examples_support/syntax/js/shCore.js"></script>
 			
 			
 			<h1>Other examples</h1>
@@ -510,6 +514,7 @@ $(document).ready(function() {
 					<li><a href="../basic_init/hidden_columns.html">Hidden columns</a></li>
 					<li><a href="../basic_init/complex_header.html">Complex headers - grouping with colspan</a></li>
 					<li><a href="../basic_init/dom.html">DOM positioning</a></li>
+					<li><a href="../basic_init/flexible_width.html">Flexible table width</a></li>
 					<li><a href="../basic_init/state_save.html">State saving</a></li>
 					<li><a href="../basic_init/alt_pagination.html">Alternative pagination styles</a></li>
 					<li>Scrolling: <br>
@@ -528,7 +533,7 @@ $(document).ready(function() {
 					<li>Events: <br>
 						<a href="../advanced_init/events_live.html">Live events</a> / 
 						<a href="../advanced_init/events_pre_init.html">Pre-init</a> / 
-						<a href="../advanced_init/events_post_init.html">Post-init with fnGetNodes</a>
+						<a href="../advanced_init/events_post_init.html">Post-init</a>
 					</li>
 					<li><a href="../advanced_init/column_render.html">Column rendering</a></li>
 					<li><a href="../advanced_init/html_sort.html">Sorting without HTML tags</a></li>
@@ -542,6 +547,9 @@ $(document).ready(function() {
 					<li><a href="../advanced_init/footer_callback.html">Footer callback</a></li>
 					<li><a href="../advanced_init/sorting_control.html">Control sorting direction of columns</a></li>
 					<li><a href="../advanced_init/language_file.html">Change language information from a file (internationalisation)</a></li>
+					<li><a href="../advanced_init/defaults.html">Setting defaults</a></li>
+					<li><a href="../advanced_init/localstorage.html">State saving with localStorage</a></li>
+					<li><a href="../advanced_init/dt_events.html">Custom events</a></li>
 				</ul>
 				
 				<h2>API</h2>
