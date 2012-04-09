@@ -133,7 +133,7 @@
 			
 			<h1>Preamble</h1>
 			<p>When using server-side processing with DataTables, it can be quite intensive on your server having an Ajax call every time the user performs some kind of interaction - you can effectively DDOS your server with your own application!</p>
-			<p>This example shows how you might over-come this by modifying the request set to the server to retrieve more information than is actually required for a single page's display. This means that the user can page multiple times (5 times the display size is the default) before a request must be made of the server. Paging is typically the most common interaction performed with a DataTable, so this can be most beneficial to your server's resource usage. Of course the pipeline must be cleared for interactions other than paging (sorting, filtering etc), but that's the trade off that can be made (sending extra information is cheep - while another XHR is expensive).</p>
+			<p>This example shows how you might over-come this by modifying the request set to the server to retrieve more information than is actually required for a single page's display. This means that the user can page multiple times (5 times the display size is the default) before a request must be made of the server. Paging is typically the most common interaction performed with a DataTable, so this can be most beneficial to your server's resource usage. Of course the pipeline must be cleared for interactions other than paging (sorting, filtering etc), but that's the trade off that can be made (sending extra information is cheap - while another XHR is expensive).</p>
 			
 			<h1>Live example</h1>
 			<div id="dynamic">
@@ -167,7 +167,7 @@
 			
 			
 			<h1>Initialisation code</h1>
-			<pre>var oCache = {
+			<pre class="brush: js;">var oCache = {
 	iCacheLower: -1
 };
 
@@ -278,6 +278,14 @@ $(document).ready(function() {
 		"fnServerData": fnDataTablesPipeline
 	} );
 } );</pre>
+			<style type="text/css">
+				@import "../examples_support/syntax/css/shCore.css";
+			</style>
+			<script type="text/javascript" language="javascript" src="../examples_support/syntax/js/shCore.js"></script>
+
+			<h1>Server response</h1>
+			<p>The code below shows the latest JSON data that has been returned from the server in response to the Ajax request made by DataTables. This will update as further requests are made.</p>
+			<pre id="latest_xhr" class="brush: js;"></pre>
 			
 			
 			<h1>Other examples</h1>
@@ -292,6 +300,7 @@ $(document).ready(function() {
 					<li><a href="../basic_init/hidden_columns.html">Hidden columns</a></li>
 					<li><a href="../basic_init/complex_header.html">Complex headers - grouping with colspan</a></li>
 					<li><a href="../basic_init/dom.html">DOM positioning</a></li>
+					<li><a href="../basic_init/flexible_width.html">Flexible table width</a></li>
 					<li><a href="../basic_init/state_save.html">State saving</a></li>
 					<li><a href="../basic_init/alt_pagination.html">Alternative pagination styles</a></li>
 					<li>Scrolling: <br>
@@ -310,7 +319,7 @@ $(document).ready(function() {
 					<li>Events: <br>
 						<a href="../advanced_init/events_live.html">Live events</a> / 
 						<a href="../advanced_init/events_pre_init.html">Pre-init</a> / 
-						<a href="../advanced_init/events_post_init.html">Post-init with fnGetNodes</a>
+						<a href="../advanced_init/events_post_init.html">Post-init</a>
 					</li>
 					<li><a href="../advanced_init/column_render.html">Column rendering</a></li>
 					<li><a href="../advanced_init/html_sort.html">Sorting without HTML tags</a></li>
@@ -324,6 +333,9 @@ $(document).ready(function() {
 					<li><a href="../advanced_init/footer_callback.html">Footer callback</a></li>
 					<li><a href="../advanced_init/sorting_control.html">Control sorting direction of columns</a></li>
 					<li><a href="../advanced_init/language_file.html">Change language information from a file (internationalisation)</a></li>
+					<li><a href="../advanced_init/defaults.html">Setting defaults</a></li>
+					<li><a href="../advanced_init/localstorage.html">State saving with localStorage</a></li>
+					<li><a href="../advanced_init/dt_events.html">Custom events</a></li>
 				</ul>
 				
 				<h2>API</h2>

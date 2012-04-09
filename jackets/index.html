@@ -3,8 +3,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   
-  <script src="../jquery.Storage.js"></script>
-  <script src="../date.js"></script> 
+  <script src="/libs/jquery.Storage.js"></script>
+  <script src="/libs/date.js"></script> 
   
 <script>
     var jsonList = {"Table" : [{ "judgeid" : "allen", "judgename" : "ALLEN/NADINE"},
@@ -73,7 +73,7 @@
             
             $( "#picker" ).change(function(){
                     //alert('Handler for picker called.');
-                    $("#jacketsForm").attr("action", "table.php");
+                    $("#jacketsForm").attr("action", "table.html");
                     
             });
             $( "#pdf" ).change(function(){
@@ -128,7 +128,7 @@ td.ui-datepicker-week-end {
         <legend>Ticket Printing Format</legend>
         
     <label> 
-        <input type="radio" name="pdfOrPicker" id="picker" value="table.php"> 
+        <input type="radio" name="pdfOrPicker" id="picker" value="table.html"> 
       Allow me to select individual cases/ticket to be printed</label> 
         <br> 
         <label> 

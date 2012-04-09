@@ -15,18 +15,16 @@ ob_start('ob_gzhandler');
 //  5 days ago. Last to 10 days out.
 //  Expects 2011-03-22 format
 if(isset($_GET["start"]))
-    $firstDateReq = date("Y-m-d", strtotime(htmlspecialchars($_GET["start"])));
+    $firstDateReq = date("Y-m-d H:i", strtotime(htmlspecialchars($_GET["start"])));
 else
-    $firstDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d"),date("Y")));
+    $firstDateReq = date("Y-m-d H:i", mktime(0, 0, 0, date("m"),date("d"),date("Y")));
 
 if(isset($_GET["last"])){
-    $lastDateReq = date("Y-m-d", strtotime(htmlspecialchars($_GET["last"])));
-    // $interval = date_interval_create_from_date_string('1 month'); 
-    // add_date( $lastDateReq, date_interval_create_from_date_string( "10 days" ) );
-    // echo $lastDateReq;
+    $temp = $_GET["last"] . " 11:59pm";
+    $lastDateReq = date("Y-m-d H:i", strtotime( htmlspecialchars($_GET["last"]) . " 11:59pm" ));
     }
 else
-    $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d") + 8,date("Y")));
+    $lastDateReq = date("Y-m-d H:i", mktime(0, 0, 0, date("m"),date("d") + 8,date("Y")));
 
 // Build the query.
 $query = "SELECT case_number, caption, NAC, NAC_date, judge, location, prosecutor, defense FROM nextActions WHERE NAC_date BETWEEN '{$firstDateReq}' and '{$lastDateReq}' ";

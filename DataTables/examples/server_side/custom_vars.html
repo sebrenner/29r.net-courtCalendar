@@ -17,13 +17,8 @@
 					"bProcessing": true,
 					"bServerSide": true,
 					"sAjaxSource": "scripts/server_processing.php",
-					"fnServerData": function ( sSource, aoData, fnCallback ) {
-						/* Add some extra data to the sender */
+					"fnServerParams": function ( aoData ) {
 						aoData.push( { "name": "more_data", "value": "my_value" } );
-						$.getJSON( sSource, aoData, function (json) { 
-							/* Do whatever additional processing you want on the callback, then tell DataTables */
-							fnCallback(json);
-						} );
 					}
 				} );
 			} );
@@ -36,7 +31,7 @@
 			</div>
 			
 			<h1>Preamble</h1>
-			<p>It can often be useful to send a little bit of extra information to the server when utilising DataTables' server-side processing option. This can be done by overriding the function used internally to get the JSON data from the server through the use of the "fnServerData" callback. This function takes three parameters (the same as <a href="http://docs.jquery.com/Ajax/jQuery.getJSON">$.getJSON()</a>, to be manipulated as you wish. This allows you to add extra data to the second parameter and then make the AJAX call, or you can call a Google Gears DB, or whatever you want. This example shows adding a single extra HTTP variable.</p>
+			<p>It can often be useful to send a little bit of extra information to the server when utilising DataTables' server-side processing option. This can be done by using the <a href="http://datatables.net/ref#fnServerParams">fnServerParams</a> callback function which is called whenever an XHR is sent to the server. fnServerParams Takes a single parameter, the array of name/value pairs of parameters that are to be sent to the server. You can manipulate this as you require - typically adding another parameter, as shown in this example.</p>
 			
 			<h1>Live example</h1>
 			<div id="dynamic">
@@ -70,21 +65,24 @@
 			
 			
 			<h1>Initialisation code</h1>
-			<pre>$(document).ready(function() {
+			<pre class="brush: js;">$(document).ready(function() {
 	$('#example').dataTable( {
 		"bProcessing": true,
 		"bServerSide": true,
-		"sAjaxSource": "scripts/server_processing.php",
-		"fnServerData": function ( sSource, aoData, fnCallback ) {
-			/* Add some extra data to the sender */
+		"sAjaxSource": "scripts/server_processing.php"
+		"fnServerParams": function ( aoData ) {
 			aoData.push( { "name": "more_data", "value": "my_value" } );
-			$.getJSON( sSource, aoData, function (json) { 
-				/* Do whatever additional processing you want on the callback, then tell DataTables */
-				fnCallback(json)
-			} );
 		}
 	} );
 } );</pre>
+			<style type="text/css">
+				@import "../examples_support/syntax/css/shCore.css";
+			</style>
+			<script type="text/javascript" language="javascript" src="../examples_support/syntax/js/shCore.js"></script>
+
+			<h1>Server response</h1>
+			<p>The code below shows the latest JSON data that has been returned from the server in response to the Ajax request made by DataTables. This will update as further requests are made.</p>
+			<pre id="latest_xhr" class="brush: js;"></pre>
 			
 			
 			<h1>Other examples</h1>
@@ -99,6 +97,7 @@
 					<li><a href="../basic_init/hidden_columns.html">Hidden columns</a></li>
 					<li><a href="../basic_init/complex_header.html">Complex headers - grouping with colspan</a></li>
 					<li><a href="../basic_init/dom.html">DOM positioning</a></li>
+					<li><a href="../basic_init/flexible_width.html">Flexible table width</a></li>
 					<li><a href="../basic_init/state_save.html">State saving</a></li>
 					<li><a href="../basic_init/alt_pagination.html">Alternative pagination styles</a></li>
 					<li>Scrolling: <br>
@@ -117,7 +116,7 @@
 					<li>Events: <br>
 						<a href="../advanced_init/events_live.html">Live events</a> / 
 						<a href="../advanced_init/events_pre_init.html">Pre-init</a> / 
-						<a href="../advanced_init/events_post_init.html">Post-init with fnGetNodes</a>
+						<a href="../advanced_init/events_post_init.html">Post-init</a>
 					</li>
 					<li><a href="../advanced_init/column_render.html">Column rendering</a></li>
 					<li><a href="../advanced_init/html_sort.html">Sorting without HTML tags</a></li>
@@ -131,6 +130,9 @@
 					<li><a href="../advanced_init/footer_callback.html">Footer callback</a></li>
 					<li><a href="../advanced_init/sorting_control.html">Control sorting direction of columns</a></li>
 					<li><a href="../advanced_init/language_file.html">Change language information from a file (internationalisation)</a></li>
+					<li><a href="../advanced_init/defaults.html">Setting defaults</a></li>
+					<li><a href="../advanced_init/localstorage.html">State saving with localStorage</a></li>
+					<li><a href="../advanced_init/dt_events.html">Custom events</a></li>
 				</ul>
 				
 				<h2>API</h2>
