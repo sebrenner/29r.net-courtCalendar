@@ -15,15 +15,13 @@ function getCaption( $case_number, $caption, $NAC ){
 }
 
 // initiate new CALENDAR
-$v = new vcalendar( array( 'unique_id' => 'Court Schedule' ));
+$v = new vcalendar( array( 'unique_id' => 'MyCourtDates.com' ));
 
 // required of some calendar software
 $v->setProperty( 'method', 'PUBLISH' );
 
 // required of some calendar software
 $v->setProperty( "X-WR-TIMEZONE", "America/New_York" );
-
-
 
 //  Get dates from uri paramater.  If none given set to first 1 days ago. Last to 5 days out.
 //  Will take almost any date/time string.  See http://php.net/manual/en/function.strtotime.php
@@ -36,6 +34,11 @@ if(isset($_GET["last"]))
     $lastDateReq = date("Y-m-d",strtotime(htmlspecialchars($_GET["last"])));
 else
     $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d")+5,date("Y")));
+
+if(isset($_GET["reminders"]))
+    $reminders = true;
+else
+    $reminders = false;
 
 
 // Build the query.
@@ -143,10 +146,7 @@ if($result = mysql_query($query))
         $hour = substr ( $row["NAC_date"] , 11 , 2);
         $minutes = substr ( $row["NAC_date"] , 14 , 2);
         $seconds = "00";
-
-        // Build UID
-        $UID = strtotime("now") . $caseNumber . $row[4] . "@cms.halilton-co.org";
-
+        
         // Create the event object
         $e = & $v->newComponent( 'vevent' );                 // initiate a new EVENT
         $e->setProperty( 'summary', $summary );              // set summary-title
@@ -155,6 +155,18 @@ if($result = mysql_query($query))
         $e->setProperty( 'duration', 0, 0, 0, 15 );         // 3 hours
         $e->setProperty( 'description', $description );     // describe the event
         $e->setProperty( 'location', $row["location"] );             // locate the event
+        
+        if ( $counsel == "BURROUGHS" ) {
+            // create an event alarm
+            $valarm = & $e->newComponent( "valarm" );
+            
+            // reuse the event description
+            $valarm->setProperty("action", "DISPLAY" );
+            $valarm->setProperty("description", $e->getProperty( "summary" ));
+            
+            // set alarm to 60 minutes prior to event.
+            $valarm->setProperty( "trigger", "-PT60M" );
+        } 
   }
     // Cal Name
     $calName = ucfirst($judgeReq) . " - " . $caseTypeWord;
