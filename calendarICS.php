@@ -156,7 +156,7 @@ if($result = mysql_query($query))
         $e->setProperty( 'description', $description );     // describe the event
         $e->setProperty( 'location', $row["location"] );             // locate the event
         
-        if ( $counsel == "BURROUGHS" ) {
+        if ( $prosecutor == "BURROUGHS" ) {
             // create an event alarm
             $valarm = & $e->newComponent( "valarm" );
             
