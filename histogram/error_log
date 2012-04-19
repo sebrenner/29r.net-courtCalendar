@@ -1,2 +1,104 @@
 [30-Mar-2012 22:37:51] PHP Parse error:  syntax error, unexpected ';' in /home3/todayspo/public_html/29r/histogram/index.php on line 24
 [30-Mar-2012 23:16:17] PHP Parse error:  syntax error, unexpected ';' in /home3/todayspo/public_html/29r/histogram/index.php on line 24
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined property: activityHistogram::$freshness in /home3/todayspo/public_html/29r.git/histogram/index.php on line 260
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 8 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 18 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 15 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 10 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 11 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 11 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 12 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 6 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 8 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 6 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 8 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 9 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 8 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 8 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 8 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 5 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 4 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 4 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 5 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 5 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 4 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 1 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 2 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 1 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 2 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 3 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 3 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 4 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 1 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 1 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 1 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 1 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Uninitialized string offset: 0 in /home3/todayspo/public_html/29r.git/histogram/index.php on line 273
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: newString in /home3/todayspo/public_html/29r.git/histogram/index.php on line 278
+[19-Apr-2012 14:20:58 UTC] PHP Notice:  Undefined variable: totalSettings in /home3/todayspo/public_html/29r.git/histogram/index.php on line 35
