@@ -77,9 +77,9 @@ def importCSV( CSVs, startDate, endDate):
     finally:
         print "Committing Transaction...",
         con.commit()
-        print "\t\t\t\t\t\tSuccess (transaction committed).\nClosing cursor...",
+        print "\t\t\t\t\t\tSuccess (Transaction committed).\nClosing cursor...",
         cursor.close() 
-        print "\t\t\t\t\t\t\tSuccess (Cursor closed)."
+        print "\t\t\t\t\t\t\tSuccess (cursor closed)."
 
 def printHeader():
     print "Content-type: text/html"
