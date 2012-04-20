@@ -205,7 +205,7 @@ class activityHistogram
             $results[] = array( $key, self::sortString($value), strlen($value), self::getNotes($key) );
             $totalSettings += (int)strlen($value);
 		}
-        // print_r ($results);
+        //print_r ($results);
         return array($results, $totalSettings);
 	}
 
