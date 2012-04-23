@@ -160,3 +160,23 @@
 [20-Apr-2012 03:47:36 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/index.php on line 31
 [20-Apr-2012 03:47:36 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/index.php on line 33
 [20-Apr-2012 03:47:36 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/index.php on line 33
+[20-Apr-2012 04:22:48 UTC] PHP Notice:  date_default_timezone_set(): Timezone ID 'America/America/New_York' is invalid in /home3/todayspo/public_html/29r/overtime/index.php on line 13
+[20-Apr-2012 04:22:49 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 04:22:49 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 04:22:49 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 33
+[20-Apr-2012 04:22:49 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 33
+[20-Apr-2012 04:22:49 UTC] PHP Notice:  Undefined variable: border in /home3/todayspo/public_html/29r/overtime/index.php on line 89
+[20-Apr-2012 04:22:49 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 04:22:49 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 04:22:49 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 33
+[20-Apr-2012 04:22:49 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 33
+[20-Apr-2012 16:41:53 UTC] PHP Notice:  date_default_timezone_set(): Timezone ID 'America/America/New_York' is invalid in /home3/todayspo/public_html/29r/overtime/index.php on line 13
+[20-Apr-2012 16:41:54 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 16:41:54 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 16:41:54 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 33
+[20-Apr-2012 16:41:54 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 33
+[20-Apr-2012 16:41:54 UTC] PHP Notice:  Undefined variable: border in /home3/todayspo/public_html/29r/overtime/index.php on line 89
+[20-Apr-2012 16:41:54 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 16:41:54 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 31
+[20-Apr-2012 16:41:54 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r/overtime/index.php on line 33
+[20-Apr-2012 16:41:54 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r/overtime/index.php on line 33
