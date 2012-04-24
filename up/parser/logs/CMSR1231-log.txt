@@ -1,2 +1,0 @@
-2012-04-23 06:50:3 - Judes set contains: 26 judges.
-2012-04-23 06:50:3 - ../server/php/files/cmsr1231.P73 was processed.  Processing time: 0:00:04.86.  3763 Criminal events processed. 9679 Civil events processed. Freshness: 2012-04-20

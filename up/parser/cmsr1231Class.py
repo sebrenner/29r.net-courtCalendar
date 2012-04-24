@@ -16,7 +16,7 @@ timeFMT = "%Y-%m-%dT%H:%M"
 """
 
 # = Modules =
-import sys, os, datetime, time, csv, shutil
+import sys, os, datetime, time, csv, shutil, MySQLdb
 from string import *
 try:
    import cPickle as pickle
@@ -28,7 +28,7 @@ class CMSR1231Docket:
         """
         """
         # initialize variables
-        self._dateDictFilePath ="logs/dates.pkl"
+        # self._dateDictFilePath ="logs/dates.pkl"
         self._verbose = verbose
         self._civRecordCount = 0
         self._crimRecordCount = 0
@@ -636,33 +636,32 @@ class CMSR1231Docket:
         If the passed file is fresher, it returns true.
         """
         try:
-            if self._verbose: print "Trying to read freshness from dates file."
-            dateDict = self.__read_obj_from_file( self._dateDictFilePath )
+            if self._verbose: print "Trying to read freshness from database."
+            self._dateOfPriorParse = self.__getDbFreshness()
             if self._verbose:
-                print "In isFresher. This is the object we got back:", dateDict
+                print "In isFresher. This is the date we got back:", self._dateOfPriorParse
         except Exception, e:
-            print "\n", "*" * 75, "\nThere is no previous freshness date in the log file.", "\nError:", e, "\n", "*" * 75
+            print "\n", "*" * 75, "\nNo freshness date was returned from the db.", "\nError:", e, "\n", "*" * 75
             return False
-        self._dateOfPriorParse = dateDict[ "freshness" ]
         
-        # Reeturn true if scheudle only contains past events.
+        # Return true if scheudle only contains past events.
         if self._freshness >= self._lastDate:
             return True       
-
+        
         if self._freshness >= self._dateOfPriorParse:
             if self._verbose:
-                print "The last parsed CMSRfile created on %s. Now importing CMSR created on %s." %( dateDict[ "freshness" ], self._freshness )
+                print "The last parsed CMSRfile created on %s. Now importing CMSR created on %s." %( self._dateOfPriorParse, self._freshness )
             return True
         else:
             return False
     
     def __archiveCMSR1231( self ):
         """
-        Moves the successfully parsed file to archive/date->date.cmsr
+        Moves the successfully parsed file to archive/date--date.cmsr
         """
         self.getPeriod()
         dates = self.getPeriod()
-        archivePage = "archive/" + dates[0] + "->" + dates[1] + ".cmsr"
+        archivePage = "archive/" + dates[0] + "--" + dates[1] + ".cmsr"
         print "Archiving %s..." % self._CMSR1231Path2File ,
         try:
             shutil.move( self._CMSR1231Path2File, archivePage )
@@ -681,10 +680,10 @@ class CMSR1231Docket:
         # ==================================
         # = Store date range and freshness =
         # ==================================
-        print "Saving date file..." ,
-        dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
-        self.__write_obj_to_file( dateDict, self._dateDictFilePath )
-        print "\t\t\t\t\t\t\tSuccess (date file saved)."
+        # print "Saving date file..." ,
+        # dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
+        # self.__write_obj_to_file( dateDict, self._dateDictFilePath )
+        # print "\t\t\t\t\t\t\tSuccess (date file saved)."
         
         # ==================================
         # = Move parsed file to archive    =
@@ -741,8 +740,23 @@ class CMSR1231Docket:
         
         if self._verbose:
             print "The CMSRfile was created on %s. It covers %s to %s." %( self._freshness, self._firstDate, self._lastDate )
-    
 
+    def __getDbFreshness( self ):
+        connection = MySQLdb.connect( host = 'localhost', 
+                port = 3306, user = 'todayspo_calAdm', 
+                passwd = 'Gmu1vltrkLOX4n', db = 'todayspo_courtCal2' )
+        curs = connection.cursor()
+        try:
+            queryString = "SELECT MAX(freshness) as freshness FROM nextActions;"
+            curs.execute( queryString )
+            freshness = curs.fetchall()
+            curs.close()
+            connection.close()
+            freshness = freshness[0][0]
+        except Exception, e:
+            print "I couldn't get the max freshness."
+            raise e
+        return freshness.strftime( "%Y-%m-%d" )
 
 if __name__ == '__main__':
     """
@@ -766,16 +780,7 @@ if __name__ == '__main__':
     #   start:      2012-01-09
     #   end:        2018-01-10
     #
-    
-    try:
-        shutil.move( "logs/dates.pkl", "logs/dates.production" )
-    except Exception, e:
-        print "logs/dates.pkl doesn't exist."
-    dateDict = { 'firstDate': "2012-03-29" , 'lastDate': "2018-03-29", 'freshness': "2012-01-01", 'dbUpdate': ""}
-    output = open( "logs/dates.pkl", 'wb')
-    pickle.dump( dateDict, output,-1)
-    output.close()
-    
+        
     # Test imports
     CMSRsForTesting = [ "testFiles/cmsr1231-Allen00.txt", "testFiles/cmsr1231.P50", "testFiles/cmsr1231.P53", "testFiles/cmsr1231.P50",  ]
     for each in CMSRsForTesting:
@@ -786,9 +791,3 @@ if __name__ == '__main__':
             print "\n!!!!!!Processing", each, "threw an exception: ", e
         print "The parsing success is %s." % testDocket.isSuccesful()
         
-    # Put the old dates file back in place
-    try:
-        shutil.move( "logs/dates.production", "logs/dates.pkl" )
-        print "\nThe production logs/dates.pkl file was restored."
-    except Exception, e:
-        print "\nNo logs/dates.production to move back."
