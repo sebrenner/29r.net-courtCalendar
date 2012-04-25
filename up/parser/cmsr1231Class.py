@@ -280,7 +280,8 @@ class CMSR1231Docket:
         Returns list of normalized NACs
         """
         # Cnum_dict = Counter()
-        for row in crim_list:
+        # for row in crim_list:
+        for index, row in enumerate( crim_list ):
             # Add coumns for AP_PO, and out of state warning
             row.insert(7,"")
             row.insert(7,"")
@@ -294,18 +295,23 @@ class CMSR1231Docket:
                     row.pop()
                     
             # Gang up caption
-            if ":" in row[10][0:3]:
-                pass
-            else:
-                while True:
-                    row[9] += row.pop(10)
-                    try:
-                        if ":" in row[10][1:3]: break
-                    except IndexError:
-                        print "Error in __final_pass_crim while trying to gang up the caption."
-                        print "curent caption:", row[9]
-                        print "Look at", row
-                        print
+            try:
+                if ":" in row[10][0:3]:
+                    pass
+                else:
+                    while True:
+                        row[9] += row.pop(10)
+                        try:
+                            if ":" in row[10][1:3]: break
+                        except IndexError:
+                            print "\n\nError in __final_pass_crim while trying to gang up the caption."
+                            print "curent caption:", row[9]
+                            print "Look at", row
+                            print
+            except IndexError:
+                print "\n\nError in __final_pass_crim while trying to gang up the caption."
+                print "Look at", row
+                print
                         
             # Move AP, if any to ap_Po column
             for index, item in enumerate(row):
@@ -402,7 +408,7 @@ class CMSR1231Docket:
                     row.insert(4, "")
                     row.insert(7, "SB10 RE-CLASSIFICATION")
                     cause_index_pos = 7
-                self._unprocessedRows.insert( -1, row )
+                unprocessedRows.insert( -1, row )
                 continue
                 
             # Gang up Counsel.  If the cause is at index 8, and the row is 10 long then
@@ -574,33 +580,6 @@ class CMSR1231Docket:
             print "Can't write ", each, " in __write_lists_csv writting: ", file_name
             raise e
     
-    def __write_obj_to_file( self, data_obj,location_name ):
-        """
-        Takes a data object and file path and pickles and writes the object
-        to the given path.
-        """
-        output = open(location_name, 'wb')
-        pickle.dump(data_obj, output,-1)
-        output.close()
-        return location_name
-    
-    def __read_obj_from_file( self, location_name ):
-        """
-        Takes a file path and returns the data object.
-        """
-        try:
-            if self._verbose:
-                print "In read_obj... Trying to read %s." %( location_name )
-            savedObject = pickle.load( open( location_name, 'rb'))
-            if self._verbose:
-                print "Saved Object:", savedObject
-            return savedObject 
-        except Exception, e:
-            print "\n", "*" * 75, "Failed to read %s." %( location_name )
-            print "Threw error:", e
-            print "\n", "*" * 75
-            return False    
-    
     def __gangAtComma( self, myList ):
         """
         Takes a list and combines items that are separated by a comma at the end of the first item.
@@ -635,6 +614,9 @@ class CMSR1231Docket:
         compares it to the freshness of the files passed to this instances.
         If the passed file is fresher, it returns true.
         """
+        # Return true if scheudle only contains past events.
+        if self._freshness >= self._lastDate:
+            return True
         try:
             if self._verbose: print "Trying to read freshness from database."
             self._dateOfPriorParse = self.__getDbFreshness()
@@ -643,10 +625,6 @@ class CMSR1231Docket:
         except Exception, e:
             print "\n", "*" * 75, "\nNo freshness date was returned from the db.", "\nError:", e, "\n", "*" * 75
             return False
-        
-        # Return true if scheudle only contains past events.
-        if self._freshness >= self._lastDate:
-            return True       
         
         if self._freshness >= self._dateOfPriorParse:
             if self._verbose:

@@ -66,10 +66,12 @@ def importCSV( CSVs, startDate, endDate):
                                 LINES TERMINATED BY \"\\r\\n\" \
                                 SET judgeId_fk = (SELECT judgeId FROM judges \
                                 where CMSRName = judge );" %( each )
+                
                 result = cursor.execute( sqlQueryLOADCSV )
                 print "\t\t\tSuccess (%i records imported)" % result
         except:
             print "\n\t\t\tFAILURE.  Records rolled back: ", con.rollback()
+            print "Bad query: " , sqlQueryLOADCSV
             raise
         else:
             # print "Success. Transaction committed: ", 
@@ -99,53 +101,9 @@ def printFooter():
     print "</body>"
     print "</html>"
 
-def getLastestFile( passedDirectory ="../server/php/files/", verbose = False ):
-    """
-    Gets the file path to the latest .pxx file from
-    the passed diretory, by default ../server/php/files/
-    
-    ~/public_html/29r.git/up/server/php/files/
-    """
-    try:
-        # get files from the passedDirectory
-        filelist = os.listdir( passedDirectory )
-        print filelist
-        
-        # filter out directories
-        filelist = filter(lambda x: not os.path.isdir(x), filelist)
-        print filelist
-        
-        # add the path to the CMSRfiles name
-        CMSRfiles = []
-        for index, item in enumerate(filelist):
-            # Only consider files that start wirh "cmsr1231"
-            if item[:8] == "cmsr1231":
-                # print "File name starts with cmsr1231."
-                CMSRfiles.append( passedDirectory + item) 
-        print CMSRfiles
-        
-        mostRecent = max(CMSRfiles, key=lambda x: os.stat(x).st_mtime)
-        if verbose:
-            print "The last modified file is: %s" % mostRecent
-        return mostRecent
-    except Exception, e:
-        print "\n\t\tERROR There are no CMSR1231 files in the %s directory." % passedDirectory
-        return -1
-        # raise e
 
 printHeader()
 print "<pre>"
-cmsrPath = -1
-cmsrPath = getLastestFile()
-
-if ( cmsrPath != -1  ):
-    testDocket = CMSR1231Docket( cmsrPath,  verbose = False )
-    print "Confirming %s was parsed..." %cmsrPath,
-    if testDocket.isSuccessful():
-        print "\t\tSuccess (file parsed)."
-        dates = testDocket.getPeriod()
-        importCSV( [ testDocket.getCrimFilePath(), testDocket.getCivFilePath() ], dates[0], dates[1] )
-    else:
-        print "\n\t\t\t\tFAILURE-  No changes to the database were made."
-print "</pre>"
+# importCSV( [ "CSVs/2009-12-01--2010-01-01_civil.csv", "CSVs/2009-12-01--2010-01-01_crim.csv" ], "2009-12-01", "2010-01-01" )
+importCSV( [ "CSVs/2009-12-01--2010-01-01_crim.csv" ], "2009-12-01", "2010-01-01" )
 printFooter()
