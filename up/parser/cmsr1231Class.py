@@ -16,7 +16,7 @@ timeFMT = "%Y-%m-%dT%H:%M"
 """
 
 # = Modules =
-import sys, os, datetime, time, csv, shutil
+import sys, os, datetime, time, csv, shutil, MySQLdb
 from string import *
 try:
    import cPickle as pickle
@@ -28,7 +28,7 @@ class CMSR1231Docket:
         """
         """
         # initialize variables
-        self._dateDictFilePath ="logs/dates.pkl"
+        # self._dateDictFilePath ="logs/dates.pkl"
         self._verbose = verbose
         self._civRecordCount = 0
         self._crimRecordCount = 0
@@ -280,7 +280,8 @@ class CMSR1231Docket:
         Returns list of normalized NACs
         """
         # Cnum_dict = Counter()
-        for row in crim_list:
+        # for row in crim_list:
+        for index, row in enumerate( crim_list ):
             # Add coumns for AP_PO, and out of state warning
             row.insert(7,"")
             row.insert(7,"")
@@ -294,18 +295,23 @@ class CMSR1231Docket:
                     row.pop()
                     
             # Gang up caption
-            if ":" in row[10][0:3]:
-                pass
-            else:
-                while True:
-                    row[9] += row.pop(10)
-                    try:
-                        if ":" in row[10][1:3]: break
-                    except IndexError:
-                        print "Error in __final_pass_crim while trying to gang up the caption."
-                        print "curent caption:", row[9]
-                        print "Look at", row
-                        print
+            try:
+                if ":" in row[10][0:3]:
+                    pass
+                else:
+                    while True:
+                        row[9] += row.pop(10)
+                        try:
+                            if ":" in row[10][1:3]: break
+                        except IndexError:
+                            print "\n\nError in __final_pass_crim while trying to gang up the caption."
+                            print "curent caption:", row[9]
+                            print "Look at", row
+                            print
+            except IndexError:
+                print "\n\nError in __final_pass_crim while trying to gang up the caption."
+                print "Look at", row
+                print
                         
             # Move AP, if any to ap_Po column
             for index, item in enumerate(row):
@@ -402,7 +408,7 @@ class CMSR1231Docket:
                     row.insert(4, "")
                     row.insert(7, "SB10 RE-CLASSIFICATION")
                     cause_index_pos = 7
-                self._unprocessedRows.insert( -1, row )
+                unprocessedRows.insert( -1, row )
                 continue
                 
             # Gang up Counsel.  If the cause is at index 8, and the row is 10 long then
@@ -574,33 +580,6 @@ class CMSR1231Docket:
             print "Can't write ", each, " in __write_lists_csv writting: ", file_name
             raise e
     
-    def __write_obj_to_file( self, data_obj,location_name ):
-        """
-        Takes a data object and file path and pickles and writes the object
-        to the given path.
-        """
-        output = open(location_name, 'wb')
-        pickle.dump(data_obj, output,-1)
-        output.close()
-        return location_name
-    
-    def __read_obj_from_file( self, location_name ):
-        """
-        Takes a file path and returns the data object.
-        """
-        try:
-            if self._verbose:
-                print "In read_obj... Trying to read %s." %( location_name )
-            savedObject = pickle.load( open( location_name, 'rb'))
-            if self._verbose:
-                print "Saved Object:", savedObject
-            return savedObject 
-        except Exception, e:
-            print "\n", "*" * 75, "Failed to read %s." %( location_name )
-            print "Threw error:", e
-            print "\n", "*" * 75
-            return False    
-    
     def __gangAtComma( self, myList ):
         """
         Takes a list and combines items that are separated by a comma at the end of the first item.
@@ -635,34 +614,32 @@ class CMSR1231Docket:
         compares it to the freshness of the files passed to this instances.
         If the passed file is fresher, it returns true.
         """
-        try:
-            if self._verbose: print "Trying to read freshness from dates file."
-            dateDict = self.__read_obj_from_file( self._dateDictFilePath )
-            if self._verbose:
-                print "In isFresher. This is the object we got back:", dateDict
-        except Exception, e:
-            print "\n", "*" * 75, "\nThere is no previous freshness date in the log file.", "\nError:", e, "\n", "*" * 75
-            return False
-        self._dateOfPriorParse = dateDict[ "freshness" ]
-        
-        # Reeturn true if scheudle only contains past events.
+        # Return true if scheudle only contains past events.
         if self._freshness >= self._lastDate:
-            return True       
-
+            return True
+        try:
+            if self._verbose: print "Trying to read freshness from database."
+            self._dateOfPriorParse = self.__getDbFreshness()
+            if self._verbose:
+                print "In isFresher. This is the date we got back:", self._dateOfPriorParse
+        except Exception, e:
+            print "\n", "*" * 75, "\nNo freshness date was returned from the db.", "\nError:", e, "\n", "*" * 75
+            return False
+        
         if self._freshness >= self._dateOfPriorParse:
             if self._verbose:
-                print "The last parsed CMSRfile created on %s. Now importing CMSR created on %s." %( dateDict[ "freshness" ], self._freshness )
+                print "The last parsed CMSRfile created on %s. Now importing CMSR created on %s." %( self._dateOfPriorParse, self._freshness )
             return True
         else:
             return False
     
     def __archiveCMSR1231( self ):
         """
-        Moves the successfully parsed file to archive/date->date.cmsr
+        Moves the successfully parsed file to archive/date--date.cmsr
         """
         self.getPeriod()
         dates = self.getPeriod()
-        archivePage = "archive/" + dates[0] + "->" + dates[1] + ".cmsr"
+        archivePage = "archive/" + dates[0] + "--" + dates[1] + ".cmsr"
         print "Archiving %s..." % self._CMSR1231Path2File ,
         try:
             shutil.move( self._CMSR1231Path2File, archivePage )
@@ -681,10 +658,10 @@ class CMSR1231Docket:
         # ==================================
         # = Store date range and freshness =
         # ==================================
-        print "Saving date file..." ,
-        dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
-        self.__write_obj_to_file( dateDict, self._dateDictFilePath )
-        print "\t\t\t\t\t\t\tSuccess (date file saved)."
+        # print "Saving date file..." ,
+        # dateDict = { 'firstDate': self._firstDate , 'lastDate': self._lastDate, 'freshness':self._freshness, 'dbUpdate': ""}
+        # self.__write_obj_to_file( dateDict, self._dateDictFilePath )
+        # print "\t\t\t\t\t\t\tSuccess (date file saved)."
         
         # ==================================
         # = Move parsed file to archive    =
@@ -741,8 +718,23 @@ class CMSR1231Docket:
         
         if self._verbose:
             print "The CMSRfile was created on %s. It covers %s to %s." %( self._freshness, self._firstDate, self._lastDate )
-    
 
+    def __getDbFreshness( self ):
+        connection = MySQLdb.connect( host = 'localhost', 
+                port = 3306, user = 'todayspo_calAdm', 
+                passwd = 'Gmu1vltrkLOX4n', db = 'todayspo_courtCal2' )
+        curs = connection.cursor()
+        try:
+            queryString = "SELECT MAX(freshness) as freshness FROM nextActions;"
+            curs.execute( queryString )
+            freshness = curs.fetchall()
+            curs.close()
+            connection.close()
+            freshness = freshness[0][0]
+        except Exception, e:
+            print "I couldn't get the max freshness."
+            raise e
+        return freshness.strftime( "%Y-%m-%d" )
 
 if __name__ == '__main__':
     """
@@ -766,16 +758,7 @@ if __name__ == '__main__':
     #   start:      2012-01-09
     #   end:        2018-01-10
     #
-    
-    try:
-        shutil.move( "logs/dates.pkl", "logs/dates.production" )
-    except Exception, e:
-        print "logs/dates.pkl doesn't exist."
-    dateDict = { 'firstDate': "2012-03-29" , 'lastDate': "2018-03-29", 'freshness': "2012-01-01", 'dbUpdate': ""}
-    output = open( "logs/dates.pkl", 'wb')
-    pickle.dump( dateDict, output,-1)
-    output.close()
-    
+        
     # Test imports
     CMSRsForTesting = [ "testFiles/cmsr1231-Allen00.txt", "testFiles/cmsr1231.P50", "testFiles/cmsr1231.P53", "testFiles/cmsr1231.P50",  ]
     for each in CMSRsForTesting:
@@ -786,9 +769,3 @@ if __name__ == '__main__':
             print "\n!!!!!!Processing", each, "threw an exception: ", e
         print "The parsing success is %s." % testDocket.isSuccesful()
         
-    # Put the old dates file back in place
-    try:
-        shutil.move( "logs/dates.production", "logs/dates.pkl" )
-        print "\nThe production logs/dates.pkl file was restored."
-    except Exception, e:
-        print "\nNo logs/dates.production to move back."

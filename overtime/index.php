@@ -86,7 +86,8 @@ class PDF extends FPDF
 		}
 	    	
 		// case_number,	Defendant, NAC_date, NAC
-		$this->Cell($w[0],$lineHeight,$row["case_number"],'L' . $border  ,0,'L',$fill);	            
+		$caseNumberURL = "http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=" . $row["case_number"];
+		$this->Cell($w[0],$lineHeight,$row["case_number"],'L' . $border  ,0,'L',$fill, $caseNumberURL );	            
 	        $this->Cell($w[1],$lineHeight,ucwords( strtolower( substr ($row["caption"],17))),'L' . $border  ,0,'L',$fill);	            
 	        $this->Cell($w[2],$lineHeight,substr ($row["NAC_date"],0,10),'L' . $border ,0,'L',$fill);
 	        $this->Cell($w[3],$lineHeight,ucwords( strtolower( $row["NAC"])),'LR' . $border ,0,'L',$fill);
