@@ -1,0 +1,24 @@
+[08-May-2012 17:13:38 UTC] PHP Notice:  mysql_query(): Function called without first fetching all rows from a previous unbuffered query in /home3/todayspo/public_html/29r.git/calendarICS.php on line 111
+[08-May-2012 17:13:38 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 114
+[08-May-2012 17:13:38 UTC] PHP Notice:  Undefined variable: judgeReq in /home3/todayspo/public_html/29r.git/calendarICS.php on line 172
+[08-May-2012 17:13:38 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 184
+[08-May-2012 17:14:05 UTC] PHP Notice:  mysql_query(): Function called without first fetching all rows from a previous unbuffered query in /home3/todayspo/public_html/29r.git/calendarICS.php on line 111
+[08-May-2012 17:14:05 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 114
+[08-May-2012 17:14:05 UTC] PHP Notice:  Undefined variable: judgeReq in /home3/todayspo/public_html/29r.git/calendarICS.php on line 172
+[08-May-2012 17:14:05 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 184
+[08-May-2012 17:14:13 UTC] PHP Notice:  mysql_query(): Function called without first fetching all rows from a previous unbuffered query in /home3/todayspo/public_html/29r.git/calendarICS.php on line 111
+[08-May-2012 17:14:13 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 114
+[08-May-2012 17:14:14 UTC] PHP Notice:  Undefined variable: judgeReq in /home3/todayspo/public_html/29r.git/calendarICS.php on line 172
+[08-May-2012 17:14:14 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 184
+[08-May-2012 17:14:41 UTC] PHP Notice:  mysql_query(): Function called without first fetching all rows from a previous unbuffered query in /home3/todayspo/public_html/29r.git/calendarICS.php on line 111
+[08-May-2012 17:14:41 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 114
+[08-May-2012 17:14:41 UTC] PHP Notice:  Undefined variable: judgeReq in /home3/todayspo/public_html/29r.git/calendarICS.php on line 172
+[08-May-2012 17:14:41 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 184
+[08-May-2012 17:16:22 UTC] PHP Notice:  mysql_query(): Function called without first fetching all rows from a previous unbuffered query in /home3/todayspo/public_html/29r.git/calendarICS.php on line 111
+[08-May-2012 17:16:22 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 114
+[08-May-2012 17:16:22 UTC] PHP Notice:  Undefined variable: judgeReq in /home3/todayspo/public_html/29r.git/calendarICS.php on line 172
+[08-May-2012 17:16:22 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 184
+[08-May-2012 17:21:19 UTC] PHP Notice:  mysql_query(): Function called without first fetching all rows from a previous unbuffered query in /home3/todayspo/public_html/29r.git/calendarICS.php on line 111
+[08-May-2012 17:21:19 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 114
+[08-May-2012 17:21:19 UTC] PHP Notice:  Undefined variable: judgeReq in /home3/todayspo/public_html/29r.git/calendarICS.php on line 172
+[08-May-2012 17:21:19 UTC] PHP Notice:  Undefined index: output in /home3/todayspo/public_html/29r.git/calendarICS.php on line 184

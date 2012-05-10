@@ -1,0 +1,48 @@
+[02-May-2012 16:04:44 UTC] PHP Notice:  date_default_timezone_set(): Timezone ID 'America/America/New_York' is invalid in /home3/todayspo/public_html/29r.git/overtime/index.php on line 13
+[02-May-2012 16:04:45 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/index.php on line 31
+[02-May-2012 16:04:45 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/index.php on line 31
+[02-May-2012 16:04:45 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/index.php on line 33
+[02-May-2012 16:04:45 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/index.php on line 33
+[02-May-2012 16:04:45 UTC] PHP Notice:  Undefined variable: border in /home3/todayspo/public_html/29r.git/overtime/index.php on line 90
+[02-May-2012 16:04:45 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/index.php on line 31
+[02-May-2012 16:04:45 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/index.php on line 31
+[02-May-2012 16:04:45 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/index.php on line 33
+[02-May-2012 16:04:45 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/index.php on line 33
+[02-May-2012 16:04:52 UTC] PHP Notice:  date_default_timezone_set(): Timezone ID 'America/America/New_York' is invalid in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 13
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: border in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 89
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 31
+[02-May-2012 16:04:53 UTC] PHP Notice:  Undefined variable: w in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
+[02-May-2012 16:04:53 UTC] PHP Warning:  array_sum() expects parameter 1 to be array, null given in /home3/todayspo/public_html/29r.git/overtime/civil.php on line 33
