@@ -10,8 +10,83 @@ require_once 'iCalcreator.class.php';
 // This command will cause the script to serve any output compressed with either gzip or deflate if accepted by the client.
 ob_start('ob_gzhandler');
 
-function getCaption( $case_number, $caption, $NAC ){
-	return $case_number . "<br />" . $caption . "</a>"; 
+function createAbbreviatedSetting($setting){
+	// create an associative array mapping setting to abv
+	$abreviations = array(
+	    "NAC" => "Abreviation",
+	    "PLEA OR TRIAL SETTING" => "PTS",
+	    "CMC INITIAL CASE MANAGEMENT" => "CMC",
+	    "ARRAIGNMENT" => "ARGN",
+	    "CASE MANAGEMENT CONFERENCE" => "CMC",
+	    "SCHEDULING CONFERENCE" => "CMC",
+	    "SENTENCE" => "SENT",
+	    "SENTENCING" => "SENT",
+	    "REPORT" => "RPT",
+	    "STATUS REPORT" => "RPT",
+	    "DSC/DISPOSITION SCHEDULING CON" => "DSC",
+	    "JURY TRIAL" => "JT",
+	    "PROBATION VIOLATION" => "PV",
+	    "TELEPHONE REPORT" => "TELE. RPT",
+	    "CIVIL PROTECTION ORDER HEARING" => "CPO HRG",
+	    "ENTRY" => "FE",
+	    "FINAL ENTRY" => "FE",
+	    "MOTION FOR SUMMARY JUDGMENT" => "MSJ",
+	    "PRE-TRIAL" => "PT",
+	    "BENCH TRIAL" => "BT",
+	    "PLEA" => "PLEA",
+	    "DISP SCHEDULING CONFERENCE" => "DSC",
+	    "POST-CONVICTION WARRANT RETURN" => "WRNT RTN",
+	    "MEDIATION CONFERENCE" => "MEDIATION",
+	    "EXPUNGEMENT" => "EXPNG",
+	    "PROBABLE CAUSE HEARING" => "PC/PV",
+	    "IN PROGRESS, JURY TRIAL" => "JT",
+	    "MOTION FOR JUDGMENT DEBTOR" => "J DEBT",
+	    "MOTION TO SUPPRESS" => "MOT SUPP",
+	    "MOTION" => "MOT",
+	    "PROBABLE CAUSE HEARING, PROBATION VIOLATION" => "PC/PV",
+	    "TELEPHONE SCHEDULING CONF" => "TELE RPT",
+	    "ORDR OF APPRNCE/JDGMNT DEBTOR" => "J DEBT",
+	    "DSC/PLEA OR TRIAL SETTING" => "PTS",
+	    "CASE MANAGEMENT CONFERENCE, INITIAL" => "CMC",
+	    "HEARING" => "HRG",
+	    "DSC/PRETRIAL" => "PT",
+	    "DECISION" => "DECISION",
+	    "DSC/TRIAL SETTING" => "DSC",
+	    "COMMUNITY CONTROL VIOLATION" => "PV",
+	    "REPORT, COMMERICAL CASE" => "RPT",
+	    "FORMAL PRE-TRIAL" => "PT",
+	    "TRIAL OR DISMISSAL" => "TR-DISM",
+	    "TELEPHONE REPORT, DEFAULT" => "TELE RPT",
+	    "PROBATION VIOLATION, SENTENCE" => "PV",
+	    "ENTRY OF DISMISSAL" => "FE",
+	    "SETTLEMENT ENTRY" => "FE",
+	    "REPORT OR ENTRY" => "RPT",
+	    "REPORT, COMMERCIAL DOCKET" => "RPT",
+	    "PROBABLE CAUSE HEARING, COMMUNITY CONTROL VIOLATION" => "PC/PV",
+	    "RE-SENTENCING" => "SNTC",
+	    "TRIAL, TO COURT" => "BT",
+	    "MOTION TO DISMISS" => "MOT DISM",
+	    "CASE MANAGEMENT CONFERENCE, COMMERCIAL DOCKET" => "CMC",
+	    "REPORT, ON MEDIATION" => "RPT",
+	    "GARNISHMENT HEARING" => "GARNISH",
+	    "DECISION DUE" => "DECISION DUE",
+	    "MOTION FOR JUDICIAL RELEASE" => "J. REL.",
+	    "CASE MANAGEMENT CONFERENCE, ON CROSS CLAIM" => "CMC",
+	    "RECEIVER'S REPORT" => "RCVR RPT",
+	    "FORFEITURE HEARING" => "FORFT HRG",
+	    "MOTIONS" => "MOT",
+	    "COMPETENCY HEARING" => "COMP HRG",
+	    "IN PROGRESS, BENCH TRIAL" => "BT",
+	    "TRIAL SETTING" => "TR SETTING",
+	    "PRE-CONVICTION CAPIAS RETURN, PLEA OR TRIAL SETTING" => "PTS",
+	    "MOTION FOR SUMMARY JUDGMENT, OR DISMISSAL" => "MSJ",
+	    "MOTION TO SUPPRESS, & JURY TRIAL" => "MOT SUPP",
+	    "DISCOVERY" => "DSCVY"
+	);
+	if (array_key_exists ($setting , $abreviations)){
+	    return $abreviations[ $setting ];
+	}
+	return $setting;
 }
 
 // initiate new CALENDAR
@@ -36,10 +111,9 @@ else
     $lastDateReq = date("Y-m-d", mktime(0, 0, 0, date("m"),date("d")+5,date("Y")));
 
 if(isset($_GET["reminders"]))
-    $reminders = true;
+	$reminders = false;
 else
-    $reminders = false;
-
+ 	$reminders = true;
 
 // Build the query.
 $query = "SELECT * FROM nextActions WHERE NAC_date > '{$firstDateReq}' and NAC_date < '{$lastDateReq}' ";
@@ -124,20 +198,36 @@ if($result = mysql_query($query))
             $NACdate = new DateTime($row["NAC_date"]);
             $row["NAC_date"]= $NACdate->format('Y-m-d H:i');
             
-			$row["caption"] =  $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
+	    $row["caption"] =  $row["case_number"] . "<br />" . $row["caption"] . "</a>"; 
             $row["counsel"] = "&pi;: " . $row["prosecutor"] . "<br />&Delta;: " . $row["defense"];
             
             $events[] = $row;
         }
         
-        // Build Summary
-        $summary = "{$row["NAC"]}-{$row["case_number"]}-{$row["caption"]}";
-        
-        // Build Description
+  	// Build Description
         $caseNumber = str_replace(" ", "", $row["case_number"]);
         $NAC_URI = "http://www.courtclerk.org/case_summary.asp?sec=history&casenumber={$caseNumber}"; 
         
-        $description = "\nPlaintiffs Counsel:" . $row["prosecutor"] . "\nDefense Counsel:" . $row["defense"] .  "\n" . $row["cause"]  . "\n" . $NAC_URI . "\n\n" . $row["caption"] . "\n\nAs of " . $row["freshness"];
+        $description = "\nPlaintiffs Counsel: " . $row["prosecutor"] . "\nDefense Counsel: " . $row["defense"] .  "\n" . $row["cause"]  . "\n" . $NAC_URI . "\n\n" . $row["caption"] . "\n\nAs of " . $row["freshness"];
+  	
+  	// Build Summary
+        $caption  = ucwords(strtolower($row['caption']));
+        $caption  = str_replace("Vs", "vs", $caption);
+        
+        // Build Summary
+        // $summary  = ucwords(strtolower($row['NAC']));
+        if (substr ( $row['case_number'] , 0 , 1) == 'B'){
+        	//if crim case, only include Defendant's name
+        	$summary  = createAbbreviatedSetting($row['NAC']);
+        	$vIndex   = strpos ( $caption, 'vs');
+        	$summary .= ' - ' . substr ( $caption, $vIndex + 3);
+        	$summary .= ' - ' . $row['case_number'];
+        }else{
+                $summary  = createAbbreviatedSetting($row['NAC']);
+        	$summary .= ' - ' . $row['case_number'];
+        	$summary .= ' - ' . $caption;
+        }
+                      
 
         // Build stateTimeDate
         $year = substr ( $row["NAC_date"] , 0 , 4);
@@ -149,24 +239,23 @@ if($result = mysql_query($query))
         
         // Create the event object
         $e = & $v->newComponent( 'vevent' );                 // initiate a new EVENT
-        $e->setProperty( 'summary', $summary );              // set summary-title
+        $e->setProperty( 'summary', $summary);              // set summary-title
         $e->setProperty( 'categories', 'Court_dates' );      // catagorize
         $e->setProperty( 'dtstart', $year, $month, $day, $hour, $minutes, 00 );     // 24 dec 2006 19.30
         $e->setProperty( 'duration', 0, 0, 0, 15 );         // 3 hours
-        $e->setProperty( 'description', $description );     // describe the event
-        $e->setProperty( 'location', $row["location"] );             // locate the event
+        $e->setProperty( 'description', ucwords(strtolower($description)));     // describe the event
+        $e->setProperty( 'location', ucwords(strtolower($row["location"])));             // locate the event
         
-        if ( $prosecutor == "BURROUGHS" ) {
-            // create an event alarm
-            $valarm = & $e->newComponent( "valarm" );
-            
-            // reuse the event description
-            $valarm->setProperty("action", "DISPLAY" );
-            $valarm->setProperty("description", $e->getProperty( "summary" ));
-            
-            // set alarm to 60 minutes prior to event.
-            $valarm->setProperty( "trigger", "-PT60M" );
-        } 
+	    // create an event alarm
+	    $valarm = & $e->newComponent( "valarm" );
+	    
+	    // reuse the event description
+	    $valarm->setProperty("action", "DISPLAY" );
+	    $valarm->setProperty("description", $e->getProperty( "summary" ));
+	    
+	    // set alarm to 60 minutes prior to event.
+	    $valarm->setProperty( "trigger", "-PT60M" );
+	
   }
     // Cal Name
     $calName = ucfirst($judgeReq) . " - " . $caseTypeWord;
@@ -201,9 +290,6 @@ switch ($_GET["output"]) {
         print "{\"aaData\":" . json_encode($events) . "}";
         break;
 }
-
-function NACDuration( $NAC ){
-    echo "I am b.";
-}
-
+   
+  
 ?>
