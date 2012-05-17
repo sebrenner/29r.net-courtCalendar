@@ -9,6 +9,12 @@
 require_once 'iCalcreator.class.php';
 // This command will cause the script to serve any output compressed with either gzip or deflate if accepted by the client.
 ob_start('ob_gzhandler');
+// seconds, minutes, hours, days
+$expires = 60*60*2;
+header("Pragma: public");
+header("Cache-Control: maxage=".$expires);
+header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
+//header('Content-type: text/calendar');
 
 function createAbbreviatedSetting($setting){
 	// create an associative array mapping setting to abv
