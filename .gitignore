@@ -1,3 +1,6 @@
 .localized
 error_log
 passwordfiles
+histogram/error_log
+jackets/error_log
+up/parser/logs

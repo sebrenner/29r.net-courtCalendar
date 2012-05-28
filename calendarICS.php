@@ -187,11 +187,10 @@ catch(PDOException $e)
 // Query the database and loop through the results.
 // $result = mysql_query($query) or die(mysql_error());
 $result = mysql_unbuffered_query($query) or die(mysql_error());
-$row = mysql_fetch_array( $result );
+//$row = mysql_fetch_array( $result );
 
 if($result = mysql_query($query))
 {
-    
     if( $_GET["output"] == 3 ){ $events = array(); }  // json data
     
     while($row = mysql_fetch_array( $result, MYSQL_ASSOC ))    {
@@ -216,9 +215,9 @@ if($result = mysql_query($query))
         $NAC_URI = "http://www.courtclerk.org/case_summary.asp?sec=history&casenumber={$caseNumber}"; 
         
         $description =    "$caseNumber\n" . $row["caption"] .  "\n" . $row['NAC']
-        		. "\nPlaintiffs Counsel: " . $row["prosecutor"]
+        		. "\n\nPlaintiffs' Counsel: " . $row["prosecutor"]
         		. "\nDefense Counsel: " . $row["defense"] 
-        		. "\n" . $row["cause"]  . "\n" . $NAC_URI 
+        		. "\n\n" . $row["cause"]  . "\n\n" . $NAC_URI 
         		. "\n\nAs of " . $row["freshness"];
   	
   	// Build Summary
