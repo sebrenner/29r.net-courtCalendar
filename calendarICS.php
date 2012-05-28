@@ -7,6 +7,7 @@
  * This application queries my database of court dates and returns an ical file.
  */
 require_once 'iCalcreator.class.php';
+require_once( "libs/UnitedPrototype/autoload.php" );
 // This command will cause the script to serve any output compressed with either gzip or deflate if accepted by the client.
 ob_start('ob_gzhandler');
 // seconds, minutes, hours, days
@@ -227,17 +228,16 @@ if($result = mysql_query($query))
         // Build Summary
         // $summary  = ucwords(strtolower($row['NAC']));
         if (substr ( $row['case_number'] , 0 , 1) == 'B'){
-        	//if crim case, only include Defendant's name
+        	// if crim case, only include Defendant's name
         	$summary  = createAbbreviatedSetting($row['NAC']);
         	$vIndex   = strpos ( $caption, 'vs');
         	$summary .= ' - ' . substr ( $caption, $vIndex + 3);
         	$summary .= ' - ' . $row['case_number'];
         }else{
-                $summary  = createAbbreviatedSetting($row['NAC']);
+            $summary  = createAbbreviatedSetting($row['NAC']);
         	$summary .= ' - ' . $row['case_number'];
         	$summary .= ' - ' . $caption;
         }
-                      
 
         // Build stateTimeDate
         $year = substr ( $row["NAC_date"] , 0 , 4);
@@ -265,7 +265,6 @@ if($result = mysql_query($query))
 	    
 	    // set alarm to 60 minutes prior to event.
 	    $valarm->setProperty( "trigger", "-PT60M" );
-	
   }
     // Cal Name
     $calName = ucfirst($judgeReq) . " - " . $caseTypeWord;
@@ -300,6 +299,29 @@ switch ($_GET["output"]) {
         print "{\"aaData\":" . json_encode($events) . "}";
         break;
 }
+
+use UnitedPrototype\GoogleAnalytics;
+
+// Initilize GA Tracker
+$tracker = new GoogleAnalytics\Tracker('UA-124185-5', '29r.net');
+
+// Assemble Visitor information
+// (could also get unserialized from database)
+$visitor = new GoogleAnalytics\Visitor();
+$visitor->setIpAddress($_SERVER['REMOTE_ADDR']);
+$visitor->setUserAgent($_SERVER['HTTP_USER_AGENT']);
+$visitor->setScreenResolution('1024x768');
+
+// Assemble Session information
+// (could also get unserialized from PHP session)
+$session = new GoogleAnalytics\Session();
+
+// Assemble Page information
+$pageName=$userName['lName'] . "-" . $userId;
+$page = new GoogleAnalytics\Page("/ics/$pageName");
+$page->setTitle( $pageName );
+
+// Track page view
+$tracker->trackPageview($page, $session, $visitor);
    
-  
 ?>
