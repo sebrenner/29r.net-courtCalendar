@@ -317,7 +317,7 @@ $visitor->setScreenResolution('1024x768');
 $session = new GoogleAnalytics\Session();
 
 // Assemble Page information
-$pageName=$userName['lName'] . "-" . $userId;
+$pageName=$userName['lName'] . "-" . $counsel . $prosecutor;
 $page = new GoogleAnalytics\Page("/ics/$pageName");
 $page->setTitle( $pageName );
 
