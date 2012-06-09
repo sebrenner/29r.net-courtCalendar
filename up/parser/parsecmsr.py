@@ -109,11 +109,11 @@ def getLastestFile( passedDirectory ="../server/php/files/", verbose = False ):
     try:
         # get files from the passedDirectory
         filelist = os.listdir( passedDirectory )
-        print filelist
+        #print filelist
         
         # filter out directories
         filelist = filter(lambda x: not os.path.isdir(x), filelist)
-        print filelist
+        #print filelist
         
         # add the path to the CMSRfiles name
         CMSRfiles = []
@@ -122,7 +122,7 @@ def getLastestFile( passedDirectory ="../server/php/files/", verbose = False ):
             if item[:8] == "cmsr1231":
                 # print "File name starts with cmsr1231."
                 CMSRfiles.append( passedDirectory + item) 
-        print CMSRfiles
+        #print CMSRfiles
         
         mostRecent = max(CMSRfiles, key=lambda x: os.stat(x).st_mtime)
         if verbose:
