@@ -4,3 +4,5 @@
  in /home3/todayspo/public_html/29r/iCalcreator.class.php on line 1565
 [19-Nov-2011 17:08:21] PHP Warning:  file_get_contents(http://29r.net/calendariCS.php?start=-1weeks) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 404 Not Found
  in /home3/todayspo/public_html/29r/iCalcreator.class.php on line 1565
+[08-Jun-2012 13:14:31 UTC] PHP Warning:  file_get_contents(http://29r.net/calendariCS.php?start=-1weeks): failed to open stream: HTTP request failed! HTTP/1.1 404 Not Found
+ in /home3/todayspo/public_html/29r/iCalcreator.class.php on line 1565

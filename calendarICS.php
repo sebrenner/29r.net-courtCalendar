@@ -197,7 +197,7 @@ if($result = mysql_query($query))
     
         if( $_GET["output"] == 3 ){ // json data
             // add the url as the list item in array
-            $row["case_number"] =  "<a class ='popup' href = 'http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=" . str_replace (" ", "", $row["case_number"]) . "' target='_blank'>" . $row["case_number"] . "</a>"; 
+            $row["case_number"] =  "<a class ='popup' href = 'http://www.courtclerk.org/case_summary.asp?sec=sched&casenumber=" . str_replace (" ", "", $row["case_number"]) . "' target='_blank'>" . $row["case_number"] . "</a>\n"; 
             //echo $row["case_number"];
             $row["judge"] = $row["judge"] . "<br />" . $row["location"];
             
@@ -218,7 +218,7 @@ if($result = mysql_query($query))
         		. "\n\nPlaintiffs' Counsel: " . $row["prosecutor"]
         		. "\nDefense Counsel: " . $row["defense"] 
         		. "\n\n" . $row["cause"]  . "\n\n" . $NAC_URI 
-        		. "\n\nAs of " . $row["freshness"];
+        		. "\n\n  As of " . $row["freshness"];
   	
   	// Build Summary
         $caption  = ucwords(strtolower($row['caption']));
