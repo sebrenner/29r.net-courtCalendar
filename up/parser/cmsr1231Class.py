@@ -86,7 +86,12 @@ class CMSR1231Docket:
         lines = inFile.readlines()  #create list each item is a line from file.
         clean_lines = ['++++++']
         
-        self._freshness, self._firstDate, self._lastDate = self.__getReportTimeFrame( lines )        
+        try:
+            self._freshness, self._firstDate, self._lastDate = self.__getReportTimeFrame( lines )        
+            break
+        except Exception, e:
+            print "\t\t\t\tFailure (__parse_file_lines could not extract date range.  Is the target file a valid cmsr1231.Pxx?)."
+            raise e
                 
         # ================
         # = Delimit blocks =
@@ -709,12 +714,8 @@ class CMSR1231Docket:
         It sets the self._crimFilePath and self._civFilePath.
         """
         print "*" * 70, "\nOpening %s ..." % self._CMSR1231Path2File , 
-        try:
-            self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
-            print "\t\t\t\tSuccess (file opened)."
-        except Exception, e:
-            print "\t\t\t\tFailure (file does appear to be valid cmsr1231)."
-            raise e
+        self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
+        print "\t\t\t\tSuccess (file opened)."
         # Create filenames based on time frames.
         self._crimFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_crim.csv"
         self._civFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_civil.csv"
