@@ -89,7 +89,7 @@ class CMSR1231Docket:
         try:
             self._freshness, self._firstDate, self._lastDate = self.__getReportTimeFrame( lines )        
         except Exception, e:
-            print "\tFailure\n(__parse_file_lines could not extract date range.  Is the target file a valid cmsr1231.Pxx?).\n", e
+            print "\tFAILURE\n\n(__parse_file_lines could not extract date range.  Is the target file a valid cmsr1231.Pxx?).\n\n", e
             raise e
                 
         # ================
