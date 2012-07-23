@@ -4,3 +4,5 @@ passwordfiles
 histogram/error_log
 jackets/error_log
 up/parser/logs
+dawson/*
+
