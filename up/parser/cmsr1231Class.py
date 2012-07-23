@@ -709,9 +709,12 @@ class CMSR1231Docket:
         It sets the self._crimFilePath and self._civFilePath.
         """
         print "*" * 70, "\nOpening %s ..." % self._CMSR1231Path2File , 
-        self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
-        print "\t\t\t\tSuccess (file opened)."
-        
+        try:
+            self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
+            print "\t\t\t\tSuccess (file opened)."
+        except Exception, e:
+            print "\t\t\t\tFailure (file does appear to be valid cmsr1231)."
+            raise e
         # Create filenames based on time frames.
         self._crimFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_crim.csv"
         self._civFilePath = "CSVs/" + str( self._firstDate ) + "--" + str( self._lastDate ) + "_civil.csv"
