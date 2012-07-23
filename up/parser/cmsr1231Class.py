@@ -713,7 +713,7 @@ class CMSR1231Docket:
         It calls self.__parse_file_lines which sets the freshness and time frame of the CMSR file.
         It sets the self._crimFilePath and self._civFilePath.
         """
-        print "*" * 70, "\nOpening %s ..." % self._CMSR1231Path2File , 
+        print "*" * 70, "\nScott Opening %s ..." % self._CMSR1231Path2File , 
         self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
         print "\t\t\t\tSuccess (file opened)."
         # Create filenames based on time frames.
