@@ -89,7 +89,7 @@ class CMSR1231Docket:
         try:
             self._freshness, self._firstDate, self._lastDate = self.__getReportTimeFrame( lines )        
         except Exception, e:
-            print "\t\t\t\tFailure (__parse_file_lines could not extract date range.  Is the target file a valid cmsr1231.Pxx?).", e
+            print "\tFailure\n(__parse_file_lines could not extract date range.  Is the target file a valid cmsr1231.Pxx?).\n", e
             raise e
                 
         # ================
@@ -712,7 +712,7 @@ class CMSR1231Docket:
         It calls self.__parse_file_lines which sets the freshness and time frame of the CMSR file.
         It sets the self._crimFilePath and self._civFilePath.
         """
-        print "*" * 70, "\nScott Opening %s ..." % self._CMSR1231Path2File , 
+        print "*" * 70, "\nOpening %s ..." % self._CMSR1231Path2File , 
         self._myList = self.__parse_file_lines(self._CMSR1231Path2File) # This function also gets freshness, stat and end dates
         print "\t\t\t\tSuccess (file opened)."
         # Create filenames based on time frames.
